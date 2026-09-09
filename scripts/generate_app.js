@@ -102,34 +102,17 @@ const htmlContent = `<!DOCTYPE html>
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-    /* Calm Water Droplet Ripple Overlay (Titisan Air yang Tenang) */
-    #waterRippleOverlay {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 99999;
-      overflow: hidden;
-      opacity: 0;
-      transition: opacity 0.3s ease;
+    /* Native View Transitions (Titisan Air yang Tenang) */
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation: none;
+      mix-blend-mode: normal;
     }
-    #waterDropCircle {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%, -50%) scale(0);
-      will-change: transform, opacity;
+    ::view-transition-old(root) {
+      z-index: 1;
     }
-
-    /* Fluid theme transition for underlying elements */
-    html.theme-transitioning,
-    html.theme-transitioning body,
-    html.theme-transitioning header,
-    html.theme-transitioning nav,
-    html.theme-transitioning article,
-    html.theme-transitioning .q-card {
-      transition: background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease !important;
+    ::view-transition-new(root) {
+      z-index: 999999;
     }
 
     /* Tactile theme icon rotation */
@@ -732,11 +715,6 @@ const htmlContent = `<!DOCTYPE html>
 
   </nav>
 
-  <!-- CALM WATER RIPPLE OVERLAY (Titisan Air yang Tenang) -->
-  <div id="waterRippleOverlay" aria-hidden="true">
-    <div id="waterDropCircle"></div>
-  </div>
-
   <!-- JAVASCRIPT APPLICATION CORE -->
   <script>
     const appData = ${JSON.stringify({ eus, questions })};
@@ -784,79 +762,50 @@ const htmlContent = `<!DOCTYPE html>
       });
     });
 
-    // Theme Switcher with Calm Water Ripple (Titisan Air yang Tenang)
-    let isThemeTransitioning = false;
-
+    // Theme Switcher with Native View Transitions (Titisan Air yang Tenang)
     function toggleTheme(e) {
-      if (isThemeTransitioning) return;
-      isThemeTransitioning = true;
+      const isDark = document.documentElement.classList.contains('dark');
+      const nextTheme = isDark ? 'light' : 'dark';
 
-      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      currentTheme = nextTheme;
-      localStorage.setItem('cpre_theme', currentTheme);
-
-      const overlay = document.getElementById('waterRippleOverlay');
-      const circle = document.getElementById('waterDropCircle');
-      const btn = document.getElementById('themeToggleBtn');
-
-      let x = window.innerWidth - 48;
-      let y = 28;
-      if (e && e.clientX && e.clientY) {
-        x = e.clientX;
-        y = e.clientY;
-      } else if (btn) {
-        const rect = btn.getBoundingClientRect();
-        x = rect.left + rect.width / 2;
-        y = rect.top + rect.height / 2;
+      // Fallback for browsers without View Transitions
+      if (!document.startViewTransition) {
+        currentTheme = nextTheme;
+        localStorage.setItem('cpre_theme', currentTheme);
+        applyTheme(currentTheme);
+        return;
       }
 
-      const maxDist = Math.hypot(
+      const btn = document.getElementById('themeToggleBtn');
+      const rect = btn ? btn.getBoundingClientRect() : { left: window.innerWidth - 48, top: 24, width: 32, height: 32 };
+      const x = e && e.clientX ? e.clientX : (rect.left + rect.width / 2);
+      const y = e && e.clientY ? e.clientY : (rect.top + rect.height / 2);
+
+      const endRadius = Math.hypot(
         Math.max(x, window.innerWidth - x),
         Math.max(y, window.innerHeight - y)
       );
-      const targetScale = Math.ceil((maxDist * 2.3) / 40);
 
-      // Set droplet ripple styling
-      if (nextTheme === 'dark') {
-        circle.style.backgroundColor = '#070709';
-        circle.style.boxShadow = '0 0 120px 60px #070709';
-      } else {
-        circle.style.backgroundColor = '#f8fafc';
-        circle.style.boxShadow = '0 0 120px 60px #f8fafc';
-      }
-
-      circle.style.transition = 'none';
-      circle.style.left = x + 'px';
-      circle.style.top = y + 'px';
-      circle.style.transform = 'translate(-50%, -50%) scale(0)';
-      circle.style.opacity = '1';
-      overlay.style.opacity = '1';
-
-      document.documentElement.classList.add('theme-transitioning');
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          circle.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease-out';
-          circle.style.transform = \`translate(-50%, -50%) scale(\${targetScale})\`;
-        });
+      const transition = document.startViewTransition(() => {
+        currentTheme = nextTheme;
+        localStorage.setItem('cpre_theme', currentTheme);
+        applyTheme(currentTheme);
       });
 
-      // Seamlessly flip underlying theme under the cover of the water droplet
-      setTimeout(() => {
-        applyTheme(nextTheme);
-      }, 180);
-
-      // Gracefully dissolve the ripple wave
-      setTimeout(() => {
-        circle.style.opacity = '0';
-        setTimeout(() => {
-          overlay.style.opacity = '0';
-          circle.style.transition = 'none';
-          circle.style.transform = 'translate(-50%, -50%) scale(0)';
-          document.documentElement.classList.remove('theme-transitioning');
-          isThemeTransitioning = false;
-        }, 320);
-      }, 380);
+      transition.ready.then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              \`circle(0px at \${x}px \${y}px)\`,
+              \`circle(\${endRadius}px at \${x}px \${y}px)\`
+            ]
+          },
+          {
+            duration: 480,
+            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            pseudoElement: '::view-transition-new(root)'
+          }
+        );
+      });
     }
 
     function applyTheme(theme) {
