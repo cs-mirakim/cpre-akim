@@ -102,45 +102,45 @@ const htmlContent = `<!DOCTYPE html>
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-    /* Smooth Water Ripple & Fluid Theme Transitions */
-    ::view-transition-old(root),
-    ::view-transition-new(root) {
-      animation: none;
-      mix-blend-mode: normal;
+    /* Calm Water Droplet Ripple Overlay (Titisan Air yang Tenang) */
+    #waterRippleOverlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 99999;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
-    ::view-transition-old(root) {
-      z-index: 1;
-    }
-    ::view-transition-new(root) {
-      z-index: 9999;
-    }
-    .dark::view-transition-old(root) {
-      z-index: 9999;
-    }
-    .dark::view-transition-new(root) {
-      z-index: 1;
+    #waterDropCircle {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(0);
+      will-change: transform, opacity;
     }
 
-    /* Calming Fluid Theme Colors (Titisan Air yang Tenang) */
-    html {
-      transition: background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1), color 0.35s ease;
-    }
-    body {
-      transition: background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1), color 0.35s ease;
-    }
-    header, nav, article, .q-card, button, input, div[class*="bg-"] {
-      transition: background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease, box-shadow 0.35s ease;
+    /* Fluid theme transition for underlying elements */
+    html.theme-transitioning,
+    html.theme-transitioning body,
+    html.theme-transitioning header,
+    html.theme-transitioning nav,
+    html.theme-transitioning article,
+    html.theme-transitioning .q-card {
+      transition: background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease !important;
     }
 
     /* Tactile theme icon rotation */
     #themeToggleBtn svg {
-      transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
     }
     #themeToggleBtn:hover svg {
-      transform: rotate(20deg) scale(1.12);
+      transform: rotate(25deg) scale(1.1);
     }
     #themeToggleBtn:active svg {
-      transform: scale(0.92);
+      transform: scale(0.9);
     }
 
     /* Touch targets and smoothness */
@@ -732,6 +732,11 @@ const htmlContent = `<!DOCTYPE html>
 
   </nav>
 
+  <!-- CALM WATER RIPPLE OVERLAY (Titisan Air yang Tenang) -->
+  <div id="waterRippleOverlay" aria-hidden="true">
+    <div id="waterDropCircle"></div>
+  </div>
+
   <!-- JAVASCRIPT APPLICATION CORE -->
   <script>
     const appData = ${JSON.stringify({ eus, questions })};
@@ -779,48 +784,79 @@ const htmlContent = `<!DOCTYPE html>
       });
     });
 
-    // Theme Switcher with Calm Water Ripple View Transitions (Titisan Air yang Tenang)
-    function toggleTheme(e) {
-      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    // Theme Switcher with Calm Water Ripple (Titisan Air yang Tenang)
+    let isThemeTransitioning = false;
 
-      if (!document.startViewTransition) {
-        currentTheme = nextTheme;
-        localStorage.setItem('cpre_theme', currentTheme);
-        applyTheme(currentTheme);
-        return;
+    function toggleTheme(e) {
+      if (isThemeTransitioning) return;
+      isThemeTransitioning = true;
+
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      currentTheme = nextTheme;
+      localStorage.setItem('cpre_theme', currentTheme);
+
+      const overlay = document.getElementById('waterRippleOverlay');
+      const circle = document.getElementById('waterDropCircle');
+      const btn = document.getElementById('themeToggleBtn');
+
+      let x = window.innerWidth - 48;
+      let y = 28;
+      if (e && e.clientX && e.clientY) {
+        x = e.clientX;
+        y = e.clientY;
+      } else if (btn) {
+        const rect = btn.getBoundingClientRect();
+        x = rect.left + rect.width / 2;
+        y = rect.top + rect.height / 2;
       }
 
-      const btn = document.getElementById('themeToggleBtn');
-      const rect = btn ? btn.getBoundingClientRect() : { left: window.innerWidth - 40, top: 20, width: 32, height: 32 };
-      const x = e && e.clientX ? e.clientX : (rect.left + rect.width / 2);
-      const y = e && e.clientY ? e.clientY : (rect.top + rect.height / 2);
-
-      const endRadius = Math.hypot(
+      const maxDist = Math.hypot(
         Math.max(x, window.innerWidth - x),
         Math.max(y, window.innerHeight - y)
       );
+      const targetScale = Math.ceil((maxDist * 2.3) / 40);
 
-      const transition = document.startViewTransition(() => {
-        currentTheme = nextTheme;
-        localStorage.setItem('cpre_theme', currentTheme);
-        applyTheme(currentTheme);
+      // Set droplet ripple styling
+      if (nextTheme === 'dark') {
+        circle.style.backgroundColor = '#070709';
+        circle.style.boxShadow = '0 0 120px 60px #070709';
+      } else {
+        circle.style.backgroundColor = '#f8fafc';
+        circle.style.boxShadow = '0 0 120px 60px #f8fafc';
+      }
+
+      circle.style.transition = 'none';
+      circle.style.left = x + 'px';
+      circle.style.top = y + 'px';
+      circle.style.transform = 'translate(-50%, -50%) scale(0)';
+      circle.style.opacity = '1';
+      overlay.style.opacity = '1';
+
+      document.documentElement.classList.add('theme-transitioning');
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          circle.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease-out';
+          circle.style.transform = \`translate(-50%, -50%) scale(\${targetScale})\`;
+        });
       });
 
-      transition.ready.then(() => {
-        document.documentElement.animate(
-          {
-            clipPath: [
-              \`circle(0px at \${x}px \${y}px)\`,
-              \`circle(\${endRadius}px at \${x}px \${y}px)\`
-            ]
-          },
-          {
-            duration: 480,
-            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-            pseudoElement: '::view-transition-new(root)'
-          }
-        );
-      });
+      // Seamlessly flip underlying theme under the cover of the water droplet
+      setTimeout(() => {
+        applyTheme(nextTheme);
+      }, 180);
+
+      // Gracefully dissolve the ripple wave
+      setTimeout(() => {
+        circle.style.opacity = '0';
+        setTimeout(() => {
+          overlay.style.opacity = '0';
+          circle.style.transition = 'none';
+          circle.style.transform = 'translate(-50%, -50%) scale(0)';
+          document.documentElement.classList.remove('theme-transitioning');
+          isThemeTransitioning = false;
+        }, 320);
+      }, 380);
     }
 
     function applyTheme(theme) {
