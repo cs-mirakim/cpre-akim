@@ -1082,7 +1082,7 @@ const htmlContent = `<!DOCTYPE html>
       const answeredQIds = Object.keys(userQuizAnswers).filter(id => userQuizAnswers[id] && userQuizAnswers[id].length > 0);
       const answeredCount = answeredQIds.length;
       let totalEarnedPts = 0;
-      const totalPossiblePts = 63;
+      const totalPossiblePts = 70;
 
       answeredQIds.forEach(id => {
         const q = questions.find(x => x.id === parseInt(id));
@@ -1102,6 +1102,7 @@ const htmlContent = `<!DOCTYPE html>
           totalEarnedPts += Math.min(score, q.pts || 2);
         } else if (q.type === 'K') {
           let matches = 0;
+          const totalOpts = (q.options || []).length;
           (q.options || []).forEach(o => {
             const isCorr = isOptionCorrect(o, q);
             const userSaysTrue = userAns.includes(o.id);
@@ -1109,8 +1110,13 @@ const htmlContent = `<!DOCTYPE html>
               matches++;
             }
           });
-          if (matches === 4) totalEarnedPts += 2;
-          else if (matches === 3) totalEarnedPts += 1;
+          if (totalOpts === 5) {
+            if (matches === 5) totalEarnedPts += 2;
+            else if (matches === 4) totalEarnedPts += 1;
+          } else {
+            if (matches === 4) totalEarnedPts += 2;
+            else if (matches === 3) totalEarnedPts += 1;
+          }
         }
       });
 
@@ -1128,10 +1134,12 @@ const htmlContent = `<!DOCTYPE html>
     function isOptionCorrect(opt, q) {
       if (typeof opt.truth === 'boolean') return opt.truth;
       if (typeof opt.truth === 'string') {
-        return opt.truth.toLowerCase().includes('true') || opt.truth.toLowerCase().includes('correct') || opt.truth.toLowerCase().includes('matches');
+        const s = opt.truth.trim().toLowerCase();
+        if (s.startsWith('does not') || s.includes('false') || s.includes('incorrect')) return false;
+        if (s === 'matches' || s === 'applies' || s.includes('needs to be considered') || s === 'true' || s === 'correct') return true;
       }
       if (q.correctDisplay) {
-        return q.correctDisplay.includes(opt.id + '=True') || q.correctDisplay.includes(opt.id + '=Matches') || q.correctDisplay.includes(opt.id + '=Correct') || q.correctDisplay.includes(opt.id + ' (Only') || q.correctDisplay.startsWith(opt.id);
+        return q.correctDisplay.includes(opt.id + '=True') || q.correctDisplay.includes(opt.id + '=Matches') || q.correctDisplay.includes(opt.id + '=Applies') || q.correctDisplay.includes(opt.id + '=Needs to be considered') || q.correctDisplay.includes(opt.id + '=Correct') || q.correctDisplay.includes(opt.id + ' (Only') || q.correctDisplay.startsWith(opt.id);
       }
       return false;
     }
