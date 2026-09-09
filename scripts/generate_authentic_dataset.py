@@ -2,8 +2,16 @@ import json
 import base64
 import os
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(SCRIPT_DIR) if os.path.basename(SCRIPT_DIR) == 'scripts' else SCRIPT_DIR
+ASSETS_DIR = os.path.join(ROOT_DIR, 'assets', 'diagrams')
+DATA_DIR = os.path.join(ROOT_DIR, 'data')
+
 # Helper for diagrams
-def get_b64(path):
+def get_b64(filename):
+    path = os.path.join(ASSETS_DIR, filename)
+    if not os.path.exists(path):
+        path = os.path.join(ROOT_DIR, filename)
     if os.path.exists(path):
         with open(path, 'rb') as f:
             return f"data:image/png;base64,{base64.b64encode(f.read()).decode('utf-8')}"
@@ -1019,13 +1027,15 @@ questions = [
   }
 ]
 
-# Write to app_data.json
+# Write to data/app_data.json
 output_data = {
   "eus": eus,
   "questions": questions
 }
 
-with open('app_data.json', 'w', encoding='utf8') as f:
+os.makedirs(DATA_DIR, exist_ok=True)
+out_path = os.path.join(DATA_DIR, 'app_data.json')
+with open(out_path, 'w', encoding='utf8') as f:
     json.dump(output_data, f, indent=2, ensure_ascii=False)
 
-print(f"Successfully generated app_data.json with {len(questions)} verified questions!")
+print(f"Successfully generated {out_path} with {len(questions)} verified questions!")

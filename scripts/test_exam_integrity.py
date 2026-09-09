@@ -1,6 +1,13 @@
 import json
+import os
 
-with open('app_data.json', 'r', encoding='utf-8') as f:
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.dirname(SCRIPT_DIR) if os.path.basename(SCRIPT_DIR) == 'scripts' else SCRIPT_DIR
+data_path = os.path.join(ROOT_DIR, 'data', 'app_data.json')
+if not os.path.exists(data_path):
+    data_path = os.path.join(ROOT_DIR, 'app_data.json')
+
+with open(data_path, 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 questions = data['questions']

@@ -41,25 +41,66 @@ Aplikasi ini adalah **100% fail statik kendiri (*self-contained `index.html`*)**
 
 ---
 
-## 🛠️ Pembangunan Tempatan (*Local Development*)
+## 📁 Struktur Folder Projek
 
-Sekiranya anda ingin menambah atau mengemaskini soalan:
-
-```bash
-# 1. Edit data dalam app_data.json
-# 2. Jana semula index.html
-node generate_app.js
+```text
+cpre/
+├── index.html                    # 🚀 Single-page app (GitHub Pages live entry point)
+├── README.md                     # 📖 Dokumentasi & panduan projek
+├── .gitignore                    # 🛡️ Konfigurasi Git ignore
+│
+├── assets/                       # 🎨 Aset media & gambar
+│   └── diagrams/                 # 🖼️ Gambar rajah rasmi soalan (Q18, Q20, Q21, Q23)
+│
+├── data/                         # 📊 Pangkalan data JSON
+│   ├── app_data.json             # ⭐ Data 45 soalan & huraian rasmi (70 markah)
+│   └── raw/                      # 🗄️ Arkib ekstraksi data terdahulu
+│
+├── docs/                         # 📚 5 Dokumen Rujukan Rasmi IREB 2025
+│   ├── AnswersToThePracticeExam_EN_2025-09-11.pdf
+│   ├── CPRE Foundation Level - Handbook V.1.2.0.pdf
+│   ├── CPRE Foundation Level - Syllabus V.3.2.0.pdf
+│   ├── CPRE Glossary V.2.2.0.pdf
+│   └── IREB_CPRE_FL_Questionnaire_Set_Public_EN_2025-09-11.pdf
+│
+├── scripts/                      # ⚙️ Skrip Bina & Ujian Integriti
+│   ├── generate_app.js           # 🔨 Compiler membina index.html
+│   ├── generate_authentic_dataset.py # 🧠 Penjana dataset rasmi IREB
+│   ├── test_exam_integrity.py    # 🧪 Ujian automatik skema & markah
+│   └── scratch/                  # 🔬 Skrip audit & analisis ekstraksi
+│
+└── legacy/                       # 📦 Versi draf terdahulu
+    ├── Cpre-Full-Guide.html
+    └── Cpre-Full-Guide-Fixed-V2.html
 ```
 
 ---
 
-## 📄 Struktur Peperiksaan & Skor Sasaran (CPRE FL)
+## 🛠️ Pembangunan & Penjanaan Semula (*Development*)
 
-- **Jumlah Soalan**: 45 Soalan
-- **Jumlah Markah**: 63 Markah
+Sekiranya anda ingin mengemaskini soalan atau menjana semula fail web:
+
+```bash
+# 1. Bina dataset rasmi dari skema
+python scripts/generate_authentic_dataset.py
+
+# 2. Uji integriti 45 soalan & markah (70 Pts)
+python scripts/test_exam_integrity.py
+
+# 3. Kompilasi semula index.html
+node scripts/generate_app.js
+```
+
+---
+
+## 📄 Struktur Peperiksaan & Skor Sasaran (IREB CPRE FL)
+
+- **Jumlah Soalan**: 45 Soalan (EU1 hingga EU7)
+- **Jumlah Markah Penuh**: 70.00 Markah
 - **Had Masa**: 75 Minit (~1.6 minit/soalan)
-- **Markah Kelayakan (*Passing Mark*)**: 70.0% (44.1 Markah)
+- **Markah Kelayakan (*Passing Mark*)**: 70.00% (49.00 Markah)
 - **Format Soalan**:
-  - **A-Type** (Single Choice • 1 Markah)
-  - **P-Type** (Multiple Choice • 1–3 Markah)
-  - **K-Type** (Matrix True/False • 2 Markah)
+  - **A-Type** (Single Choice • 1–2 Markah)
+  - **P-Type** (Multiple Choice • 1–2 Markah dengan penalti jika salah)
+  - **K-Type** (Matrix True/False • 2 Markah: 4/4 betul = 2 pts, 3/4 betul = 1 pt)
+

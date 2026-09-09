@@ -15,29 +15,13 @@ yarn-error.log*
 .vscode/
 .idea/
 
-# Raw / Intermediate Extraction Assets & Scratch Scripts
-diagram_images/
-*.pdf
-extract_data.js
-build_data.js
-inspect_cheatsheets.js
-merge_data.js
-v1_questions.json
-v2_eus.json
-merged_questions.json
-pages_dump.txt
-audit_*.py
-parse_*.py
-check_*.py
-dump_*.py
-verify_*.py
-build_ground_truth.py
-extract_full_cpre.py
-test_b64.py
-validate_dataset.py
-check_diff.py
+# Scratch, audit & extraction scripts
+scripts/scratch/
+data/raw/
+legacy/
+docs/
 
-# Previous Raw Versions (Optional / Local only)
-Cpre-Full-Guide.html
-Cpre-Full-Guide-Fixed-V2.html
+# Large PDF files
+*.pdf
+
 

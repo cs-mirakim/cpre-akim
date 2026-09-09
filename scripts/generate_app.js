@@ -1,6 +1,12 @@
 const fs = require('fs');
+const path = require('path');
 
-const { eus, questions } = JSON.parse(fs.readFileSync('app_data.json', 'utf8'));
+const rootDir = path.basename(__dirname) === 'scripts' ? path.resolve(__dirname, '..') : __dirname;
+const dataFile = fs.existsSync(path.join(rootDir, 'data', 'app_data.json')) 
+  ? path.join(rootDir, 'data', 'app_data.json') 
+  : path.join(rootDir, 'app_data.json');
+
+const { eus, questions } = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
 
 // Calculate question counts by type
 const kCount = questions.filter(q => q.type === 'K').length;
@@ -1405,5 +1411,6 @@ const htmlContent = `<!DOCTYPE html>
 </body>
 </html>`;
 
-fs.writeFileSync('index.html', htmlContent, 'utf8');
-console.log(`Generated upgraded index.html with Shadcn clean UI & zero AI-slop! Size: ${htmlContent.length} bytes`);
+const outHtmlPath = path.join(rootDir, 'index.html');
+fs.writeFileSync(outHtmlPath, htmlContent, 'utf8');
+console.log(`Generated upgraded ${outHtmlPath} with Shadcn clean UI & zero AI-slop! Size: ${htmlContent.length} bytes`);
