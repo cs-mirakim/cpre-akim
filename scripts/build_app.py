@@ -102,7 +102,7 @@ app_data_json_str = json.dumps({'eus': eus, 'questions': questions}, ensure_asci
 with open(TEMPLATE_PATH, 'r', encoding='utf-8') as f:
     template_content = f.read()
 
-rendered = template_content.replace('/* APP_DATA_PLACEHOLDER */', app_data_json_str)
+rendered = template_content.replace('/* APP_DATA_PLACEHOLDER */ null', app_data_json_str)
 rendered = rendered.replace('<!-- EU_BUTTONS_PLACEHOLDER -->', eu_buttons_html)
 rendered = rendered.replace('<!-- TOC_DRAWER_PLACEHOLDER -->', toc_drawer_items_html)
 rendered = rendered.replace('<!-- QUESTIONS_COUNT -->', str(len(questions)))

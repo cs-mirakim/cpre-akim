@@ -78,7 +78,7 @@ const tocDrawerHtml = eus.map(eu => {
 }).join('');
 
 let template = fs.readFileSync(templateFile, 'utf8');
-template = template.replace('/* APP_DATA_PLACEHOLDER */', JSON.stringify({ eus, questions }));
+template = template.replace('/* APP_DATA_PLACEHOLDER */ null', JSON.stringify({ eus, questions }));
 template = template.replace('<!-- EU_BUTTONS_PLACEHOLDER -->', euButtonsHtml);
 template = template.replace('<!-- TOC_DRAWER_PLACEHOLDER -->', tocDrawerHtml);
 template = template.replace(/<!-- QUESTIONS_COUNT -->/g, questions.length);
