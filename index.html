@@ -48,11 +48,11 @@
   
   <style>
     /* Custom Scrollbars */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    .dark ::-webkit-scrollbar-track { background: #070709; }
+    ::-webkit-scrollbar { width: 6px; height: 5px; }
+    .dark ::-webkit-scrollbar-track { background: transparent; }
     .dark ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
     .dark ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
-    ::-webkit-scrollbar-track { background: #f4f4f5; }
+    ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
@@ -426,7 +426,7 @@
       </div>
 
       <!-- EU Selector Pills -->
-      <div class="flex items-center gap-1.5 overflow-x-auto pt-1 pb-0.5 scrollbar-none">
+      <div class="flex items-center gap-1.5 overflow-x-auto pt-1.5 pb-2.5 scroll-smooth">
         <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 mr-1 shrink-0">EU:</span>
         <button onclick="filterByEU(0)" class="eu-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shrink-0 shadow-xs" data-eu="0">
           Semua (EU1–7)
