@@ -206,8 +206,20 @@ const htmlContent = `<!DOCTYPE html>
   </div>
 
   <!-- EXAM TARGET & STRATEGY DASHBOARD (Linear / shadcn Card Style) -->
-  <section class="max-w-5xl mx-auto px-4 pt-5 pb-2">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+  <section class="max-w-5xl mx-auto px-4 pt-3 sm:pt-5 pb-2">
+    
+    <!-- Mobile Compact Strategy Bar (Collapsible to save vertical screen space) -->
+    <button onclick="toggleStrategyDashboard()" class="w-full sm:hidden mb-2 p-3 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 flex items-center justify-between shadow-xs text-left">
+      <div class="flex items-center space-x-2.5">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+          Pass: 70.0%
+        </span>
+        <span class="text-xs font-bold text-slate-900 dark:text-white">Pelan Kelayakan: 69.02% ➔ 75%+</span>
+      </div>
+      <span id="stratToggleArrow" class="text-xs font-mono text-slate-500 dark:text-zinc-400">Buka ▾</span>
+    </button>
+
+    <div id="strategyCardsGrid" class="hidden sm:grid grid-cols-1 md:grid-cols-3 gap-3">
       
       <!-- Target Score Math Card -->
       <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
@@ -597,32 +609,42 @@ const htmlContent = `<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- Mobile Quick Jump Drawer (Q1–45 Grid) -->
-  <div id="drawerOverlay" onclick="toggleDrawer()" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+  <!-- Mobile Quick Jump Drawer (Q1–45 Grid - iOS Sheet Style) -->
+  <div id="drawerOverlay" onclick="toggleDrawer()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden transition-opacity duration-200"></div>
   
-  <div id="jumpDrawer" class="fixed bottom-0 inset-x-0 bg-white dark:bg-zinc-900 border-t border-slate-200 dark:border-zinc-800 rounded-t-2xl p-4 z-50 max-h-[80vh] overflow-y-auto transform translate-y-full transition-transform duration-200 ease-out hidden shadow-2xl">
+  <div id="jumpDrawer" class="fixed bottom-0 inset-x-0 bg-white dark:bg-zinc-900 border-t border-slate-200 dark:border-zinc-800 rounded-t-3xl p-4 sm:p-5 z-50 max-h-[85vh] overflow-y-auto transform translate-y-full transition-transform duration-200 ease-out hidden shadow-2xl">
+    
+    <!-- iOS Drag Handle Bar -->
+    <div class="w-10 h-1 bg-slate-300 dark:bg-zinc-700 rounded-full mx-auto mb-3.5 shrink-0"></div>
+
     <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100 dark:border-zinc-800">
-      <div class="font-bold text-sm text-slate-900 dark:text-white">Lompat Ke Soalan (Q1–45)</div>
-      <button onclick="toggleDrawer()" class="text-xs font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white p-1">
-        Tutup ✕
+      <div>
+        <div class="font-bold text-sm text-slate-900 dark:text-white">Lompat Ke Soalan (Q1–45)</div>
+        <div class="text-[11px] text-slate-500 dark:text-zinc-400">Pilih nombor soalan mengikut Unit Silibus (EU)</div>
+      </div>
+      <button onclick="toggleDrawer()" class="w-7 h-7 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center font-bold text-xs">
+        ✕
       </button>
     </div>
 
-    <div class="space-y-3">
+    <div class="space-y-3.5 pb-8">
       ${eus.map(eu => {
         const qList = questions.filter(q => q.euNo === eu.no);
         return `
           <div>
             <div class="text-[11px] font-bold text-slate-600 dark:text-zinc-400 mb-1.5 flex items-center justify-between">
-              <span>EU${eu.no}: ${eu.name}</span>
-              <span class="font-mono text-[10px]">${eu.range}</span>
+              <span class="flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full ${eu.no === 5 || eu.no === 6 ? 'bg-rose-500' : 'bg-indigo-500'}"></span>
+                EU${eu.no}: ${eu.name}
+              </span>
+              <span class="font-mono text-[10px] font-medium text-slate-400">${eu.range}</span>
             </div>
             <div class="grid grid-cols-6 sm:grid-cols-9 gap-1.5">
               ${qList.map(q => `
                 <button 
                   onclick="jumpToQuestion(${q.id})" 
                   id="drawerBtnQ${q.id}" 
-                  class="h-8 rounded-lg text-xs font-mono font-bold border text-center flex items-center justify-center transition-colors bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-800 dark:text-zinc-200 hover:bg-zinc-900 hover:text-white dark:hover:bg-white dark:hover:text-zinc-950"
+                  class="h-8 rounded-lg text-xs font-mono font-bold border text-center flex items-center justify-center transition-all bg-slate-50 dark:bg-zinc-950 border-slate-200 dark:border-zinc-800 text-slate-800 dark:text-zinc-200 hover:bg-zinc-900 hover:text-white dark:hover:bg-white dark:hover:text-zinc-950 active:scale-95"
                 >
                   Q${q.id}
                 </button>
@@ -634,18 +656,37 @@ const htmlContent = `<!DOCTYPE html>
     </div>
   </div>
 
-  <!-- Mobile Floating Bottom Bar -->
-  <div class="fixed bottom-0 inset-x-0 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border-t border-slate-200 dark:border-zinc-800 h-13 px-4 z-30 md:hidden flex items-center justify-between shadow-lg">
-    <button onclick="toggleDrawer()" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 text-xs font-bold shadow-xs flex items-center">
-      <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
-      TOC Grid
+  <!-- Mobile Native Bottom Navigation Bar (iOS / Android App Style) -->
+  <nav aria-label="Mobile Navigation" class="fixed bottom-0 inset-x-0 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl border-t border-slate-200/90 dark:border-zinc-800/90 h-16 z-30 md:hidden flex items-center justify-around px-2 shadow-lg">
+    
+    <!-- Tab 1: Soalan -->
+    <button onclick="switchTab('questions')" id="mobTabQ" class="flex flex-1 flex-col items-center justify-center py-1 text-slate-900 dark:text-white font-bold transition-all active:scale-95">
+      <svg class="w-5 h-5 mb-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+      </svg>
+      <span class="text-[10px] tracking-tight">Soalan</span>
+      <span id="mobDotQ" class="w-1 h-1 rounded-full bg-indigo-600 dark:bg-white mt-0.5 transition-opacity"></span>
     </button>
 
-    <div class="flex items-center space-x-1.5 text-xs">
-      <button onclick="switchTab('questions')" id="mobTabQ" class="px-3 py-1.5 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold">Soalan</button>
-      <button onclick="switchTab('cheatsheet')" id="mobTabCs" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 font-medium">Nota</button>
-    </div>
-  </div>
+    <!-- Tab 2: Nota / Cheat Sheet -->
+    <button onclick="switchTab('cheatsheet')" id="mobTabCs" class="flex flex-1 flex-col items-center justify-center py-1 text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 font-medium transition-all active:scale-95">
+      <svg class="w-5 h-5 mb-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+      </svg>
+      <span class="text-[10px] tracking-tight">Cheat Sheet</span>
+      <span id="mobDotCs" class="w-1 h-1 rounded-full bg-indigo-600 dark:bg-white mt-0.5 opacity-0 transition-opacity"></span>
+    </button>
+
+    <!-- Tab 3: TOC Grid Drawer Trigger -->
+    <button onclick="toggleDrawer()" id="mobTabDrawer" class="flex flex-1 flex-col items-center justify-center py-1 text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 font-medium transition-all active:scale-95">
+      <svg class="w-5 h-5 mb-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/>
+      </svg>
+      <span class="text-[10px] tracking-tight">TOC Grid</span>
+      <span class="w-1 h-1 rounded-full opacity-0 mt-0.5"></span>
+    </button>
+
+  </nav>
 
   <!-- JAVASCRIPT APPLICATION CORE -->
   <script>
@@ -717,6 +758,19 @@ const htmlContent = `<!DOCTYPE html>
       }
     }
 
+    // Toggle Strategy Dashboard (on Mobile)
+    function toggleStrategyDashboard() {
+      const grid = document.getElementById('strategyCardsGrid');
+      const arrow = document.getElementById('stratToggleArrow');
+      if (grid.classList.contains('hidden')) {
+        grid.classList.remove('hidden');
+        arrow.textContent = 'Tutup ▴';
+      } else {
+        grid.classList.add('hidden');
+        arrow.textContent = 'Buka ▾';
+      }
+    }
+
     // Toggle Format Guide
     function toggleTypeGuide() {
       const body = document.getElementById('typeGuideBody');
@@ -751,7 +805,7 @@ const htmlContent = `<!DOCTYPE html>
       renderQuestions();
     }
 
-    // Tab Switcher
+    // Tab Switcher (Syncs desktop & mobile navigation bars)
     function switchTab(tab) {
       const qTab = document.getElementById('questionsTab');
       const csTab = document.getElementById('cheatsheetTab');
@@ -759,21 +813,29 @@ const htmlContent = `<!DOCTYPE html>
       const csBtn = document.getElementById('tabCheatsheetBtn');
       const mobQ = document.getElementById('mobTabQ');
       const mobCs = document.getElementById('mobTabCs');
+      const mobDotQ = document.getElementById('mobDotQ');
+      const mobDotCs = document.getElementById('mobDotCs');
 
       if (tab === 'questions') {
         qTab.classList.remove('hidden');
         csTab.classList.add('hidden');
         qBtn.className = 'h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold text-xs shadow-xs transition-all flex items-center justify-center';
         csBtn.className = 'h-8 px-3 rounded-lg bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs border border-slate-200 dark:border-zinc-700 transition-all flex items-center justify-center';
-        if (mobQ) mobQ.className = 'px-3 py-1.5 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold';
-        if (mobCs) mobCs.className = 'px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 font-medium';
+        
+        if (mobQ) mobQ.className = 'flex flex-1 flex-col items-center justify-center py-1 text-slate-900 dark:text-white font-bold transition-all active:scale-95';
+        if (mobCs) mobCs.className = 'flex flex-1 flex-col items-center justify-center py-1 text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 font-medium transition-all active:scale-95';
+        if (mobDotQ) mobDotQ.classList.remove('opacity-0');
+        if (mobDotCs) mobDotCs.classList.add('opacity-0');
       } else {
         qTab.classList.add('hidden');
         csTab.classList.remove('hidden');
         csBtn.className = 'h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold text-xs shadow-xs transition-all flex items-center justify-center';
         qBtn.className = 'h-8 px-3 rounded-lg bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs border border-slate-200 dark:border-zinc-700 transition-all flex items-center justify-center';
-        if (mobCs) mobCs.className = 'px-3 py-1.5 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold';
-        if (mobQ) mobQ.className = 'px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 font-medium';
+        
+        if (mobCs) mobCs.className = 'flex flex-1 flex-col items-center justify-center py-1 text-slate-900 dark:text-white font-bold transition-all active:scale-95';
+        if (mobQ) mobQ.className = 'flex flex-1 flex-col items-center justify-center py-1 text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 font-medium transition-all active:scale-95';
+        if (mobDotCs) mobDotCs.classList.remove('opacity-0');
+        if (mobDotQ) mobDotQ.classList.add('opacity-0');
       }
     }
 
