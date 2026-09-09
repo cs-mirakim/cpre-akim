@@ -243,10 +243,10 @@ const htmlContent = `<!DOCTYPE html>
         </span>
         <span class="text-xs font-bold text-slate-900 dark:text-white">Pelan Kelayakan: 69.02% ➔ 75%+</span>
       </div>
-      <span id="stratToggleArrow" class="text-xs font-mono text-slate-500 dark:text-zinc-400">Buka ▾</span>
+      <span id="stratToggleArrow" class="text-xs font-mono text-slate-500 dark:text-zinc-400">Tutup ▴</span>
     </button>
 
-    <div id="strategyCardsGrid" class="hidden grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-3 mb-2">
+    <div id="strategyCardsGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-3 sm:!grid">
       
       <!-- Target Score Math Card -->
       <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
