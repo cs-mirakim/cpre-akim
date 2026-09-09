@@ -1,0 +1,31 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node modules & logs
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Antigravity & IDE Local Workspace Configs
+.agents/
+.gemini/
+.vscode/
+.idea/
+
+# Raw / Intermediate Extraction Assets & Scratch Scripts
+diagram_images/
+*.pdf
+extract_data.js
+build_data.js
+inspect_cheatsheets.js
+merge_data.js
+v1_questions.json
+v2_eus.json
+merged_questions.json
+
+# Previous Raw Versions (Optional / Local only)
+Cpre-Full-Guide.html
+Cpre-Full-Guide-Fixed-V2.html
