@@ -581,8 +581,8 @@
   <div id="confirmModal" onclick="closeConfirmModal()" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-[70] hidden flex items-center justify-center p-4 transition-opacity duration-200">
     <div class="relative w-full max-w-md bg-white dark:bg-zinc-900 rounded-2xl p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-zinc-800" onclick="event.stopPropagation()">
       <div class="flex items-start space-x-3.5 mb-4">
-        <div class="w-10 h-10 rounded-full bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/60 flex items-center justify-center text-rose-600 dark:text-rose-400 shrink-0">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <div id="confirmIconContainer" class="w-10 h-10 rounded-full bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/60 flex items-center justify-center text-rose-600 dark:text-rose-400 shrink-0">
+          <svg id="confirmIcon" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
           </svg>
         </div>
@@ -1181,22 +1181,70 @@
     }
 
     function submitAndScoreQuiz() {
-      quizSubmitted = true;
-      localStorage.setItem('cpre_quiz_submitted', 'true');
-      questions.forEach(q => revealedAnswers.add(q.id));
-      localStorage.setItem('cpre_revealed_qids', JSON.stringify(Array.from(revealedAnswers)));
+      const answeredCount = getAnsweredCount();
+      const unansweredCount = 45 - answeredCount;
       
-      updateQuizHud();
-      renderQuestions();
-      openExamResultsModal();
+      let desc = 'Adakah anda pasti untuk menghantar jawapan dan melihat keputusan rasmi pemarkahan IREB?';
+      if (unansweredCount > 0) {
+        desc = `Anda telah menjawab ${answeredCount} daripada 45 soalan (${unansweredCount} soalan belum dijawab). Adakah anda pasti mahu menghantar peperiksaan sekarang dan melihat analisis keputusan?`;
+      } else {
+        desc = 'Tahniah! Anda telah menjawab kesemua 45 soalan. Adakah anda bersedia untuk menghantar dan menyemak markah rasmi?';
+      }
+
+      openConfirmModal(
+        'Hantar Peperiksaan & Semak Keputusan?',
+        desc,
+        () => {
+          quizSubmitted = true;
+          localStorage.setItem('cpre_quiz_submitted', 'true');
+          questions.forEach(q => revealedAnswers.add(q.id));
+          localStorage.setItem('cpre_revealed_qids', JSON.stringify(Array.from(revealedAnswers)));
+          
+          updateQuizHud();
+          renderQuestions();
+          openExamResultsModal();
+        },
+        'Ya, Hantar & Semak',
+        'emerald'
+      );
     }
 
     // Confirmation Modal System
     let pendingConfirmAction = null;
 
-    function openConfirmModal(title, desc, actionFn) {
-      document.getElementById('confirmTitle').textContent = title || 'Pengesahan';
-      document.getElementById('confirmDesc').textContent = desc || 'Adakah anda pasti untuk meneruskan tindakan ini?';
+    function openConfirmModal(title, desc, actionFn, confirmBtnText = 'Ya, Teruskan', variant = 'rose') {
+      const titleEl = document.getElementById('confirmTitle');
+      const descEl = document.getElementById('confirmDesc');
+      const actionBtn = document.getElementById('confirmActionBtn');
+      const iconContainer = document.getElementById('confirmIconContainer');
+      const icon = document.getElementById('confirmIcon');
+
+      if (titleEl) titleEl.textContent = title || 'Pengesahan';
+      if (descEl) descEl.textContent = desc || 'Adakah anda pasti untuk meneruskan tindakan ini?';
+      
+      if (actionBtn) {
+        actionBtn.textContent = confirmBtnText;
+        if (variant === 'emerald') {
+          actionBtn.className = 'h-8 px-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-xs transition-colors';
+        } else {
+          actionBtn.className = 'h-8 px-3.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow-xs transition-colors';
+        }
+      }
+
+      if (iconContainer) {
+        if (variant === 'emerald') {
+          iconContainer.className = 'w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-900/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shrink-0';
+          if (icon) {
+            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />';
+          }
+        } else {
+          iconContainer.className = 'w-10 h-10 rounded-full bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/60 flex items-center justify-center text-rose-600 dark:text-rose-400 shrink-0';
+          if (icon) {
+            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />';
+          }
+        }
+      }
+
       pendingConfirmAction = actionFn;
       document.getElementById('confirmModal').classList.remove('hidden');
     }
@@ -1227,7 +1275,9 @@
           closeExamResultsModal();
           updateQuizHud();
           renderQuestions();
-        }
+        },
+        'Ya, Set Semula',
+        'rose'
       );
     }
 
