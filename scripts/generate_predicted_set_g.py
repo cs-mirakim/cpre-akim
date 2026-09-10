@@ -414,7 +414,7 @@ predicted_questions.append({
   ],
   "correctDisplay": "A, C",
   "whyCorrect": "• A (Assessing feasibility & cost): Betul. Analisis impak mesti menilai kos, usaha dan kebolehlaksanaan teknikal.\n• C (Analyzing dependencies & risks): Betul. Mesti mengenal pasti keperluan atau modul lain yang terjejas sebelum kelulusan.",
-  "whyWrong": "• B & E: Tidak boleh mengubah dokumen/kod sebelum CCB membuat keputusan rasmi.\n• D: Had masa 1 hari adalah rekaan dan bukan kriteria penolakan automatik IREB.",
+  "whyWrong": "• B: Salah. Menulis semula semua keperluan dalam pangkalan data sebelum semakan CCB memusnahkan integriti baseline sedia ada.\n• D: Salah. Had masa 1 hari adalah rekaan sewenang-wenangnya dan bukan kriteria penolakan automatik IREB.\n• E: Salah. Menggabungkan kod terus ke 'production branch' tanpa kelulusan CCB dan tanpa rundingan pihak berkepentingan melanggar kawalan perubahan.",
   "extra": "Handbook Bab 6.4: Aliran kerja Change Request: Submit -> Log -> Analyze Impact -> CCB Decision -> Implement & Verify.",
   "mnemonic": "Ubah Keperluan: Buat Analisis Impak (Kos, Risiko, Kesan) DAHULU sebelum CCB buat keputusan."
 })

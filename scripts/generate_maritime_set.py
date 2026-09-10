@@ -138,7 +138,7 @@ maritime_map[15] = {
     ],
     "correctDisplay": "A",
     "whyCorrect": "• A: Betul. 'Authentication' adalah nominalisasi (kata kerja 'authenticate' dijadikan kata nama). Ini menyembunyikan siapa yang mengesahkan, bagaimana pengesahan berlaku, dan apa akibat jika gagal.",
-    "whyWrong": "• B, C, D: Salah. Tiada kuantiti sejagat ('all/never') atau masalah pertembungan sinonim yang menjadi fokus soalan ini.",
+    "whyWrong": "• B: Salah. Tiada penggunaan universal quantifier ('all', 'always', 'never') yang mencetuskan komitmen mutlak tanpa had dalam ayat ini.\n• C: Salah. Tiada pertembungan atau percanggahan sinonim (synonym collision) antara dua istilah berbeza yang merujuk konsep yang sama.\n• D: Salah. Ayat ini tidak mengalami penyongsangan struktur tatabahasa (structural grammar inversion) antara klausa utama dan klausa bawahan.",
     "extra": "Handbook Bab 3.3.2: 4 Kesan Transformasi Bahasa: Deletion, Nominalization, Generalization, Distortion.",
     "mnemonic": "Nominalization = Kata kerja jadi kata nama. Ia menyorokkan siapa pembuat dan bagaimana proses berlaku."
 }
@@ -185,7 +185,7 @@ maritime_map[24] = {
     ],
     "correctDisplay": "A",
     "whyCorrect": "• A: Betul. Pengetahuan tersirat (tacit knowledge) tidak dapat dijelaskan secara lisan dalam temu bual. Kaedah Pemerhatian Lapangan (Field Observation / Apprenticeship) adalah satu-satunya teknik yang membolehkan jurutera keperluan melihat tindakan sebenar pakar dalam konteks kerja sebenar.",
-    "whyWrong": "• B, C, D: Salah. Soal selidik dan temu bual formal bergantung pada keupayaan pakar untuk menyatakan pengetahuan mereka secara sedar (explicit knowledge).",
+    "whyWrong": "• B: Salah. Soal selidik aneka pilihan bertulis (questionnaires) tidak mampu menangkap pengetahuan tersirat (tacit knowledge) dan nuansa keputusan spontan jurumudi pelabuhan.\n• C: Salah. Temu bual formal di bilik mesyuarat di luar lokasi bergantung kepada keupayaan pakar untuk menyatakan proses secara lisan dan sedar (explicit knowledge sahaja), tanpa konteks real-time.\n• D: Salah. Analisis kekerapan kata kunci log arkib terminal hanya membaca ringkasan data komputer yang telah lepas, bukan proses penaakulan dan kemahiran sebenar pakar.",
     "extra": "Handbook Bab 4.1.2: Jenis pengetahuan: Explicit, Tacit (tersirat), Unconscious.",
     "mnemonic": "Tacit Knowledge = Susah cakap, senang buat. Kena tengok secara langsung (Observation/Apprenticeship)."
 }
@@ -207,7 +207,7 @@ maritime_map[26] = {
     ],
     "correctDisplay": "A",
     "whyCorrect": "• A: Betul. Mengikut Model Kano, ciri yang asalnya 'Delighter' (mengujakan pengguna kerana ia baharu) akan menjadi kebiasaan lama-kelamaan, bertukar menjadi faktor prestasi, dan akhirnya menjadi faktor asas (Must-be) yang wajib ada.",
-    "whyWrong": "• B, C, D: Salah. Ciri asas tidak pernah bertukar menjadi delighter; sebaliknya ekspektasi pengguna sentiasa meningkat seiring masa.",
+    "whyWrong": "• B: Salah. Faktor asas (Must-be) tidak pernah bermigrasi menjadi faktor keterujaan (Delighters) kerana pelanggan sentiasa menganggapnya sebagai perkara asas yang wajib ada secara lumrah.\n• C: Salah. Faktor terbalik (Reverse factors) yang menyebabkan rasa jengkel tidak bertukar sendiri menjadi faktor prestasi satu dimensi tanpa reka bentuk semula.\n• D: Salah. Klasifikasi faktor dalam Model Kano tidak kekal statik sepanjang hayat produk; jangkaan pelanggan sentiasa meningkat mengikut peredaran masa (kesan pembiasaan / habituation).",
     "extra": "Handbook Bab 4.1.3: Contoh: Wi-Fi percuma di hotel dulunya Delighter, kini menjadi Basic Factor (Must-be).",
     "mnemonic": "Evolusi Kano: Delighter ➔ Performance ➔ Must-be. Jangkaan pengguna sentiasa naik."
 }
@@ -229,7 +229,7 @@ maritime_map[28] = {
     ],
     "correctDisplay": "A",
     "whyCorrect": "• A: Betul (ia BUKAN teknik sah). Mengelak atau membuang keperluan secara senyap tanpa persetujuan pihak berkepentingan (Avoidance/Disregard) bukanlah penyelesaian konflik yang sah, malah akan mengundang kegagalan projek.",
-    "whyWrong": "• B, C, D: Salah satu teknik penyelesaian konflik rasmi IREB (Consensus, Compromise, Voting, Escalation).",
+    "whyWrong": "• B: Salah (ia adalah teknik resolusi konflik yang sah). Pembinaan konsensus melalui dialog berpandu bersama pihak berkepentingan adalah pendekatan kolaboratif yang diiktiraf IREB.\n• C: Salah (ia adalah teknik resolusi konflik yang sah). Kompromi membolehkan setiap pihak bertolak ansur untuk mencapai penyelesaian titik tengah yang boleh diterima bersama.\n• D: Salah (ia adalah teknik resolusi konflik yang sah). Eskalasi hierarki (Hierarchical Escalation) merujuk keputusan konflik kepada badan tadbir urus atau pihak atasan yang diberi kuasa membuat keputusan pemutus.",
     "extra": "Handbook Bab 4.2.2: 5 Teknik Resolusi Konflik: Agreement, Compromise, Voting, Overruling/Escalation, Variance creation.",
     "mnemonic": "Elak konflik senyap-senyap = Gagal. Selesaikan dengan Konsensus, Kompromi, Undian, atau Eskalasi."
 }
@@ -251,7 +251,7 @@ maritime_map[31] = {
     ],
     "correctDisplay": "A",
     "whyCorrect": "• A: Betul. Pihak-pihak bersetuju tentang data teknikal, tetapi mempunyai matlamat dan keutamaan yang bercanggah (Keselamatan vs Kepantasan Operasi). Ini ialah Takrifan tepat untuk Konflik Kepentingan (Interest Conflict).",
-    "whyWrong": "• B: Salah. Tiada pertikaian fakta atau data (Data Conflict).\n• C, D: Salah. Tiada isu kuasa hierarki (Structural) atau permusuhan emosi peribadi (Relationship).",
+    "whyWrong": "• B: Salah. Konflik Data/Subjek berlaku apabila terdapat percanggahan maklumat, fakta, atau tafsiran data teknikal (dalam senario ini kedua-dua pihak bersetuju tentang data teknikal).\n• C: Salah. Konflik Struktur berpunca daripada ketidakseimbangan kuasa hierarki, birokrasi, atau kekangan sumber organisasi.\n• D: Salah. Konflik Hubungan berpunca daripada ketegangan interpersonal, permusuhan emosi, atau prasangka peribadi antara individu.",
     "extra": "Handbook Bab 4.2.1: Jenis Konflik: Subject-matter, Interest, Value, Relationship, Structural.",
     "mnemonic": "Bercanggah matlamat/kepentingan = Interest Conflict. Bercanggah fakta/maklumat = Data Conflict."
 }
@@ -318,7 +318,7 @@ maritime_map[36] = {
     ],
     "correctDisplay": "A, B",
     "whyCorrect": "• A: Betul. Time Facet membahagikan proses kepada Linear (sekali harung / Waterfall) atau Iterative (berperingkat / Agile).\n• B: Betul. Purpose Facet membahagikan proses kepada Prescriptive (spesifikasi kontrak terperinci) atau Explorative (penerokaan keperluan inovatif).",
-    "whyWrong": "• C, D: Salah. Model perniagaan/kewangan (Budget) dan gaya seni bina perisian (Architecture) bukan antara 4 faset proses RE rasmi IREB (4 Faset: Time, Purpose, Target, Interaction).",
+    "whyWrong": "• C: Salah. Faset Belanjawan (Budget: Fixed-Price vs Time-and-Materials) adalah model komersial kewangan/kontrak perniagaan, bukan salah satu daripada 4 faset proses RE piawai IREB (Time, Purpose, Target, Interaction).\n• D: Salah. Faset Seni Bina (Architecture: Monolithic vs Microservices) adalah corak reka bentuk teknologi seni bina perisian, bukan faset konfigurasi proses RE IREB.",
     "extra": "Handbook Bab 5.1: 4 Faset Proses RE: Time (Linear/Iterative), Purpose (Prescriptive/Explorative), Target (Customer-specific/Market-driven), Interaction (Close/Distant).",
     "mnemonic": "4 Faset RE: TIME, PURPOSE, TARGET, INTERACTION (T-P-T-I)."
 }
@@ -341,7 +341,7 @@ maritime_map[39] = {
     ],
     "correctDisplay": "A",
     "whyCorrect": "• A: Betul. Pre-RS (Pre-Requirements Specification) Traceability membolehkan keperluan dijejak kembali ke asal-usul kelahirannya (stakeholder, mesyuarat, peraturan undang-undang).",
-    "whyWrong": "• B: Salah. Mengesan ke kod sumber dan ujian adalah Post-RS Traceability.\n• C: Salah. Ini ialah inter-requirements traceability.",
+    "whyWrong": "• B: Salah. Menjejak keperluan ke hadapan ke kelas kod sumber dan skrip ujian regresi automatik adalah takrifan bagi Post-RS Traceability.\n• C: Salah. Menjejak hubungan kebergantungan sesama keperluan dalam dokumen spesifikasi yang sama merujuk kepada Inter-Requirements Traceability.\n• D: Salah. Menjejak tiket kecacatan ujian penerimaan pengguna (UAT defect tickets) adalah pengurusan jejak kecacatan (defect traceability), bukan Pre-RS traceability.",
     "extra": "Handbook Bab 6.2: Pre-RS = Sebelum keperluan ditulis (punca asal). Post-RS = Selepas keperluan ditulis (seni bina, kod, ujian).",
     "mnemonic": "Pre-RS = Jejak ke belakang (Punca/Stakeholder). Post-RS = Jejak ke depan (Kod/Ujian)."
 }
@@ -407,7 +407,7 @@ maritime_map[43] = {
     ],
     "correctDisplay": "A",
     "whyCorrect": "• A: Betul. Baseline ialah konfigurasi keperluan yang stabil, lengkap, telah diluluskan secara rasmi (frozen/signed off), dan menjadi titik rujukan untuk pembangunan fasa seterusnya serta kawalan perubahan.",
-    "whyWrong": "• B, C, D: Salah. Nota awal tidak stabil, ujian liputan kod bukan baseline keperluan, dan pangkalan data tanpa versi bercanggah dengan prinsip pengurusan konfigurasi.",
+    "whyWrong": "• B: Salah. Senarai nota draf atau lakaran idea awal (scratchpad) semasa sesi sumbang saran tidak stabil dan belum diluluskan secara formal, menjadikannya bukan baseline.\n• C: Salah. Bilangan kes ujian minimum untuk mencapai 100% liputan pernyataan kod (statement coverage) ialah metrik ujian perisian, bukan baseline keperluan.\n• D: Salah. Pangkalan data langsung tanpa kawalan versi di mana rekod sentiasa ditulis ganti tanpa sejarah jejak perubahan bercanggah secara langsung dengan integriti konsep baseline.",
     "extra": "Handbook Bab 6.5: Baseline membolehkan perbandingan perubahan (delta analysis) antara versi keluaran.",
     "mnemonic": "Baseline = Versi beku yang diluluskan secara rasmi (Approved & Frozen Snapshot)."
 }
@@ -445,6 +445,18 @@ assert len(final_questions) == 45, "Must be exactly 45 questions"
 assert abs(total_pts - 72.0) < 0.001, f"Points must equal 72.00, got {total_pts}"
 
 # Update data
+if 'predicted_maritime' not in app_data['sets']:
+    app_data['sets']['predicted_maritime'] = {
+        "id": "predicted_maritime",
+        "name": "Set Ramalan Peperiksaan G+ (Maritime & Authentic Pool)",
+        "badge": "Set Ramalan G+",
+        "maxPoints": 72.0,
+        "passPoints": 50.4,
+        "passPct": 70.0,
+        "totalQuestions": 45,
+        "eus": app_data['sets']['predicted']['eus'],
+        "questions": []
+    }
 app_data['sets']['predicted_maritime']['questions'] = final_questions
 
 with open(DATA_PATH, 'w', encoding='utf-8') as f:
