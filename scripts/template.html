@@ -359,6 +359,152 @@
     </div>
   </section>
 
+  <!-- STRUKTUR SILIBUS RASMI IREB (EU1 - EU7) ACCORDION -->
+  <section class="max-w-5xl mx-auto px-4 py-1.5">
+    <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-3.5 shadow-sm">
+      <button onclick="toggleSyllabusGuide()" class="w-full flex items-center justify-between text-left group">
+        <div class="flex items-center space-x-2.5">
+          <span class="px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 text-xs font-bold border border-indigo-200 dark:border-indigo-900/60">
+            STRUKTUR SILIBUS (EU1 – EU7)
+          </span>
+          <span class="text-xs font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+            7 Unit Pendidikan (Educational Units) Silibus Rasmi IREB CPRE FL 3.3.2
+          </span>
+        </div>
+        <span id="syllabusGuideArrow" class="text-xs font-mono text-slate-500 dark:text-zinc-400">Buka ▾</span>
+      </button>
+
+      <div id="syllabusGuideBody" class="hidden mt-3.5 pt-3.5 border-t border-slate-100 dark:border-zinc-800/80 space-y-2.5 text-xs">
+        
+        <!-- EU1 -->
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-950/80 border border-slate-200 dark:border-zinc-800">
+          <div class="flex items-center justify-between font-bold text-slate-900 dark:text-white mb-1">
+            <span class="flex items-center gap-1.5 text-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              EU1: Introduction and Overview of Requirements Engineering
+            </span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-bold">Q1–Q3 • 4 Pts (5.7%)</span>
+          </div>
+          <p class="text-slate-600 dark:text-zinc-400 leading-relaxed text-[12px]">
+            • <strong>Definisi & Nilai RE:</strong> Mengurangkan risiko kegagalan projek dan kos pembaikan ralat ralat.<br/>
+            • <strong>3 Kategori Keperluan:</strong> Functional Requirements (Fungsi), Quality Requirements (Prestasi, Usability, Security), dan Constraints (Kekangan teknikal & organisasi).<br/>
+            • <strong>4 Aktiviti Teras:</strong> Elicitation, Documentation, Validation & Negotiation, Management (E-D-V-M).
+          </p>
+        </div>
+
+        <!-- EU2 -->
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-950/80 border border-slate-200 dark:border-zinc-800">
+          <div class="flex items-center justify-between font-bold text-slate-900 dark:text-white mb-1">
+            <span class="flex items-center gap-1.5 text-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              EU2: Fundamental Principles of Requirements Engineering
+            </span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-bold">Q4–Q7 • 6 Pts (8.6%)</span>
+          </div>
+          <p class="text-slate-600 dark:text-zinc-400 leading-relaxed text-[12px]">
+            • <strong>9 Prinsip Asas RE:</strong><br/>
+            1. <em>Value-Orientation:</em> Keperluan adalah alat mencapai nilai (means to an end), bukan matlamat mutlak.<br/>
+            2. <em>Stakeholders:</em> RE adalah tentang orang; kenalpasti semua stakeholder yang relevan.<br/>
+            3. <em>Shared Understanding:</em> Gabungan pemahaman eksplisit (ditulis) & implisit (difahami bersama).<br/>
+            4. <em>Context:</em> System Boundary (dalam kawalan) vs Context Boundary (luar relevan) vs Irrelevant Environment.<br/>
+            5. <em>Problem-Requirement-Solution:</em> Fahami masalah sebenar sebelum melompat ke penyelesaian teknikal.<br/>
+            6. <em>Validation:</em> Buat semakan awal, berterusan, dan berulang kali bersama stakeholders.<br/>
+            7. <em>Evolution:</em> Keperluan pasti berevolusi; kawal versi dan perubahan secara sistematik.<br/>
+            8. <em>Innovation:</em> Terokai keperluan tersirat di luar permintaan lisan asas (Model Kano).<br/>
+            9. <em>Systematic Work:</em> Bekerja secara berdisiplin dan kaedah yang boleh diulang.
+          </p>
+        </div>
+
+        <!-- EU3 -->
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-950/80 border border-slate-200 dark:border-zinc-800">
+          <div class="flex items-center justify-between font-bold text-slate-900 dark:text-white mb-1">
+            <span class="flex items-center gap-1.5 text-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              EU3: Work Products and Documentation Practices (Topik Terbesar)
+            </span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-bold">Q8–Q25 • 30 Pts (42.9%)</span>
+          </div>
+          <p class="text-slate-600 dark:text-zinc-400 leading-relaxed text-[12px]">
+            • <strong>Jenis Work Products:</strong> Individual (User Story, Use Case) vs Work Product Sets (SRS, Product Backlog).<br/>
+            • <strong>Bahasa Semulajadi & Templat:</strong> Sentence Template (SOPHIST/MARE), elakkan Nominalization, Passive Voice, dan Universal Quantifiers.<br/>
+            • <strong>Model Konseptual (3 Perspektif):</strong><br/>
+            &nbsp;&nbsp;- <em>Structure Perspective:</em> UML Class Diagram (Classes, Attributes, Multiplicities 0..1, 1..*, *).<br/>
+            &nbsp;&nbsp;- <em>Function Perspective:</em> Use Case Diagram, Activity Diagram (Fork/Join), Data Flow Diagram (DFD).<br/>
+            &nbsp;&nbsp;- <em>Behavior Perspective:</em> UML State Machine Diagram (States, Transitions, Events, Guards).
+          </p>
+        </div>
+
+        <!-- EU4 -->
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-950/80 border border-slate-200 dark:border-zinc-800">
+          <div class="flex items-center justify-between font-bold text-slate-900 dark:text-white mb-1">
+            <span class="flex items-center gap-1.5 text-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              EU4: Practices for Requirements Elaboration
+            </span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-bold">Q26–Q35 • 14 Pts (20.0%)</span>
+          </div>
+          <p class="text-slate-600 dark:text-zinc-400 leading-relaxed text-[12px]">
+            • <strong>Sumber Keperluan:</strong> Stakeholders, Documents, Systems in Operation.<br/>
+            • <strong>Teknik Elisitasi:</strong> Gathering (Interview, Questionnaire), Observation (Field Observation, Apprenticeship, Shadowing), Creativity (Brainstorming), Artifact-based (Document Analysis, System Archaeology).<br/>
+            • <strong>Model Kano:</strong> Basic Factors (Dissatisfiers), Performance Factors (Satisfiers), Excitement Factors (Delighters).<br/>
+            • <strong>Resolusi Konflik:</strong> Agreement, Compromise, Voting, Overruling, Decision Matrix.<br/>
+            • <strong>Validasi Keperluan:</strong> Inspection (paling formal & ketat untuk Safety-Critical), Walkthrough, Peer Review.
+          </p>
+        </div>
+
+        <!-- EU5 -->
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-950/80 border border-slate-200 dark:border-zinc-800">
+          <div class="flex items-center justify-between font-bold text-slate-900 dark:text-white mb-1">
+            <span class="flex items-center gap-1.5 text-sm">
+              <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+              EU5: Process and Working Structure (Fokus Utama)
+            </span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-bold">Q36–Q37 • 3 Pts (4.3%)</span>
+          </div>
+          <p class="text-slate-600 dark:text-zinc-400 leading-relaxed text-[12px]">
+            • <strong>3 Dimensi / Facets Konfigurasi Proses:</strong><br/>
+            1. <em>Time Facet:</em> Linear (Waterfall / V-Model) vs Iterative (Agile / Scrum).<br/>
+            2. <em>Purpose Facet:</em> Prescriptive (Kontrak tetap) vs Explorative (Meneroka keperluan dinamik).<br/>
+            3. <em>Target/Change Facet:</em> Customer-specific vs Market-driven / Product Line.
+          </p>
+        </div>
+
+        <!-- EU6 -->
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-950/80 border border-slate-200 dark:border-zinc-800">
+          <div class="flex items-center justify-between font-bold text-slate-900 dark:text-white mb-1">
+            <span class="flex items-center gap-1.5 text-sm">
+              <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+              EU6: Management Practices for Requirements (Fokus Utama)
+            </span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 font-bold">Q38–Q43 • 10 Pts (14.3%)</span>
+          </div>
+          <p class="text-slate-600 dark:text-zinc-400 leading-relaxed text-[12px]">
+            • <strong>Atribut & Views:</strong> Unique ID (kekal seumur hidup projek), Status, Priority, Author, Views (tapis ikut atribut & kawal capaian).<br/>
+            • <strong>Keutamaan (Prioritization):</strong> MoSCoW (Must, Should, Could, Won't), Kano, Wiegers Matrix (Cost-Value Tradeoff).<br/>
+            • <strong>Traceability (Kebolehkesanan):</strong> Pre-RS (ke sumber asal), Post-RS (ke seni bina, kod, ujian), Inter-RS (antara keperluan).<br/>
+            • <strong>Baselines:</strong> Konfigurasi keperluan stabil yang telah disahkan dan ditandatangani pada satu ketika masa.
+          </p>
+        </div>
+
+        <!-- EU7 -->
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-950/80 border border-slate-200 dark:border-zinc-800">
+          <div class="flex items-center justify-between font-bold text-slate-900 dark:text-white mb-1">
+            <span class="flex items-center gap-1.5 text-sm">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              EU7: Tool Support
+            </span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-bold">Q44–Q45 • 3 Pts (4.3%)</span>
+          </div>
+          <p class="text-slate-600 dark:text-zinc-400 leading-relaxed text-[12px]">
+            • <strong>Kategori Alatan RE:</strong> Management Tools, Modeling Tools, Collaboration Tools, Validation Tools.<br/>
+            • <strong>Prinsip Pemilihan Alatan:</strong> Alat mesti menyokong proses RE organisasi (bukan sebaliknya), kira kos pemilikan penuh (TCO: lesen, latihan, penyelenggaraan), dan jalankan projek perintis (Pilot Project) sebelum pelancaran penuh.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- MAIN TAB 1: QUESTIONS BANK -->
   <main id="questionsTab" class="max-w-5xl mx-auto px-4 py-3">
     
@@ -454,15 +600,75 @@
     
     <div class="mb-5 pb-3 border-b border-slate-200 dark:border-zinc-800">
       <h2 class="text-base font-bold text-slate-900 dark:text-white">CPRE FL 3.3.2 Reference & Core Guidelines</h2>
-      <p class="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">Nota padat untuk rujukan pantas konsep asas, peraturan pemodelan, dan topik kritikal peperiksaan.</p>
+      <p class="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">Nota padat untuk rujukan pantas 9 Prinsip Asas RE, peraturan pemodelan, elisitasi, proses, dan pengurusan keperluan.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       
-      <!-- 1. Natural Language Defects -->
+      <!-- 1. 9 Fundamental Principles of RE -->
+      <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm md:col-span-2">
+        <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-zinc-800">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+            <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">1. 9 Fundamental Principles of Requirements Engineering (EU2)</h3>
+          </div>
+          <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">EU2 Core</span>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs leading-relaxed text-slate-700 dark:text-zinc-300">
+          
+          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
+            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">1. Value-Orientation</strong>
+            <span class="text-slate-600 dark:text-zinc-400">Keperluan ialah <em>means to an end</em> (alat capai nilai perniagaan), bukan matlamat mutlak. Setiap keperluan mesti menambah nilai.</span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
+            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">2. Stakeholders</strong>
+            <span class="text-slate-600 dark:text-zinc-400">RE adalah tentang orang. Kenalpasti semua pihak berkepentingan (Direct Users, Sponsors, Operators, Regulators) dan imbangkan kehendak mereka.</span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
+            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">3. Shared Understanding</strong>
+            <span class="text-slate-600 dark:text-zinc-400">Gabungan <strong>Explicit Shared Understanding</strong> (didokumentasikan) dan <strong>Implicit Shared Understanding</strong> (pengalaman & budaya bersama).</span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
+            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">4. Context</strong>
+            <span class="text-slate-600 dark:text-zinc-400">Tentukan <strong>System Boundary</strong> (dalam kawalan sistem) vs <strong>Context Boundary</strong> (persekitaran berkaitan) vs <strong>Irrelevant Environment</strong>.</span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
+            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">5. Problem - Req - Solution</strong>
+            <span class="text-slate-600 dark:text-zinc-400">Fahami <em>Problem Space</em> (keperluan bisnes) terlebih dahulu sebelum melompat ke <em>Solution Space</em> (spesifikasi seni bina & teknikal).</span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
+            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">6. Validation</strong>
+            <span class="text-slate-600 dark:text-zinc-400">Sahkan keperluan seawal mungkin, secara berterusan dan berulang-ulang bersama stakeholder sebelum pembinaan sistem bermula.</span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
+            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">7. Evolution</strong>
+            <span class="text-slate-600 dark:text-zinc-400">Keperluan tidak statik; ia sentiasa berubah (evolving). Kawal perubahan melalui baselines dan Change Control yang sistematik.</span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
+            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">8. Innovation</strong>
+            <span class="text-slate-600 dark:text-zinc-400">Jangan sekadar mencatat permintaan lisan stakeholder; jana idea inovatif yang memberi kepuasan luar jangka (Excitement Factors).</span>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
+            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">9. Systematic Work</strong>
+            <span class="text-slate-600 dark:text-zinc-400">Gunakan kaedah, templat, dan proses yang berdisiplin serta boleh diulang (repeatable) mengikut kesesuaian konteks projek.</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 2. Natural Language Defects -->
       <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm">
         <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-zinc-800">
-          <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">1. Natural Language Defects (Chapter 5)</h3>
+          <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">2. Natural Language Defects (EU3 / Ch 5)</h3>
           <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700">EU3 / Ch 5</span>
         </div>
         
@@ -475,12 +681,12 @@
 
           <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
             <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">2. Universal Quantifiers (All, Always, Never)</strong>
-            <span>Mengitlakkan keadaan tanpa mengambil kira syarat kekecualian (exceptions).</span>
+            <span>Mengitlakkan keadaan tanpa mengambil kira syarat pengecualian (exceptions).</span>
           </div>
 
           <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
             <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">3. Incompletely Specified Conditions (If...)</strong>
-            <span>Menyatakan syarat 'IF' tanpa menjelaskan apa berlaku sekiranya syarat gagal dipenuhi.</span>
+            <span>Menyatakan syarat 'IF' tanpa menjelaskan apa berlaku sekiranya syarat gagal dipenuhi (ELSE/Exception).</span>
           </div>
 
           <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
@@ -490,10 +696,10 @@
         </div>
       </div>
 
-      <!-- 2. Model-Based Requirements Rules -->
+      <!-- 3. Model-Based Requirements Rules -->
       <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm">
         <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-zinc-800">
-          <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">2. Model-Based RE Rules (Chapter 6)</h3>
+          <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">3. Conceptual Modeling Rules (EU3 / Ch 6)</h3>
           <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700">EU3 / Ch 6</span>
         </div>
 
@@ -501,7 +707,7 @@
           <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
             <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">Use Case Diagram</strong>
             <ul class="list-disc pl-4 space-y-0.5 text-slate-600 dark:text-zinc-400">
-              <li>Actor ke Actor: Hanya <strong>Generalization</strong> dibenarkan.</li>
+              <li>Actor ke Actor: Hanya hubungan <strong>Generalization</strong> dibenarkan.</li>
               <li>Use Case ke Use Case: Wajib menggunakan <strong>&lt;&lt;include&gt;&gt;</strong> atau <strong>&lt;&lt;extend&gt;&gt;</strong>.</li>
             </ul>
           </div>
@@ -525,36 +731,83 @@
         </div>
       </div>
 
-      <!-- 3. EU5 Process & Facets -->
+      <!-- 4. EU4 Elicitation & Validation -->
       <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm">
         <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-zinc-800">
-          <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">3. Process Facets (EU5)</h3>
+          <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">4. Elicitation, Kano & Validation (EU4)</h3>
+          <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">EU4 Core</span>
+        </div>
+
+        <div class="space-y-2.5 text-xs leading-relaxed text-slate-700 dark:text-zinc-300">
+          <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+            <strong class="text-slate-900 dark:text-zinc-100 block font-bold mb-0.5">Model Kano:</strong>
+            <ul class="list-disc pl-4 space-y-0.5 text-slate-600 dark:text-zinc-400 text-[11px]">
+              <li><strong>Basic Factors (Must-be):</strong> Diambil mudah; jika tiada pelanggan sangat kecewa.</li>
+              <li><strong>Performance Factors (Linear):</strong> Semakin banyak, semakin puas hati pelanggan.</li>
+              <li><strong>Excitement Factors (Delighters):</strong> Keperluan tidak dijangka yang memukau pelanggan.</li>
+            </ul>
+          </div>
+          <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+            <strong class="text-slate-900 dark:text-zinc-100 block font-bold mb-0.5">Validasi Keperluan:</strong>
+            <p class="text-slate-600 dark:text-zinc-400 text-[11px]">
+              <strong>Inspection:</strong> Teknik semakan paling formal, teliti, dan berstruktur (wajib untuk sistem keselamatan tinggi / Safety-Critical). <strong>Walkthrough:</strong> Dipimpin oleh pengarang untuk penerangan santai.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. EU5 Process & Facets -->
+      <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm">
+        <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-zinc-800">
+          <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">5. Process Facets (EU5)</h3>
           <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">EU5 Core</span>
         </div>
 
         <div class="space-y-2 text-xs leading-relaxed text-slate-700 dark:text-zinc-300">
-          <p><strong>Time Facet:</strong> Linear (Prescriptive) vs Iterative (Explorative).</p>
-          <p><strong>Purpose Facet:</strong> Prescriptive (Contractual) vs Explorative (Product/Market).</p>
-          <p><strong>Target Facet:</strong> Specific Customer vs Market-driven (Standard product).</p>
-          <p><strong>Format Facet:</strong> Document-centric vs Item-centric.</p>
+          <p><strong>Time Facet:</strong> Linear (Sequential / Waterfall) vs Iterative (Agile / Sprint).</p>
+          <p><strong>Purpose Facet:</strong> Prescriptive (Spesifikasi Kontrak) vs Explorative (Meneroka pasaran).</p>
+          <p><strong>Target Facet:</strong> Customer-specific (Satu pelanggan khas) vs Market-driven (Produk pasaran terbuka).</p>
+          <p><strong>Format Facet:</strong> Document-centric (Dokumen formal SRS) vs Item-centric (Product Backlog items).</p>
           <div class="p-2.5 bg-slate-50 dark:bg-zinc-950 rounded-lg border border-slate-200 dark:border-zinc-800 text-[11px] text-slate-800 dark:text-zinc-200 font-medium">
             Kunci soalan: Dua facet paling utama menentukan bentuk proses ialah <strong>Time Facet</strong> dan <strong>Purpose Facet</strong>.
           </div>
         </div>
       </div>
 
-      <!-- 4. EU6 Management Practices -->
-      <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm">
+      <!-- 6. EU6 Management Practices -->
+      <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm md:col-span-2">
         <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-zinc-800">
-          <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">4. Management & Baseline (EU6)</h3>
-          <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">EU6 Core</span>
+          <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">6. Management, Traceability & Baselines (EU6 & EU7)</h3>
+          <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">EU6 & EU7 Core</span>
         </div>
 
-        <div class="space-y-2 text-xs leading-relaxed text-slate-700 dark:text-zinc-300">
-          <p><strong>Prioritization:</strong> Tujuan utama adalah untuk <strong>Release Planning</strong> dan <strong>Test Focus</strong> (bukan untuk menganggar kos projek).</p>
-          <p><strong>Techniques:</strong> Kano (Must-be, Performance, Attractive), MoSCoW, Wiegers Matrix.</p>
-          <p><strong>Baselines:</strong> Baseline yang telah diluluskan tidak boleh diubah secara terus; perubahan diserap ke dalam <strong>Future Baseline</strong> melalui proses Change Control.</p>
-          <p><strong>Views:</strong> Berfungsi menapis maklumat untuk mengurangkan beban kognitif pembaca.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs leading-relaxed text-slate-700 dark:text-zinc-300">
+          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
+            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">Traceability (Kebolehkesanan)</strong>
+            <ul class="list-disc pl-4 space-y-0.5 text-slate-600 dark:text-zinc-400 text-[11px]">
+              <li><strong>Pre-RS Traceability:</strong> Keperluan ke sumber asalnya (stakeholder, minit mesyuarat, undang-undang).</li>
+              <li><strong>Post-RS Traceability:</strong> Keperluan ke artifak hiliran (reka bentuk seni bina, kod sumber, kes ujian).</li>
+              <li><strong>Inter-RS Traceability:</strong> Hubungan kebergantungan antara keperluan berbeza.</li>
+            </ul>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
+            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">Baselines & Versioning</strong>
+            <ul class="list-disc pl-4 space-y-0.5 text-slate-600 dark:text-zinc-400 text-[11px]">
+              <li><strong>Baselines:</strong> Konfigurasi keperluan stabil yang telah disahkan dan dipersetujui secara rasmi.</li>
+              <li>Baseline yang telah ditandatangani <strong>tidak boleh diubah secara terus</strong>.</li>
+              <li>Perubahan diserap ke dalam <strong>Future Baseline</strong> melalui proses kawalan perubahan (Change Control).</li>
+            </ul>
+          </div>
+
+          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
+            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">Tool Support (EU7)</strong>
+            <ul class="list-disc pl-4 space-y-0.5 text-slate-600 dark:text-zinc-400 text-[11px]">
+              <li>Alat perisian mesti menyokong proses RE sedia ada (bukan memaksa organisasi mengubah proses semata-mata mengikut alatan).</li>
+              <li>Kira kos keseluruhan pemilikan (TCO: latihan, integrasi, penyelenggaraan).</li>
+              <li>Laksanakan projek perintis (Pilot Project) sebelum penggunaan menyeluruh.</li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -884,6 +1137,21 @@
       } else {
         body.classList.add('hidden');
         arrow.textContent = 'Buka ▾';
+      }
+    }
+
+    // Toggle Syllabus Structure Guide
+    function toggleSyllabusGuide() {
+      const body = document.getElementById('syllabusGuideBody');
+      const arrow = document.getElementById('syllabusGuideArrow');
+      if (body && arrow) {
+        if (body.classList.contains('hidden')) {
+          body.classList.remove('hidden');
+          arrow.textContent = 'Tutup ▴';
+        } else {
+          body.classList.add('hidden');
+          arrow.textContent = 'Buka ▾';
+        }
       }
     }
 
@@ -1524,24 +1792,29 @@
       return false;
     }
 
-    // Smart Reader Formatter (Zero-slop, clean paragraphs and bullets)
+    // Smart Reader Formatter (Zero-slop, clean paragraphs and flex bullet lists)
     function formatText(text) {
       if (!text) return '';
-      const paragraphs = text.split(/\n\n+/);
-      return paragraphs.map(p => {
-        const trimmed = p.trim();
-        if (!trimmed) return '';
-        
-        let formatted = trimmed
-          .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>')
-          .replace(/\`([^\`]+)\`/g, '<code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 font-mono text-[11px]">$1</code>')
-          .replace(/\n/g, '<br/>');
+      const lines = text.split('\n');
+      let html = '';
 
-        if (formatted.startsWith('• ') || formatted.startsWith('- ')) {
-          return `<div class="flex items-start space-x-2 my-1.5"><span class="text-slate-400 dark:text-zinc-500 font-bold shrink-0 leading-relaxed">•</span><span class="leading-relaxed">${formatted.replace(/^[•\-]\s*/, '')}</span></div>`;
+      for (let i = 0; i < lines.length; i++) {
+        let line = lines[i].trim();
+        if (!line) continue;
+
+        // Format inline markdown bold and code
+        let formatted = line
+          .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>')
+          .replace(/\`([^\`]+)\`/g, '<code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 font-mono text-[11px]">$1</code>');
+
+        if (formatted.startsWith('• ') || formatted.startsWith('- ') || formatted.startsWith('* ')) {
+          const cleanText = formatted.replace(/^[•\-\*]\s*/, '');
+          html += `<div class="flex items-start gap-2 my-1.5"><span class="text-indigo-500 dark:text-indigo-400 font-bold shrink-0 leading-relaxed">•</span><span class="leading-relaxed flex-1">${cleanText}</span></div>`;
+        } else {
+          html += `<p class="leading-relaxed mb-2 last:mb-0">${formatted}</p>`;
         }
-        return `<p class="leading-relaxed mb-2 last:mb-0">${formatted}</p>`;
-      }).join('');
+      }
+      return html;
     }
 
     // Render Question Cards
