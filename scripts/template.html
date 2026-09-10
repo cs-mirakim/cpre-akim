@@ -116,15 +116,21 @@
       <!-- Right Controls: Bookmarks, Mode Toggle & Theme -->
       <div class="flex items-center space-x-2 sm:space-x-3">
         
-        <!-- Set Switcher Dropdown (Official vs Predicted G) -->
+        <!-- Set Switcher Dropdown (Official vs Predicted G - Clean SVGs, No Emojis) -->
         <div class="relative inline-block text-left" id="setSelectorWrapper">
           <button 
             id="setSelectorBtn" 
             onclick="toggleSetDropdown(event)" 
-            class="h-8 px-2 sm:px-2.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 flex items-center space-x-1.5 transition-all text-xs font-semibold shadow-xs cursor-pointer"
+            class="h-8 px-2 sm:px-2.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 flex items-center space-x-2 transition-all text-xs font-semibold shadow-xs cursor-pointer"
             title="Tukar Mod Set Peperiksaan"
           >
-            <span id="activeSetBadgeIcon">🎯</span>
+            <span id="activeSetBadgeIcon" class="flex items-center">
+              <svg class="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <circle cx="12" cy="12" r="6" />
+                <circle cx="12" cy="12" r="2" />
+              </svg>
+            </span>
             <span id="activeSetNameText" class="hidden sm:inline">Set Ramalan G (72 Pts)</span>
             <span id="activeSetNameMobile" class="sm:hidden">Set G</span>
             <svg class="w-3 h-3 text-indigo-500 opacity-70 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -134,25 +140,37 @@
           
           <div id="setDropdownMenu" class="hidden absolute right-0 mt-1.5 w-64 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-xl z-50 py-1.5 animate-in fade-in zoom-in-95 duration-100">
             <div class="px-3 py-1.5 border-b border-slate-100 dark:border-zinc-800 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
-              Pilih Set Peperiksaan
+              PILIH SET PEPERIKSAAN
             </div>
             
             <button onclick="switchExamSet('official')" class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-slate-50 dark:hover:bg-zinc-800/60 transition-colors">
-              <div>
-                <div class="font-bold text-slate-800 dark:text-zinc-200 flex items-center gap-1.5">
-                  <span>📘</span> Set Latihan Rasmi
+              <div class="flex items-start gap-2.5">
+                <div class="w-6 h-6 rounded-md bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                  </svg>
                 </div>
-                <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 70.0 Pts (Lulus 49.0 Pts)</div>
+                <div>
+                  <div class="font-bold text-slate-800 dark:text-zinc-200">Set Latihan Rasmi</div>
+                  <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 70.0 Pts (Lulus 49.0 Pts)</div>
+                </div>
               </div>
               <span id="check-official" class="text-indigo-600 dark:text-indigo-400 font-bold hidden">✓</span>
             </button>
             
             <button onclick="switchExamSet('predicted')" class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-slate-50 dark:hover:bg-zinc-800/60 transition-colors">
-              <div>
-                <div class="font-bold text-slate-800 dark:text-zinc-200 flex items-center gap-1.5">
-                  <span>🎯</span> Set Ramalan G (Slip Sebenar)
+              <div class="flex items-start gap-2.5">
+                <div class="w-6 h-6 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <circle cx="12" cy="12" r="6" />
+                    <circle cx="12" cy="12" r="2" />
+                  </svg>
                 </div>
-                <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 72.0 Pts (Lulus 50.40 Pts)</div>
+                <div>
+                  <div class="font-bold text-slate-800 dark:text-zinc-200">Set Ramalan G (Slip Sebenar)</div>
+                  <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 72.0 Pts (Lulus 50.40 Pts)</div>
+                </div>
               </div>
               <span id="check-predicted" class="text-indigo-600 dark:text-indigo-400 font-bold hidden">✓</span>
             </button>
@@ -615,7 +633,7 @@
       </div>
 
       <!-- EU Selector Pills (Rendered dynamically) -->
-      <div id="euPillsContainer" class="flex items-center gap-1.5 overflow-x-auto pt-1.5 pb-2.5 scroll-smooth scrollbar-none">
+      <div id="euPillsContainer" class="flex items-center gap-1.5 overflow-x-auto pt-1.5 pb-2.5 scroll-smooth">
         <!-- Dynamically rendered by JS based on active set -->
       </div>
 
@@ -1573,7 +1591,11 @@
       const chkOff = document.getElementById('check-official');
       const chkPred = document.getElementById('check-predicted');
 
-      if (badgeIcon) badgeIcon.textContent = isOfficial ? '📘' : '🎯';
+      if (badgeIcon) {
+        badgeIcon.innerHTML = isOfficial 
+          ? `<svg class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>`
+          : `<svg class="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>`;
+      }
       if (nameText) nameText.textContent = isOfficial ? 'Set Latihan Rasmi (70 Pts)' : 'Set Ramalan G (72 Pts)';
       if (nameMobile) nameMobile.textContent = isOfficial ? 'Set Rasmi' : 'Set G';
 
@@ -1605,14 +1627,15 @@
 
       eus.forEach(eu => {
         const isActive = currentEU === eu.no;
+        const dotColor = (eu.no === 5 || eu.no === 6) ? 'bg-rose-500' : 'bg-slate-400 dark:bg-zinc-500';
         const btnCls = isActive 
           ? 'eu-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shrink-0 shadow-xs'
           : 'eu-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 shrink-0 flex items-center gap-1.5 border border-slate-200 dark:border-zinc-700/60';
         
         html += `
           <button onclick="filterByEU(${eu.no})" class="${btnCls}" data-eu="${eu.no}">
-            <span>EU${eu.no}</span>
-            <span class="text-[10px] font-mono px-1 rounded bg-black/10 dark:bg-white/10 opacity-80">${eu.qCount}Q • ${eu.pts}P</span>
+            <span class="w-1.5 h-1.5 rounded-full ${dotColor}"></span>
+            EU${eu.no} (${eu.range})
           </button>
         `;
       });
@@ -2086,7 +2109,7 @@
               <span class="inline-flex items-center px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-white/20 border border-white/30 tracking-wider uppercase">
                 Status Rasmi: Lulus Peperiksaan
               </span>
-              <div class="text-xl sm:text-2xl font-black">🎉 TAHNIAH! ANDA TELAH LULUS!</div>
+              <div class="text-xl sm:text-2xl font-black">TAHNIAH! ANDA TELAH LULUS!</div>
               <p class="text-xs text-emerald-100 max-w-md leading-relaxed">
                 Skor anda <strong>${summary.totalScore.toFixed(2)} Pts (${summary.percentage.toFixed(1)}%)</strong> melepasi syarat kelayakan minimum <strong>${(activeSet ? activeSet.passPoints : 49.0).toFixed(2)} Pts (70.0%)</strong> dengan kelebihan <strong>+${(summary.totalScore - (activeSet ? activeSet.passPoints : 49.0)).toFixed(2)} Pts</strong>!
               </p>
