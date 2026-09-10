@@ -3815,46 +3815,44 @@
       "questions": [
         {
           "id": 1,
-          "code": "K0111",
+          "code": "GM0101",
           "type": "K",
           "pts": 2.0,
-          "eo": "1.1.1",
+          "eo": "1.1.2",
           "euNo": 1,
-          "title": "Quality Requirements vs Functional Requirements",
-          "question": "Which of the following statements on quality requirements are true and which are false?",
+          "title": "Categorization of Requirements: Functional, Quality, and Constraints",
+          "question": "A requirements engineer in a mission-critical logistics system receives various stakeholder statements. Which of the following classifications are true and which are false according to IREB definitions?",
           "options": [
             {
               "id": "A",
-              "text": "Quality requirements refer to the process of creating software and not to the product.",
-              "truth": false
+              "text": "'The system shall encrypt all maritime positioning telematics using AES-256-GCM' is a technical constraint.",
+              "truth": true
             },
             {
               "id": "B",
-              "text": "Quality requirements can complement functional requirements.",
+              "text": "'The port dispatcher shall be able to filter arriving vessels by gross tonnage' is a functional requirement.",
               "truth": true
             },
             {
               "id": "C",
-              "text": "Quality requirements are elicited after the functional requirements.",
+              "text": "'The database backup routine must execute daily at 03:00 AM UTC' is a quality requirement regarding usability.",
               "truth": false
             },
             {
               "id": "D",
-              "text": "Quality requirements can be substantiated with additional functional requirements.",
+              "text": "'The telemetry telemetry dashboard shall render updated radar coordinates within 800 milliseconds' is a quality requirement regarding performance efficiency.",
               "truth": true
             }
           ],
-          "diagramHtml": "",
-          "correctDisplay": "A=False, B=True, C=False, D=True",
-          "whyCorrect": "• B: True. Quality requirements melengkapi functional requirements dengan menetapkan tahap kualiti (seperti performance, usability, security, reliability) yang perlu dicapai oleh sesuatu fungsi.\n• D: True. Quality requirements boleh diperincikan (substantiated) menjadi functional requirements baharu (contoh: keperluan keselamatan 'Akses mesti dilindungi' diperincikan kepada fungsi 'Sistem mesti menyediakan Two-Factor Authentication').",
-          "whyWrong": "• A: False. Quality requirements merujuk kepada kualiti PRODUK (sistem), bukannya proses pembangunan (keperluan proses dirujuk sebagai Project / Process Requirements).\n• C: False. Quality requirements TIDAK semestinya di-elicit selepas fungsi; dalam praktis RE sebenar, kedua-duanya di-elicit serentak secara berulang (intertwined).",
-          "extra": "Handbook Bab 1.1 / Syllabus EO 1.1.1: 3 jenis keperluan mengikut piawaian IREB ialah: 1. Functional Requirements, 2. Quality Requirements, 3. Constraints.",
-          "mnemonic": "Quality = Sifat Produk. Boleh melahirkan Functional Requirement baharu (Substantiated).",
-          "isAnchor": true
+          "correctDisplay": "A=True, B=True, C=False, D=True",
+          "whyCorrect": "• A: True. Spesifikasi algoritma enkripsi tertentu (AES-256) mengehadkan kebebasan reka bentuk arkitek, menjadikannya Technical Constraint.\n• B: True. Keupayaan menapis kapal berdasarkan tan adalah tingkah laku/fungsi sistem (Functional Requirement).\n• D: True. Had masa respons (< 800ms) ialah keperluan kualiti prestasi (Quality Requirement: Performance Efficiency).",
+          "whyWrong": "• C: False. Arahan jadual sandaran harian pada jam 03:00 AM ialah Operational Constraint, bukan keperluan kualiti kebolehgunaan (Usability).",
+          "extra": "Handbook Bab 1.1: 3 Kategori Keperluan IREB: Functional Requirements, Quality Requirements, dan Constraints (Organizational & Technical).",
+          "mnemonic": "Constraint = Menghadkan kebebasan solusi. Functional = Apa sistem buat. Quality = Sejauh mana sistem berfungsi dengan baik."
         },
         {
           "id": 2,
-          "code": "GM0102",
+          "code": "G0102",
           "type": "P",
           "pts": 2.0,
           "eo": "1.4.1",
@@ -4018,46 +4016,44 @@
         },
         {
           "id": 6,
-          "code": "K0202",
+          "code": "GM0203",
           "type": "K",
           "pts": 2.0,
-          "eo": "2.2.2",
+          "eo": "2.2.1",
           "euNo": 2,
-          "title": "Principle 4: Context Boundaries (System vs Context)",
-          "question": "When defining the system boundary and the context boundary, which aspects need to be considered and which do not need to be considered?",
+          "title": "System Boundary, Context Boundary, and the Grey Zone",
+          "question": "During the scoping of a harbor vessel traffic service, the boundaries of the system under development must be determined. Which of the following statements regarding boundaries and the grey zone are true and which are false?",
           "options": [
             {
               "id": "A",
-              "text": "The system",
+              "text": "The system boundary separates what will be designed and implemented inside the software from the operational environment.",
               "truth": true
             },
             {
               "id": "B",
-              "text": "The system context",
+              "text": "The context boundary delineates the relevant operational context from the irrelevant environment that has no impact on requirements.",
               "truth": true
             },
             {
               "id": "C",
-              "text": "The application domain",
-              "truth": true
+              "text": "The grey zone consists of aspects where the requirements engineer has conclusively confirmed that no stakeholder cares about them.",
+              "truth": false
             },
             {
               "id": "D",
-              "text": "The interfaces between system and system context",
+              "text": "Aspects situated within the grey zone must be clarified during requirements analysis so they are assigned either inside the system, into the context, or into the irrelevant environment.",
               "truth": true
             }
           ],
-          "diagramHtml": "",
-          "correctDisplay": "A=Needs to be considered, B=Needs to be considered, C=Needs to be considered, D=Needs to be considered",
-          "whyCorrect": "• A: Needs to be considered. Sistem itu sendiri mentakrifkan apa yang berada di dalam System Boundary.\n• B: Needs to be considered. System Context adalah persekitaran relevan yang berinteraksi dengan sistem (Stakeholders, sistem luaran, proses perniagaan, undang-undang).\n• C: Needs to be considered. Application Domain adalah domain aplikasi di mana sistem dan konteks beroperasi (mempunyai peraturan dan kekangan domain tersendiri).\n• D: Needs to be considered. Antara muka (Interfaces) menghubungkan sistem dengan konteks sistem merentasi System Boundary.",
-          "whyWrong": "• Kesemua 4 aspek (A, B, C, D) WAJIB dipertimbangkan semasa mentakrifkan System Boundary dan Context Boundary mengikut IREB Handbook Bab 2.4.",
-          "extra": "Handbook Bab 2.4 / Syllabus EO 2.3.1 (Principle 4: Context):\n1. System Boundary: Memisahkan sistem daripada konteksnya.\n2. Context Boundary: Memisahkan persekitaran relevan daripada persekitaran yang tidak relevan (Irrelevant Environment).\n3. Context: Sumber kepada segala keperluan.",
-          "mnemonic": "Semua 4 aspek (System, Context, Domain, Interfaces) wajib dipertimbangkan untuk Context Boundary.",
-          "isAnchor": true
+          "correctDisplay": "A=True, B=True, C=False, D=True",
+          "whyCorrect": "• A: True. System boundary menetapkan sempadan apa yang dibina dalam perisian berbanding dunia luar.\n• B: True. Context boundary memisahkan persekitaran yang relevan daripada persekitaran yang tidak relevan (irrelevant environment).\n• D: True. Zon kelabu (grey zone) wajib diselesaikan semasa analisis supaya setiap aspek jelas lokasinya.",
+          "whyWrong": "• C: False. Zon kelabu bukan perkara yang diabaikan, tetapi perkara yang belum diputuskan sama ada ia termasuk dalam skop sistem atau di luar.",
+          "extra": "Handbook Bab 2.2: Sempadan sistem sentiasa boleh beralih semasa proses elisitasi.",
+          "mnemonic": "System Boundary: Skop binaan. Context Boundary: Relevan vs Tak Relevan. Grey Zone: Belum diputuskan."
         },
         {
           "id": 7,
-          "code": "GM0204",
+          "code": "G0204",
           "type": "P",
           "pts": 2.0,
           "eo": "2.2.2",
@@ -4304,125 +4300,114 @@
         },
         {
           "id": 13,
-          "code": "K3423",
+          "code": "GM0306",
           "type": "K",
-          "pts": 2.0,
-          "eo": "3.8.2",
-          "euNo": 3,
-          "title": "Quality Criteria for Work Products (IREB Standards)",
-          "question": "IREB defines quality criteria for work products.\n\nWhich of the following statements about quality criteria are true and which are false?",
-          "options": [
-            {
-              "id": "A",
-              "text": "A requirement specification is non-redundant if each requirement is documented only once and does not overlap with others.",
-              "truth": true
-            },
-            {
-              "id": "B",
-              "text": "A use case diagram might be not consistent with an activity diagram even if both of them are non-redundant.",
-              "truth": true
-            },
-            {
-              "id": "C",
-              "text": "A requirements specification is consistent if no single requirement contradicts with other requirements.",
-              "truth": true
-            },
-            {
-              "id": "D",
-              "text": "A use case specification is conformant if it contains all relevant requirements for the final product.",
-              "truth": false
-            }
-          ],
-          "diagramHtml": "",
-          "correctDisplay": "A=False, B=True, C=True, D=False",
-          "whyCorrect": "• B: True. Kriteria kualiti untuk himpunan keperluan (Work Product Sets) termasuklah: Completeness, Consistency, Non-redundancy, Modifiability, dan Traceability.\n• C: True. Keperluan individu mestilah: Unambiguous, Atomic, Verifiable, dan Necessary.",
-          "whyWrong": "• A: False. Work products TIDAK boleh dinilai hanya berdasarkan ketebalan dokumen; kualiti diukur dari segi ketepatan dan kegunaan sebenar.\n• D: False. Kriteria kualiti berbeza antara Individual Work Products (Atomic, Verifiable) dengan Sets (Completeness, Consistency).",
-          "extra": "Handbook Bab 3.1 / Syllabus EO 3.1.6: Kualiti Keperluan: 1. Individual Requirements Criteria vs 2. Work Product Set Criteria.",
-          "mnemonic": "Individu = Atomic, Verifiable, Unambiguous. Set = Complete, Consistent, Traceable.",
-          "isAnchor": true
-        },
-        {
-          "id": 14,
-          "code": "P0510",
-          "type": "P",
           "pts": 2.0,
           "eo": "3.3.1",
           "euNo": 3,
-          "title": "Benefits of Phrase Templates (Sentence Templates / SOPHIST / MARE)",
-          "question": "A phrase template can be used to document natural-language requirements. You want to introduce such a template in your project and have to convince your project manager of the benefits.\n\nWhich are the two best arguments? (2 answers)",
+          "title": "Quality Criteria for Individual Requirements (IREB Standard)",
+          "question": "An engineering team reviews textual requirements specifications for compliance with IREB quality criteria. Which of the following statements regarding criteria for individual requirements are true and which are false?",
           "options": [
             {
               "id": "A",
-              "text": "Phrase templates help to document well-structured requirements by providing a predefined syntactic structure.",
+              "text": "A requirement is 'Verifiable' if a practical test or inspection procedure can be devised to prove whether the requirement has been met.",
               "truth": true
             },
             {
               "id": "B",
-              "text": "Requirements formulated in accordance with a phrase template do not contain incomplete relationships.",
+              "text": "A requirement is 'Unambiguous' only if it is expressed purely in formal mathematical logic and contains no natural language.",
               "truth": false
             },
             {
               "id": "C",
-              "text": "Learning how to write requirements in accordance with a phrase template does not require much time.",
+              "text": "A requirement is 'Traceable' if it can be tracked back to its originating stakeholder rationale and forward to its design and verification artifacts.",
               "truth": true
             },
             {
               "id": "D",
-              "text": "Using a phrase template basically delivers a greater degree of information content.",
+              "text": "A requirement containing the phrase 'The system should be as fast as reasonably possible' violates the verifiability criterion.",
+              "truth": true
+            }
+          ],
+          "correctDisplay": "A=True, B=False, C=True, D=True",
+          "whyCorrect": "• A: True. Verifiable bermaksud ada cara praktikal (ujian/semakan) untuk mengesahkan pematuhan.\n• C: True. Traceable membolehkan jejak ke punca asal (backward) dan ke artifak hiliran (forward).\n• D: True. Frasa kabur 'as fast as reasonably possible' tidak boleh diuji secara objektif.",
+          "whyWrong": "• B: False. Unambiguous bermaksud hanya mempunyai satu tafsiran sahaja; ia tidak mewajibkan penggunaan logik matematik formal semata-mata.",
+          "extra": "Handbook Bab 3.3: Kriteria kualiti individu: Complete, Consistent, Unambiguous, Verifiable, Modifiable, Traceable.",
+          "mnemonic": "Kualiti Keperluan: Jelas (Unambiguous), Boleh Diuji (Verifiable), Boleh Dijejak (Traceable)."
+        },
+        {
+          "id": 14,
+          "code": "GM0307",
+          "type": "P",
+          "pts": 2.0,
+          "eo": "3.3.3",
+          "euNo": 3,
+          "title": "SOPHIST Requirements Phrase Templates and Legal Modals",
+          "question": "You are formulating natural language requirements using the SOPHIST sentence template. Which TWO (2) of the following statements are correct regarding template construction and modal verb selection? (Select 2 answers)",
+          "options": [
+            {
+              "id": "A",
+              "text": "The modal verb 'shall' indicates a strictly mandatory requirement with full legal binding commitment.",
+              "truth": true
+            },
+            {
+              "id": "B",
+              "text": "The modal verb 'should' indicates a desirable or future goal that carries no legal necessity under contract.",
+              "truth": true
+            },
+            {
+              "id": "C",
+              "text": "Passive voice constructions ('The vessel manifest shall be exported') are recommended by SOPHIST because they keep sentences concise.",
               "truth": false
             },
             {
-              "id": "E",
-              "text": "Requirements written in accordance with a phrase template ensure that the quality criteria for requirements are met.",
+              "id": "D",
+              "text": "The modal verb 'will' represents the highest level of legal necessity in IREB contractual requirements specifications.",
               "truth": false
             }
           ],
-          "diagramHtml": "",
-          "correctDisplay": "A, C",
-          "whyCorrect": "• A (Requirements written using a phrase template contain fewer linguistic defects): Betul. Templat ayat mengelakkan kecacatan bahasa seperti Nominalization dan ayat pasif.\n• C (Using phrase templates is easy to learn for everyone): Betul. Struktur templat ayat mudah dipelajari oleh jurutera dan stakeholder dalam masa yang singkat.",
-          "whyWrong": "• B (Phrase templates eliminate the need to write functional requirements): Salah, templat ayat digunakan khusus untuk MENULIS functional requirements.\n• D (Using phrase templates completely avoids any ambiguities): Tiada templat yang dapat menghapuskan kekaburan 100% jika perkataan yang diisi tidak jelas.",
-          "extra": "Handbook Bab 3.3 / Syllabus EO 3.3.1: Sentence Templates (SOPHIST/MARE): Mengurangkan kecacatan bahasa dan membina struktur konsisten.",
-          "mnemonic": "Sentence Template: Kurangkan kecacatan bahasa & Mudah dipelajari.",
-          "isAnchor": true
+          "correctDisplay": "A, B",
+          "whyCorrect": "• A: Betul. 'Shall' menetapkan kewajipan mutlak mengikat (mandatory/legally binding).\n• B: Betul. 'Should' menunjukkan cadangan atau matlamat masa hadapan yang wajar dilaksanakan tetapi tidak membawa liabiliti mutlak.",
+          "whyWrong": "• C: Salah. Ayat pasif dilarang dalam SOPHIST kerana ia menyembunyikan pelaku/ejen (siapa yang mengeksport manifest?).\n• D: Salah. 'Will' hanya menyatakan niat masa depan atau penerangan maklumat (bukan tahap perundangan tertinggi; 'shall' yang tertinggi).",
+          "extra": "Handbook Bab 3.3.3: Struktur SOPHIST: [Syarat] + <Sistem> + <shall/should/will> + [Aktiviti] + [Objek].",
+          "mnemonic": "SHALL = Wajib undang-undang. SHOULD = Cadangan kuat. PASSIVE = Perangkap bahaya (hilang pelaku)."
         },
         {
           "id": 15,
-          "code": "A0508",
+          "code": "GM0308",
           "type": "A",
           "pts": 1.0,
-          "eo": "3.2.1",
+          "eo": "3.3.2",
           "euNo": 3,
-          "title": "Natural Language Defects: Universal Quantifiers",
-          "question": "You are given the following requirement:\n\n\"The system Alpha should display all data sets in all submenus\".\n\nWhat is the most severe issue in this requirement? (1 answer)",
+          "title": "Natural Language Transformation Defects: Nominalization",
+          "question": "A specification contains the sentence: 'The authentication of port operators occurs before access to berth allocation data is granted.'\n\nWhich natural language defect is prominently present in this requirement, and why is it problematic according to IREB? (Select 1 answer)",
           "options": [
             {
               "id": "A",
-              "text": "The requirement is written in the passive voice.",
-              "truth": false
-            },
-            {
-              "id": "B",
-              "text": "Universal quantifiers have been used.",
+              "text": "Nominalization (converting a process verb into a noun 'authentication'), which obscures the executing actor and procedural sequence.",
               "truth": true
             },
             {
+              "id": "B",
+              "text": "Universal quantifier ('all port operators'), which leads to unfulfillable blanket commitments.",
+              "truth": false
+            },
+            {
               "id": "C",
-              "text": "The requirement has incomplete conditions.",
+              "text": "Synonym collision between 'port operators' and 'berth allocators'.",
               "truth": false
             },
             {
               "id": "D",
-              "text": "Nominalizations have been used.",
+              "text": "Structural grammar inversion between subordinate and main clauses.",
               "truth": false
             }
           ],
-          "diagramHtml": "",
-          "correctDisplay": "B (Universal quantifiers)",
-          "whyCorrect": "• Pilihan B adalah jawapan yang betul. Perkataan 'ALL data sets' dan 'ALL submenus' adalah contoh Universal Quantifiers (Kuantifier Universal). Ia mengitlakkan keadaan secara melampau dan menyembunyikan pengecualian (exceptions) yang perlu dikendalikan.",
-          "whyWrong": "• A (Nominalization): Tiada kata kerja yang diubah menjadi kata nama dalam ayat tersebut.\n• C (Passive voice): Ayat menggunakan struktur aktif ('The system Alpha should display...').\n• D (Incompletely specified process words): Masalah paling utama dalam ayat ini ialah generalisasi melampau perkataan 'ALL'.",
-          "extra": "Handbook Bab 3.3 / Syllabus EO 3.3.2: 4 Kecacatan Bahasa Semulajadi: 1. Nominalization, 2. Universal Quantifiers, 3. Incompletely Specified Conditions, 4. Passive Voice.",
-          "mnemonic": "All, Every, Always, Never = Universal Quantifiers (Bahaya generalisasi tanpa pengecualian).",
-          "isAnchor": true
+          "correctDisplay": "A",
+          "whyCorrect": "• A: Betul. 'Authentication' adalah nominalisasi (kata kerja 'authenticate' dijadikan kata nama). Ini menyembunyikan siapa yang mengesahkan, bagaimana pengesahan berlaku, dan apa akibat jika gagal.",
+          "whyWrong": "• B, C, D: Salah. Tiada kuantiti sejagat ('all/never') atau masalah pertembungan sinonim yang menjadi fokus soalan ini.",
+          "extra": "Handbook Bab 3.3.2: 4 Kesan Transformasi Bahasa: Deletion, Nominalization, Generalization, Distortion.",
+          "mnemonic": "Nominalization = Kata kerja jadi kata nama. Ia menyorokkan siapa pembuat dan bagaimana proses berlaku."
         },
         {
           "id": 16,
@@ -4504,7 +4489,7 @@
         },
         {
           "id": 18,
-          "code": "GM0311",
+          "code": "G0311",
           "type": "K",
           "pts": 2.0,
           "eo": "3.4.6",
@@ -4619,7 +4604,7 @@
         },
         {
           "id": 21,
-          "code": "GM0314",
+          "code": "G0314",
           "type": "K",
           "pts": 2.0,
           "eo": "3.4.7",
@@ -4701,7 +4686,7 @@
         },
         {
           "id": 23,
-          "code": "GM0316",
+          "code": "G0316",
           "type": "K",
           "pts": 2.0,
           "eo": "3.4.7",
@@ -4739,42 +4724,40 @@
         },
         {
           "id": 24,
-          "code": "A3409",
+          "code": "GM0401",
           "type": "A",
           "pts": 1.0,
-          "eo": "4.3.2",
+          "eo": "4.1.2",
           "euNo": 4,
-          "title": "Handling Inconsistencies Discovered in Stakeholder Interviews",
-          "question": "You have been appointed as a Requirements Engineer in a company and are in the process of eliciting detailed requirements for a use case. To do this, you run through a series of interviews with various stakeholders. In the interview follow-up, you notice an inconsistency in the statements about the arrangement of functions in the menu on the user interface.\n\nWhat is the best way to deal with this situation? (1 answer)",
+          "title": "Eliciting Tacit and Implicit Knowledge from Operational Experts",
+          "question": "In a maritime terminal control center, experienced harbor pilots make rapid split-second navigation decisions that they find difficult to articulate or explain verbally in meeting rooms.\n\nWhich elicitation technique is the MOST effective to uncover this tacit knowledge? (Select 1 answer)",
           "options": [
             {
               "id": "A",
-              "text": "You discuss this finding with an available stakeholder and get a clear statement and record their advice.",
-              "truth": false
-            },
-            {
-              "id": "B",
-              "text": "You invite all stakeholders involved to a meeting and reach an agreement on this point.",
+              "text": "Field Observation / Apprenticeship (observing the pilots on-site while they execute real-time vessel guidance).",
               "truth": true
             },
             {
+              "id": "B",
+              "text": "Distributing a standardized multiple-choice questionnaire via email.",
+              "truth": false
+            },
+            {
               "id": "C",
-              "text": "Due to your experience with user interfaces you can solve the problem on your own, thus saving valuable time.",
+              "text": "Conducting a formal structured interview in an off-site conference room.",
               "truth": false
             },
             {
               "id": "D",
-              "text": "You forward the problem to the product owner and let them decide on this matter based on the evaluation of potential risks.",
+              "text": "Performing keyword frequency analysis on archived terminal log reports.",
               "truth": false
             }
           ],
-          "diagramHtml": "",
-          "correctDisplay": "C (You consult with the affected stakeholders to agree on a common solution)",
-          "whyCorrect": "• Pilihan C adalah tindakan profesional yang betul. Apabila terdapat percanggahan kenyataan antara stakeholder dalam temubual, jurutera keperluan mesti mengadakan perbincangan/bengkel bersama stakeholder terbabit untuk mencapai kata sepakat (Conflict Resolution).",
-          "whyWrong": "• A (You decide on your own): Jurutera keperluan tidak mempunyai kuasa membuat keputusan sepihak mengenai fungsi perniagaan tanpa persetujuan stakeholder.\n• B (You ignore the inconsistency): Mengabaikan percanggahan akan menyebabkan ralat besar semasa pembangunan.\n• D (You ask the developers to decide): Pembangun tidak bertanggungjawab mentakrifkan keperluan bisnes.",
-          "extra": "Handbook Bab 4.3 / Syllabus EO 4.3.1: Resolusi Konflik: Kenalpasti percanggahan, bincang bersama stakeholder terbabit, dan pilih teknik penyelesaian yang dipersetujui.",
-          "mnemonic": "Ada percanggahan ➔ Bincang bersama stakeholder terbabit (Jangan buat keputusan sendiri).",
-          "isAnchor": true
+          "correctDisplay": "A",
+          "whyCorrect": "• A: Betul. Pengetahuan tersirat (tacit knowledge) tidak dapat dijelaskan secara lisan dalam temu bual. Kaedah Pemerhatian Lapangan (Field Observation / Apprenticeship) adalah satu-satunya teknik yang membolehkan jurutera keperluan melihat tindakan sebenar pakar dalam konteks kerja sebenar.",
+          "whyWrong": "• B, C, D: Salah. Soal selidik dan temu bual formal bergantung pada keupayaan pakar untuk menyatakan pengetahuan mereka secara sedar (explicit knowledge).",
+          "extra": "Handbook Bab 4.1.2: Jenis pengetahuan: Explicit, Tacit (tersirat), Unconscious.",
+          "mnemonic": "Tacit Knowledge = Susah cakap, senang buat. Kena tengok secara langsung (Observation/Apprenticeship)."
         },
         {
           "id": 25,
@@ -4822,42 +4805,40 @@
         },
         {
           "id": 26,
-          "code": "A0312",
+          "code": "GM0403",
           "type": "A",
           "pts": 1.0,
-          "eo": "4.2.2",
+          "eo": "4.1.3",
           "euNo": 4,
-          "title": "Kano Model: Most Effective Elicitation Technique for Dissatisfiers (Basic Factors)",
-          "question": "The Kano model states that dissatisfiers (basic factors) are hard to elicit.\n\nWhich of the techniques mentioned below is the most effective elicitation technique for dissatisfiers? (1 answer)",
+          "title": "Kano Model: Temporal Migration of Delighters into Basic Factors",
+          "question": "According to Noriaki Kano's model of customer satisfaction, how does the classification of product characteristics typically evolve over time as market adoption matures? (Select 1 answer)",
           "options": [
             {
               "id": "A",
-              "text": "Prototyping",
-              "truth": false
+              "text": "Excitement factors (Delighters) gradually transition into Performance factors and eventually become Basic factors (Must-be).",
+              "truth": true
             },
             {
               "id": "B",
-              "text": "Questionnaire",
+              "text": "Basic factors migrate into Delighters as customers appreciate their enduring reliability.",
               "truth": false
             },
             {
               "id": "C",
-              "text": "Field observation",
-              "truth": true
+              "text": "Reverse factors spontaneously convert into One-dimensional Performance factors without user redesign.",
+              "truth": false
             },
             {
               "id": "D",
-              "text": "Brainstorming",
+              "text": "Classifications remain completely static throughout the entire product lifecycle.",
               "truth": false
             }
           ],
-          "diagramHtml": "",
-          "correctDisplay": "C (Observation techniques)",
-          "whyCorrect": "• Pilihan C adalah jawapan yang betul. Faktor Asas (Basic Factors / Dissatisfiers) adalah ciri yang dianggap lumrah oleh pengguna (diambil mudah) sehingga mereka terlupa untuk menyatakannya semasa temubual. Oleh itu, teknik pemerhatian (Observation seperti Field Observation atau Shadowing) adalah kaedah paling berkesan untuk mengenal pasti faktor tersirat ini.",
-          "whyWrong": "• A (Questionnaires) & B (Interviews): Pengguna jarang menyebut ciri asas dalam soal selidik/temubual kerana menganggapnya terlalu jelas.\n• D (Creativity techniques): Teknik kreativiti (Brainstorming) lebih berkesan untuk mencari Excitement Factors (Delighters).",
-          "extra": "Handbook Bab 4.2 / Syllabus EO 4.2.2 (Model Kano):\n1. Basic Factors ➔ Observation & Artifact Analysis\n2. Performance Factors ➔ Interview & Survey\n3. Excitement Factors ➔ Creativity Techniques (Brainstorming).",
-          "mnemonic": "Basic Factors (Dissatisfiers) = Observation (Pemerhatian). Excitement Factors = Creativity.",
-          "isAnchor": true
+          "correctDisplay": "A",
+          "whyCorrect": "• A: Betul. Mengikut Model Kano, ciri yang asalnya 'Delighter' (mengujakan pengguna kerana ia baharu) akan menjadi kebiasaan lama-kelamaan, bertukar menjadi faktor prestasi, dan akhirnya menjadi faktor asas (Must-be) yang wajib ada.",
+          "whyWrong": "• B, C, D: Salah. Ciri asas tidak pernah bertukar menjadi delighter; sebaliknya ekspektasi pengguna sentiasa meningkat seiring masa.",
+          "extra": "Handbook Bab 4.1.3: Contoh: Wi-Fi percuma di hotel dulunya Delighter, kini menjadi Basic Factor (Must-be).",
+          "mnemonic": "Evolusi Kano: Delighter ➔ Performance ➔ Must-be. Jangkaan pengguna sentiasa naik."
         },
         {
           "id": 27,
@@ -4905,42 +4886,40 @@
         },
         {
           "id": 28,
-          "code": "A3410",
+          "code": "GM0405",
           "type": "A",
           "pts": 1.0,
-          "eo": "4.3.2",
+          "eo": "4.2.2",
           "euNo": 4,
-          "title": "Techniques for Resolving Requirements Conflicts (NOT Suitable)",
-          "question": "Which of the following techniques is NOT suitable for resolving requirements conflicts? (1 answer)",
+          "title": "Legitimate Conflict Resolution Techniques in Requirements Engineering",
+          "question": "During a requirements negotiation workshop, two key department heads hold conflicting objectives regarding vessel scheduling automation. Which of the following is NOT recognized by IREB as a constructive conflict resolution technique? (Select 1 answer)",
           "options": [
             {
               "id": "A",
-              "text": "Overruling",
-              "truth": false
+              "text": "Unilateral avoidance / Disregard (deliberately omitting the contested requirement from the backlog without informing stakeholders).",
+              "truth": true
             },
             {
               "id": "B",
-              "text": "Definition of variants",
+              "text": "Consensus building through moderated stakeholder dialogue.",
               "truth": false
             },
             {
               "id": "C",
-              "text": "Compromise",
+              "text": "Compromise (each party concedes certain parameters to establish an acceptable middle ground).",
               "truth": false
             },
             {
               "id": "D",
-              "text": "Sampling",
-              "truth": true
+              "text": "Hierarchical Escalation (referring the conflict to an authorized governance board or steering committee).",
+              "truth": false
             }
           ],
-          "diagramHtml": "",
-          "correctDisplay": "D (Separation of concerns)",
-          "whyCorrect": "• Pilihan D adalah jawapan yang betul (BUKAN teknik resolusi konflik). 'Separation of concerns' adalah prinsip reka bentuk seni bina perisian, bukannya kaedah menyelesaikan perselisihan pendapat antara stakeholder.",
-          "whyWrong": "• A (Agreement / Persetujuan), B (Compromise / Kompromi), dan C (Voting / Undian) kesemuanya merupakan teknik resolusi konflik standard mengikut IREB.",
-          "extra": "Handbook Bab 4.3 / Syllabus EO 4.3.2: 5 Teknik Resolusi Konflik IREB: 1. Agreement, 2. Compromise, 3. Voting, 4. Overruling, 5. Decision Matrix (Criteria-based evaluation).",
-          "mnemonic": "Resolusi Konflik: Persetujuan, Kompromi, Undian, Overruling, Matriks Keputusan.",
-          "isAnchor": true
+          "correctDisplay": "A",
+          "whyCorrect": "• A: Betul (ia BUKAN teknik sah). Mengelak atau membuang keperluan secara senyap tanpa persetujuan pihak berkepentingan (Avoidance/Disregard) bukanlah penyelesaian konflik yang sah, malah akan mengundang kegagalan projek.",
+          "whyWrong": "• B, C, D: Salah satu teknik penyelesaian konflik rasmi IREB (Consensus, Compromise, Voting, Escalation).",
+          "extra": "Handbook Bab 4.2.2: 5 Teknik Resolusi Konflik: Agreement, Compromise, Voting, Overruling/Escalation, Variance creation.",
+          "mnemonic": "Elak konflik senyap-senyap = Gagal. Selesaikan dengan Konsensus, Kompromi, Undian, atau Eskalasi."
         },
         {
           "id": 29,
@@ -5032,46 +5011,44 @@
         },
         {
           "id": 31,
-          "code": "A0720",
+          "code": "GM0408",
           "type": "A",
           "pts": 1.0,
-          "eo": "4.3.1",
+          "eo": "4.2.1",
           "euNo": 4,
-          "title": "Conflict Types: Value Conflict vs Interest vs Structural",
-          "question": "For a navigation system that is to be used internationally, a stakeholder demands a female voice only for the voice output. Another stakeholder considers this discriminatory and demands a male voice in addition.\n\nWhich of the following types of conflicts describes this conflict best? (1 answer)",
+          "title": "Classification of Requirements Conflict Types",
+          "question": "The safety auditor insists on 100% manual confirmation for each container crane movement, while the operational logistics manager demands full automation to maximize throughput. Both agree on the terminal data and technical facts, but prioritize conflicting organizational goals.\n\nWhich type of conflict is this according to IREB? (Select 1 answer)",
           "options": [
             {
               "id": "A",
-              "text": "Relationship conflict",
-              "truth": false
+              "text": "Interest Conflict (divergent individual or departmental goals and objectives).",
+              "truth": true
             },
             {
               "id": "B",
-              "text": "Interest conflict",
+              "text": "Data / Subject-matter Conflict (differing information or interpretation of facts).",
               "truth": false
             },
             {
               "id": "C",
-              "text": "Structural conflict",
+              "text": "Structural Conflict (power imbalances caused by hierarchical reporting lines).",
               "truth": false
             },
             {
               "id": "D",
-              "text": "Value conflict",
-              "truth": true
+              "text": "Relationship Conflict (interpersonal animosity and negative emotional friction).",
+              "truth": false
             }
           ],
-          "diagramHtml": "",
-          "correctDisplay": "D (Value conflict)",
-          "whyCorrect": "• Pilihan D adalah jawapan yang betul. Percanggahan ini berpunca daripada perbezaan pegangan prinsip etika, persepsi diskriminasi jantina, dan nilai moral asas stakeholder (Value Conflict).",
-          "whyWrong": "• A (Relationship conflict): Konflik interpersonal/emosi peribadi.\n• B (Interest conflict): Konflik pertembungan matlamat keuntungan/sumber.\n• C (Structural conflict): Konflik hirarki organisasi/kuasa.",
-          "extra": "Handbook Bab 4.3 / Syllabus EO 4.3.1: Jenis Konflik: 1. Subject Matter Conflict, 2. Interest Conflict, 3. Value Conflict, 4. Relationship Conflict, 5. Structural Conflict.",
-          "mnemonic": "Isu Etika / Diskriminasi / Moral = Value Conflict (Konflik Nilai).",
-          "isAnchor": true
+          "correctDisplay": "A",
+          "whyCorrect": "• A: Betul. Pihak-pihak bersetuju tentang data teknikal, tetapi mempunyai matlamat dan keutamaan yang bercanggah (Keselamatan vs Kepantasan Operasi). Ini ialah Takrifan tepat untuk Konflik Kepentingan (Interest Conflict).",
+          "whyWrong": "• B: Salah. Tiada pertikaian fakta atau data (Data Conflict).\n• C, D: Salah. Tiada isu kuasa hierarki (Structural) atau permusuhan emosi peribadi (Relationship).",
+          "extra": "Handbook Bab 4.2.1: Jenis Konflik: Subject-matter, Interest, Value, Relationship, Structural.",
+          "mnemonic": "Bercanggah matlamat/kepentingan = Interest Conflict. Bercanggah fakta/maklumat = Data Conflict."
         },
         {
           "id": 32,
-          "code": "GM0409",
+          "code": "G0409",
           "type": "K",
           "pts": 2.0,
           "eo": "4.2.2",
@@ -5108,46 +5085,44 @@
         },
         {
           "id": 33,
-          "code": "A0721",
+          "code": "GM0410",
           "type": "A",
           "pts": 2.0,
-          "eo": "4.4.3",
+          "eo": "4.3.2",
           "euNo": 4,
-          "title": "Requirements Validation: Formal Inspection for Safety-Critical Systems",
-          "question": "In your project, a new braking system for high speed trains is developed.\n\nWhich validation technique is most suitable for this situation, where the system requirements of a safety-critical component should be validated? (1 answer)",
+          "title": "Formal Inspection Roles according to Fagan",
+          "question": "A safety-critical automated navigation module undergoes a formal requirements inspection. In Michael Fagan's inspection methodology, who is responsible for leading the meeting, ensuring adherence to the process rules, and maintaining objective focus? (Select 1 answer)",
           "options": [
             {
               "id": "A",
-              "text": "A/B testing",
-              "truth": false
+              "text": "The Moderator",
+              "truth": true
             },
             {
               "id": "B",
-              "text": "Prototype",
+              "text": "The Author",
               "truth": false
             },
             {
               "id": "C",
-              "text": "Walkthrough",
+              "text": "The Scribe (Recorder)",
               "truth": false
             },
             {
               "id": "D",
-              "text": "Inspection",
-              "truth": true
+              "text": "The Lead Architect",
+              "truth": false
             }
           ],
-          "diagramHtml": "",
-          "correctDisplay": "D (Inspection)",
-          "whyCorrect": "• Pilihan D adalah jawapan yang betul. Untuk komponen kritikal keselamatan tinggi (Safety-Critical seperti sistem brek kereta api berkelajuan tinggi), Inspection adalah teknik semakan yang paling formal, berdisiplin, dan berstruktur dengan peranan khusus (Moderator, Author, Inspector, Scribe) dan senarai semak peraturan yang ketat.",
-          "whyWrong": "• A (A/B testing): Kaedah ujian pasaran perbandingan produk pengguna.\n• B (Prototype): Prototaip bagus untuk reka bentuk awal tetapi tidak mencukupi untuk semakan keselamatan kritikal tanpa formaliti.\n• C (Walkthrough): Sesi semakan tidak formal yang dipimpin oleh pengarang (kurang ketat berbanding Inspection).",
-          "extra": "Handbook Bab 4.4 / Syllabus EO 4.4.2: Teknik Validasi: Inspection (Paling Formal & Ketat) > Walkthrough (Sederhana Formal) > Peer Review (Santai).",
-          "mnemonic": "Safety-Critical (Keselamatan Nyawa) = Wajib Formal Inspection.",
-          "isAnchor": true
+          "correctDisplay": "A",
+          "whyCorrect": "• A: Betul. Moderator ialah individu yang bertanggungjawab menguruskan proses semakan, memimpin mesyuarat, memastikan peraturan dipatuhi, dan mengawal dinamik perbincangan secara objektif.",
+          "whyWrong": "• B: Salah. Penulis (Author) tidak boleh memoderasi mesyuarat sendiri bagi mengelakkan bias.\n• C: Salah. Pencatat (Scribe) mencatat kecacatan/isu yang ditemui.\n• D: Salah. Arkitek bertindak sebagai Reviewer/Inspector.",
+          "extra": "Handbook Bab 4.3.2: 4 Peranan Utama Fagan Inspection: Moderator, Author, Reviewer/Inspector, Scribe.",
+          "mnemonic": "Moderator = Ketua Proses. Author = Pencipta dokumen. Scribe = Tukang catat kecacatan."
         },
         {
           "id": 34,
-          "code": "GM0411",
+          "code": "G0411",
           "type": "A",
           "pts": 1.0,
           "eo": "4.3.2",
@@ -5221,47 +5196,40 @@
         },
         {
           "id": 36,
-          "code": "P3504",
+          "code": "GM0502",
           "type": "P",
           "pts": 2.0,
-          "eo": "5.2.1",
+          "eo": "5.1.2",
           "euNo": 5,
-          "title": "Key Facets for Configuring an RE Process (Time & Purpose Facets)",
-          "question": "Which two major facets below are the most important to consider when configuring an RE process? (2 answers)",
+          "title": "The Four Process Facets of Requirements Engineering (IREB Standard)",
+          "question": "IREB characterizes Requirements Engineering processes along four orthogonal dimensions (facets). Which TWO (2) of the following represent recognized IREB process facets? (Select 2 answers)",
           "options": [
             {
               "id": "A",
-              "text": "The time facet: linear vs. iterative",
+              "text": "Time Facet (Linear vs. Iterative)",
               "truth": true
             },
             {
               "id": "B",
-              "text": "The budget facet: tight vs. large",
-              "truth": false
-            },
-            {
-              "id": "C",
-              "text": "The purpose facet: prescriptive vs. explorative",
+              "text": "Purpose Facet (Prescriptive vs. Explorative)",
               "truth": true
             },
             {
-              "id": "D",
-              "text": "The methodology facet: structure-based vs. process-based",
+              "id": "C",
+              "text": "Budget Facet (Fixed-Price vs. Time-and-Materials)",
               "truth": false
             },
             {
-              "id": "E",
-              "text": "The interaction facet: team-driven vs. individual-driven",
+              "id": "D",
+              "text": "Architecture Facet (Monolithic vs. Microservices)",
               "truth": false
             }
           ],
-          "diagramHtml": "",
-          "correctDisplay": "A, C",
-          "whyCorrect": "• A (The time facet: linear vs. iterative): Betul. Time facet menentukan sama ada proses bergerak secara lurus (Waterfall/V-Model) atau berulang (Agile/Scrum).\n• C (The purpose facet: prescriptive vs. explorative): Betul. Purpose facet menentukan sama ada keperluan berfungsi sebagai kontrak tetap (Prescriptive) atau ruang penerokaan inovasi (Explorative).",
-          "whyWrong": "• B, D, E bukan merupakan 3 Dimensi/Facet proses piawai yang diiktiraf dalam silibus IREB FL.",
-          "extra": "Handbook Bab 5.1 / Syllabus EO 5.1.1: 3 Dimensi Proses RE IREB:\n1. Time Facet (Linear vs Iterative)\n2. Purpose Facet (Prescriptive vs Explorative)\n3. Target/Customer Facet (Customer-specific vs Market-driven).",
-          "mnemonic": "Dua facet paling utama menentukan bentuk proses RE = Time Facet + Purpose Facet.",
-          "isAnchor": true
+          "correctDisplay": "A, B",
+          "whyCorrect": "• A: Betul. Time Facet membahagikan proses kepada Linear (sekali harung / Waterfall) atau Iterative (berperingkat / Agile).\n• B: Betul. Purpose Facet membahagikan proses kepada Prescriptive (spesifikasi kontrak terperinci) atau Explorative (penerokaan keperluan inovatif).",
+          "whyWrong": "• C, D: Salah. Model perniagaan/kewangan (Budget) dan gaya seni bina perisian (Architecture) bukan antara 4 faset proses RE rasmi IREB (4 Faset: Time, Purpose, Target, Interaction).",
+          "extra": "Handbook Bab 5.1: 4 Faset Proses RE: Time (Linear/Iterative), Purpose (Prescriptive/Explorative), Target (Customer-specific/Market-driven), Interaction (Close/Distant).",
+          "mnemonic": "4 Faset RE: TIME, PURPOSE, TARGET, INTERACTION (T-P-T-I)."
         },
         {
           "id": 37,
@@ -5343,42 +5311,40 @@
         },
         {
           "id": 39,
-          "code": "A0820",
+          "code": "GM0602",
           "type": "A",
           "pts": 1.0,
-          "eo": "6.6.1",
+          "eo": "6.2.1",
           "euNo": 6,
-          "title": "Goals and Benefits of Requirements Traceability (NOT a Goal)",
-          "question": "The traceability of requirements has several goals.\n\nIndicate the statement that is NOT correct. (1 answer)",
+          "title": "Pre-RS Traceability vs Post-RS Traceability",
+          "question": "A maritime software vendor must demonstrate traceability across the lifecycle. Which of the following correctly describes 'Pre-RS Traceability' according to IREB? (Select 1 answer)",
           "options": [
             {
               "id": "A",
-              "text": "Traceability facilitates an impact analysis.",
-              "truth": false
+              "text": "Tracing a requirement backward to the stakeholder statement, business goal, or regulatory standard that originated it.",
+              "truth": true
             },
             {
               "id": "B",
-              "text": "Traceability facilitates the verification of implementation.",
+              "text": "Tracing a requirement forward to the source code classes and automated regression test scripts.",
               "truth": false
             },
             {
               "id": "C",
-              "text": "Traceability facilitates exports from a requirements management tool.",
-              "truth": true
+              "text": "Tracing dependencies exclusively between requirements within the same specification document.",
+              "truth": false
             },
             {
               "id": "D",
-              "text": "Traceability facilitates finding a requirement's source.",
+              "text": "Tracing historical defect tickets recorded during user acceptance testing.",
               "truth": false
             }
           ],
-          "diagramHtml": "",
-          "correctDisplay": "C (Traceability facilitates exports from a requirements management tool)",
-          "whyCorrect": "• Pilihan C adalah jawapan yang betul (BUKAN matlamat utama kebolehkesanan). Mengeksport fail adalah ciri teknikal alatan perisian semata-mata, bukannya tujuan konseptual mengapa kebolehkesanan (traceability) diwujudkan.",
-          "whyWrong": "• A (Impact analysis), B (Verification of implementation), dan D (Finding requirement source) kesemuanya merupakan matlamat teras kebolehkesanan (Pre-RS, Post-RS, Inter-RS Traceability).",
-          "extra": "Handbook Bab 6.2 / Syllabus EO 6.2.1: Matlamat Traceability:\n1. Bukti pematuhan (Verification)\n2. Analisis impak perubahan (Impact Analysis)\n3. Mengetahui sumber asal (Pre-RS)\n4. Mengesan komponen hiliran (Post-RS).",
-          "mnemonic": "Traceability = Bukti Pematuhan, Analisis Impak, dan Sumber Asal (Bukan untuk fungsi eksport fail).",
-          "isAnchor": true
+          "correctDisplay": "A",
+          "whyCorrect": "• A: Betul. Pre-RS (Pre-Requirements Specification) Traceability membolehkan keperluan dijejak kembali ke asal-usul kelahirannya (stakeholder, mesyuarat, peraturan undang-undang).",
+          "whyWrong": "• B: Salah. Mengesan ke kod sumber dan ujian adalah Post-RS Traceability.\n• C: Salah. Ini ialah inter-requirements traceability.",
+          "extra": "Handbook Bab 6.2: Pre-RS = Sebelum keperluan ditulis (punca asal). Post-RS = Selepas keperluan ditulis (seni bina, kod, ujian).",
+          "mnemonic": "Pre-RS = Jejak ke belakang (Punca/Stakeholder). Post-RS = Jejak ke depan (Kod/Ujian)."
         },
         {
           "id": 40,
@@ -5426,40 +5392,35 @@
           "pts": 2.0,
           "eo": "6.4.1",
           "euNo": 6,
-          "title": "Requirements Change Management: Impact Analysis & CCB",
-          "question": "A change request is submitted to modify an existing requirements baseline of an operational banking application. According to IREB change management best practices, which two of the following tasks should be performed before the Change Control Board (CCB) makes a decision? (2 answers)",
+          "title": "Change Control Board (CCB) and Impact Analysis Workflow",
+          "question": "A major customer requests a change to the automated harbor docking sequence during mid-development. Which TWO (2) of the following activities are standard steps in the formal Change Management workflow? (Select 2 answers)",
           "options": [
             {
               "id": "A",
-              "text": "Assessing the technical feasibility and cost/effort impact of the proposed change",
+              "text": "Conducting an Impact Analysis to evaluate technical effort, budget variance, and ripple effects across existing requirements.",
               "truth": true
             },
             {
               "id": "B",
-              "text": "Immediately rewriting all existing requirements in the database to match the requested change before review",
-              "truth": false
-            },
-            {
-              "id": "C",
-              "text": "Analyzing dependencies and risks for related system components and requirements",
+              "text": "Submitting the change request and impact evaluation to the Change Control Board (CCB) for formal approval or rejection.",
               "truth": true
             },
             {
-              "id": "D",
-              "text": "Rejecting the change request automatically if it requires more than 1 day of development work",
+              "id": "C",
+              "text": "Immediately altering source code repositories before documenting the change request to maximize delivery speed.",
               "truth": false
             },
             {
-              "id": "E",
-              "text": "Committing the change directly to the production branch without stakeholder consultation",
+              "id": "D",
+              "text": "Discarding previously approved test cases without creating an updated baseline.",
               "truth": false
             }
           ],
-          "correctDisplay": "A, C",
-          "whyCorrect": "• A (Assessing feasibility & cost): Betul. Analisis impak mesti menilai kos, usaha dan kebolehlaksanaan teknikal.\n• C (Analyzing dependencies & risks): Betul. Mesti mengenal pasti keperluan atau modul lain yang terjejas sebelum kelulusan.",
-          "whyWrong": "• B & E: Tidak boleh mengubah dokumen/kod sebelum CCB membuat keputusan rasmi.\n• D: Had masa 1 hari adalah rekaan dan bukan kriteria penolakan automatik IREB.",
-          "extra": "Handbook Bab 6.4: Aliran kerja Change Request: Submit -> Log -> Analyze Impact -> CCB Decision -> Implement & Verify.",
-          "mnemonic": "Ubah Keperluan: Buat Analisis Impak (Kos, Risiko, Kesan) DAHULU sebelum CCB buat keputusan."
+          "correctDisplay": "A, B",
+          "whyCorrect": "• A: Betul. Analisis Impak wajib dijalankan terlebih dahulu untuk melihat kesan perubahan terhadap kos, jadual, dan komponen lain.\n• B: Betul. Lembaga Kawalan Perubahan (CCB) adalah badan berwibawa yang membuat keputusan meluluskan, menolak, atau menangguhkan permohonan perubahan.",
+          "whyWrong": "• C: Salah. Mengubah kod secara terus tanpa kelulusan formal (uncontrolled change) memusnahkan integriti kebolehkesanan.\n• D: Salah. Menghapuskan kes ujian tanpa rekod melanggar tatakelola RE.",
+          "extra": "Handbook Bab 6.4: Aliran Perubahan: Request ➔ Impact Analysis ➔ CCB Decision ➔ Update Baseline.",
+          "mnemonic": "Change Management: Request ➔ Analisis Impak ➔ Kelulusan CCB ➔ Kemas kini Baseline."
         },
         {
           "id": 42,
@@ -5500,81 +5461,77 @@
         },
         {
           "id": 43,
-          "code": "A0804",
+          "code": "GM0606",
           "type": "A",
           "pts": 1.0,
-          "eo": "6.4.1",
+          "eo": "6.5.1",
           "euNo": 6,
-          "title": "Requirements Baseline Definition and Concept",
-          "question": "Version and configuration management are used for managing requirements and requirements specifications. \"Version\" and \"baseline\" are two frequently used terms in this context.\n\nSelect the best description of a baseline. (1 answer)",
+          "title": "Requirements Baseline Concept and Purpose",
+          "question": "Which of the following statements BEST defines a 'Requirements Baseline' in Requirements Management? (Select 1 answer)",
           "options": [
             {
               "id": "A",
-              "text": "A version of a requirement",
-              "truth": false
+              "text": "A stable, internally consistent, and formally approved set of requirements frozen at a specific milestone to serve as the benchmark for further work and change control.",
+              "truth": true
             },
             {
               "id": "B",
-              "text": "A released configuration of an individual requirement",
+              "text": "An informal scratchpad list of ideas brainstormed during initial stakeholder elicitation sessions.",
               "truth": false
             },
             {
               "id": "C",
-              "text": "A released configuration of requirements",
-              "truth": true
+              "text": "The minimum number of test cases required to achieve 100% statement coverage in source code.",
+              "truth": false
             },
             {
               "id": "D",
-              "text": "A not yet released version of a requirements specification",
+              "text": "A live, unversioned database where requirements are continually overwritten without change history.",
               "truth": false
             }
           ],
-          "diagramHtml": "",
-          "correctDisplay": "C (A released configuration of requirements)",
-          "whyCorrect": "• Pilihan C adalah takrifan tepat mengikut standard IREB. Baseline ialah satu konfigurasi keperluan yang stabil, telah disemak, diluluskan secara rasmi (released), dan ditandatangani untuk menjadi asas pembangunan seterusnya.",
-          "whyWrong": "• A (A version of a requirement): Ini adalah versi individu, bukan baseline.\n• B (A released configuration of an individual requirement): Baseline merangkumi himpunan konfigurasi keseluruhan set keperluan yang konsisten.\n• D (A not yet released version): Baseline hanya wujud selepas dikeluarkan dan diluluskan secara rasmi.",
-          "extra": "Handbook Bab 6.3 / Syllabus EO 6.3.1: Definisi Baseline: 'A released configuration of work products that is committed to by the stakeholders.'",
-          "mnemonic": "Baseline = Himpunan Keperluan yang Diluluskan & Ditandatangani (Released Configuration).",
-          "isAnchor": true
+          "correctDisplay": "A",
+          "whyCorrect": "• A: Betul. Baseline ialah konfigurasi keperluan yang stabil, lengkap, telah diluluskan secara rasmi (frozen/signed off), dan menjadi titik rujukan untuk pembangunan fasa seterusnya serta kawalan perubahan.",
+          "whyWrong": "• B, C, D: Salah. Nota awal tidak stabil, ujian liputan kod bukan baseline keperluan, dan pangkalan data tanpa versi bercanggah dengan prinsip pengurusan konfigurasi.",
+          "extra": "Handbook Bab 6.5: Baseline membolehkan perbandingan perubahan (delta analysis) antara versi keluaran.",
+          "mnemonic": "Baseline = Versi beku yang diluluskan secara rasmi (Approved & Frozen Snapshot)."
         },
         {
           "id": 44,
-          "code": "K0910",
+          "code": "GM0701",
           "type": "K",
           "pts": 2.0,
-          "eo": "7.2.1",
+          "eo": "7.1.1",
           "euNo": 7,
-          "title": "Principles for RE Tool Selection and Toolchain Integration",
-          "question": "As a Requirements Engineer for a company, you have to choose a tool to support your Requirements Engineering process.\n\nIn this context, which of the following statements are true and which are false?",
+          "title": "Criteria for Selecting Requirements Engineering Tools",
+          "question": "An enterprise plans to introduce a dedicated Requirements Engineering tool suite across distributed engineering centers. Which of the following statements regarding tool selection and deployment are true and which are false?",
           "options": [
             {
               "id": "A",
-              "text": "The tool has to support the artifacts demanded in the Requirements Engineering process applied.",
+              "text": "A suitable RE tool must support bidirectional traceability between requirements and verification artifacts across tool boundaries.",
               "truth": true
             },
             {
               "id": "B",
-              "text": "The choice of a tool should be left to the users of the tool.",
-              "truth": false
+              "text": "Role-based access control and comprehensive version history are essential capabilities for multi-user collaborative RE tools.",
+              "truth": true
             },
             {
               "id": "C",
-              "text": "The tool has to assist users to set up their test cases as part of the Requirements Engineering process to support shift-left testing.",
+              "text": "Introducing a sophisticated RE tool automatically corrects poorly phrased or missing requirements without training analysts.",
               "truth": false
             },
             {
               "id": "D",
-              "text": "The choice of a tool is influenced by the tool chain (e.g., configuration management tool) the tool is to be applied in.",
+              "text": "Tool integration interfaces (such as REST APIs or OSLC standards) are vital to connect RE data with test management and bug tracking systems.",
               "truth": true
             }
           ],
-          "diagramHtml": "",
-          "correctDisplay": "A=True, B=False, C=False, D=True",
-          "whyCorrect": "• A: True. Alatan perisian mesti menyokong jenis Work Products dan proses RE yang diamalkan oleh organisasi.\n• D: True. Pemilihan alat sangat dipengaruhi oleh kesesuaian integrasi dengan rantai alatan sedia ada (Tool Chain seperti alatan pengurusan konfigurasi dan pengujian).",
-          "whyWrong": "• B: False. Pemilihan alatan RE organisasi tidak boleh diserahkan semata-mata kepada citarasa individu tanpa strategi integrasi piawai.\n• C: False. Pembinaan kes ujian adalah peranan alat ujian (Testing Tools), bukan kriteria wajib alatan RE.",
-          "extra": "Handbook Bab 7.1 / Syllabus EO 7.1.1: Prinsip Alatan RE: 1. Sokong proses organisasi, 2. Integrasi Toolchain, 3. Kira kos pemilikan penuh (TCO), 4. Jalankan projek perintis (Pilot Project).",
-          "mnemonic": "Alat mesti sokong proses organisasi dan serasi dengan rantai alatan (Tool Chain).",
-          "isAnchor": true
+          "correctDisplay": "A=True, B=True, C=False, D=True",
+          "whyCorrect": "• A: True. Kebolehkesanan dwi-arah (bidirectional traceability) adalah ciri utama alat RE moden.\n• B: True. Kawalan akses (RBAC) dan sejarah versi diperlukan untuk pengurusan kolaboratif pelbagai pengguna.\n• D: True. Integrasi melalui API/OSLC membolehkan pertukaran data lancar dengan alat hiliran.",
+          "whyWrong": "• C: False. Alat perisian hanyalah pemudah cara; 'A fool with a tool is still a fool'. Ia tidak boleh menggantikan kemahiran manusia dalam mengenal pasti keperluan yang hilang.",
+          "extra": "Handbook Bab 7.1: Faktor kejayaan alatan: Latihan, penyesuaian proses, sokongan kebolehkesanan.",
+          "mnemonic": "Tool = Pemudah cara, bukan pengganti otak jurutera. Wajib ada Traceability, Versioning, dan Integrasi."
         },
         {
           "id": 45,
