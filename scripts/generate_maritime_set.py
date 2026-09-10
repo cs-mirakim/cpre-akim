@@ -49,7 +49,7 @@ for q in base_g:
                 { "id": "C", "text": "A vessel can transition directly from 'At Sea' to 'Cargo Operations' in a single step.", "truth": False },
                 { "id": "D", "text": "'Moored at Berth' and 'Cargo Operations' are executed concurrently as parallel states in this diagram.", "truth": False }
             ],
-            "correctDisplay": "A=True, B=True, C=False, D=True",
+            "correctDisplay": "A=True, B=True, C=False, D=False",
             "whyCorrect": "• A: True. Terdapat transisi 'approach_port [berth_busy == false]' yang membenarkan kapal masuk terus ke fasa 'Entering Harbor' tanpa perlu berlabuh sauh.\n• B: True. Transisi kecemasan 'storm_warning [wind > 40kn]' mengarahkan kapal yang sedang memasuki alur pelabuhan kembali berlabuh selamat di 'Waiting at Anchorage'.",
             "whyWrong": "• C: False. Tiada anak panah terus dari 'At Sea' ke 'Cargo Operations'; kapal wajib merapat di dermaga (Moored at Berth) terlebih dahulu.\n• D: False. Kedua-dua keadaan ini berlaku secara berurutan (sequential), bukan serentak (tiada garis putus-putus atau composite orthogonal states).",
             "extra": "Handbook Bab 3.4.5: State Machine Diagram memodelkan kitaran hayat tingkah laku objek dinamik berdasarkan Events, Guard Conditions [syarat], dan Actions /tindakan.",

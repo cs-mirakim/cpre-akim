@@ -185,11 +185,8 @@
                   </svg>
                 </div>
                 <div>
-                  <div class="font-bold text-slate-800 dark:text-zinc-200 flex items-center gap-1.5">
-                    Set Ramalan G+ (Varian Maritim)
-                    <span class="text-[9px] px-1 py-0.2 rounded bg-teal-100 dark:bg-teal-900/60 text-teal-800 dark:text-teal-300 font-mono font-bold">Rajah Kapal</span>
-                  </div>
-                  <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 72.0 Pts (Rajah Kapal Q20)</div>
+                  <div class="font-bold text-slate-800 dark:text-zinc-200">Set Ramalan G+ (Varian Maritim)</div>
+                  <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 72.0 Pts (Lulus 50.40 Pts)</div>
                 </div>
               </div>
               <span id="check-predicted-maritime" class="text-teal-600 dark:text-teal-400 font-bold hidden">✓</span>
@@ -1611,6 +1608,7 @@
       const badgeIcon = document.getElementById('activeSetBadgeIcon');
       const nameText = document.getElementById('activeSetNameText');
       const nameMobile = document.getElementById('activeSetNameMobile');
+      const setBtn = document.getElementById('setSelectorBtn');
       const chkOff = document.getElementById('check-official');
       const chkPred = document.getElementById('check-predicted');
       const chkMar = document.getElementById('check-predicted-maritime');
@@ -1625,14 +1623,24 @@
         }
       }
 
+      if (setBtn) {
+        if (isOfficial) {
+          setBtn.className = "h-8 px-2 sm:px-2.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 flex items-center space-x-2 transition-all text-xs font-semibold shadow-xs cursor-pointer";
+        } else if (isMaritime) {
+          setBtn.className = "h-8 px-2 sm:px-2.5 rounded-lg bg-teal-50 dark:bg-teal-950/60 hover:bg-teal-100 dark:hover:bg-teal-900/60 border border-teal-200 dark:border-teal-800 text-teal-700 dark:text-teal-300 flex items-center space-x-2 transition-all text-xs font-semibold shadow-xs cursor-pointer";
+        } else {
+          setBtn.className = "h-8 px-2 sm:px-2.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 flex items-center space-x-2 transition-all text-xs font-semibold shadow-xs cursor-pointer";
+        }
+      }
+
       if (nameText) {
         if (isOfficial) nameText.textContent = 'Set Latihan Rasmi (70 Pts)';
-        else if (isMaritime) nameText.textContent = 'Set Ramalan G+ (Maritim 72 Pts)';
+        else if (isMaritime) nameText.textContent = 'Set Ramalan G+ (72 Pts)';
         else nameText.textContent = 'Set Ramalan G (72 Pts)';
       }
       if (nameMobile) {
         if (isOfficial) nameMobile.textContent = 'Set Rasmi';
-        else if (isMaritime) nameMobile.textContent = 'Ramalan G+';
+        else if (isMaritime) nameMobile.textContent = 'Set G+';
         else nameMobile.textContent = 'Set G';
       }
 
@@ -1646,8 +1654,6 @@
       if (badge) {
         if (currentExamSet === 'official') {
           badge.textContent = '45 Soalan • 70.0 Pts (Lulus 49.0 Pts)';
-        } else if (currentExamSet === 'predicted_maritime') {
-          badge.textContent = '45 Soalan • 72.0 Pts (Rajah Kapal Q20 • Lulus 50.40 Pts)';
         } else {
           badge.textContent = '45 Soalan • 72.0 Pts (Lulus 50.40 Pts)';
         }
