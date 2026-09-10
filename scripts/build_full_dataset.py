@@ -13,10 +13,10 @@ def get_b64(filename):
             return f"data:image/png;base64,{base64.b64encode(f.read()).decode('utf-8')}"
     return ""
 
-img_q18 = get_b64('diagram_page_12_2.png')
-img_q20 = get_b64('diagram_page_13_2.png')
-img_q21 = get_b64('diagram_page_14_2.png')
-img_q23 = get_b64('diagram_page_16_2.png')
+img_q18 = get_b64('clean_q18.png')
+img_q20 = get_b64('clean_q20.png')
+img_q21 = get_b64('clean_q21.png')
+img_q23 = get_b64('clean_q23.png')
 
 eus = [
   { "no": 1, "name": "Introduction and Overview of Requirements Engineering", "range": "Q1–Q3", "pts": 4, "qCount": 3 },
