@@ -266,9 +266,9 @@
     <button onclick="toggleStrategyDashboard()" class="w-full sm:hidden mb-3 p-3.5 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 flex items-center justify-between shadow-xs text-left transition-colors hover:bg-slate-50 dark:hover:bg-zinc-850">
       <div class="flex items-center space-x-2.5">
         <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-          Pass: 70.0%
+          Lulus: 70.0% (50.40 Pts)
         </span>
-        <span class="text-xs font-bold text-slate-900 dark:text-white">Pelan Kelayakan: 69.02% ➔ 75%+</span>
+        <span class="text-xs font-bold text-slate-900 dark:text-white">Sasaran Lulus: 49.70 ➔ 50.40 (+0.70 Pts)</span>
       </div>
       <span id="stratToggleArrow" class="text-xs font-mono text-slate-500 dark:text-zinc-400">Tutup ▴</span>
     </button>
@@ -281,10 +281,10 @@
           <div class="flex items-center justify-between gap-1.5 mb-2">
             <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Formula Kelayakan</span>
             <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-              Lulus: 70% (49 Pts)
+              Lulus: 70% (50.40 Pts)
             </span>
           </div>
-          <div class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white">69.02% ➔ 75%+ Target Push</div>
+          <div class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white">49.70 Pts ➔ 50.40 Pts (Sasaran Lulus +0.70)</div>
           <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
             Sebelum ini anda capai <strong>69.02%</strong>. Beza hanya <strong>0.98%</strong> (hanya 1 soalan K-type 2-markah sahaja lagi untuk lulus selamat).
           </p>
@@ -610,16 +610,16 @@
         <div class="flex items-center gap-1 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none">
           <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 mr-1 shrink-0">Jenis:</span>
           <button onclick="filterByType('all')" class="type-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-xs" data-type="all">
-            Semua (<!-- QUESTIONS_COUNT -->)
+            Semua (<span id="typeCountAll">45</span>)
           </button>
           <button onclick="filterByType('K')" class="type-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/60" data-type="K">
-            K-Type (<!-- K_COUNT -->)
+            K-Type (<span id="typeCountK">16</span>)
           </button>
           <button onclick="filterByType('A')" class="type-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/60" data-type="A">
-            A-Type (<!-- A_COUNT -->)
+            A-Type (<span id="typeCountA">16</span>)
           </button>
           <button onclick="filterByType('P')" class="type-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/60" data-type="P">
-            P-Type (<!-- P_COUNT -->)
+            P-Type (<span id="typeCountP">13</span>)
           </button>
         </div>
 
@@ -1109,6 +1109,7 @@
       updateSetSwitcherUI();
       updateHeaderBadge();
       updateStrategyDashboard();
+      updateTypeCounts();
       renderEUPills();
       renderTOCDrawer();
       updateBookmarkUI();
@@ -1576,6 +1577,7 @@
       updateSetSwitcherUI();
       updateHeaderBadge();
       updateStrategyDashboard();
+      updateTypeCounts();
       renderEUPills();
       renderTOCDrawer();
       updateBookmarkUI();
@@ -1683,6 +1685,19 @@
       container.innerHTML = html;
     }
 
+    
+    function updateTypeCounts() {
+      const elAll = document.getElementById('typeCountAll');
+      const elK = document.getElementById('typeCountK');
+      const elA = document.getElementById('typeCountA');
+      const elP = document.getElementById('typeCountP');
+      
+      if (elAll) elAll.textContent = questions.length;
+      if (elK) elK.textContent = questions.filter(q => q.type === 'K').length;
+      if (elA) elA.textContent = questions.filter(q => q.type === 'A').length;
+      if (elP) elP.textContent = questions.filter(q => q.type === 'P').length;
+    }
+
     function updateStrategyDashboard() {
       const grid = document.getElementById('strategyCardsGrid');
       if (!grid) return;
@@ -1769,7 +1784,7 @@
                   Lulus: 70% (50.40 Pts)
                 </span>
               </div>
-              <div class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white">49.70 Pts ➔ 54.0+ Target Push</div>
+              <div class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white">49.70 Pts ➔ 50.40 Pts (Sasaran Lulus +0.70)</div>
               <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
                 Slip sebenar anda: <strong>49.70 Pts (69.02%)</strong> daripada 72.00 Pts. Jurang lulus hanya <strong>+0.70 Mata</strong> sahaja lagi (hanya 1 jawapan tepat!).
               </p>
