@@ -105,8 +105,8 @@
         <div class="flex flex-col">
           <div class="flex items-center space-x-2">
             <span class="font-extrabold text-sm tracking-tight text-slate-900 dark:text-white">CPRE FL 3.3.2</span>
-            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 font-medium">
-              45 Soalan • 70 Pts
+            <span id="headerBadgeText" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 font-medium">
+              45 Soalan • 72 Pts
             </span>
           </div>
           <span class="text-[10.5px] text-slate-500 dark:text-zinc-400 hidden sm:inline">IREB Ground Truth Practice Hub</span>
@@ -116,6 +116,49 @@
       <!-- Right Controls: Bookmarks, Mode Toggle & Theme -->
       <div class="flex items-center space-x-2 sm:space-x-3">
         
+        <!-- Set Switcher Dropdown (Official vs Predicted G) -->
+        <div class="relative inline-block text-left" id="setSelectorWrapper">
+          <button 
+            id="setSelectorBtn" 
+            onclick="toggleSetDropdown(event)" 
+            class="h-8 px-2 sm:px-2.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 flex items-center space-x-1.5 transition-all text-xs font-semibold shadow-xs cursor-pointer"
+            title="Tukar Mod Set Peperiksaan"
+          >
+            <span id="activeSetBadgeIcon">🎯</span>
+            <span id="activeSetNameText" class="hidden sm:inline">Set Ramalan G (72 Pts)</span>
+            <span id="activeSetNameMobile" class="sm:hidden">Set G</span>
+            <svg class="w-3 h-3 text-indigo-500 opacity-70 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+          
+          <div id="setDropdownMenu" class="hidden absolute right-0 mt-1.5 w-64 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-xl z-50 py-1.5 animate-in fade-in zoom-in-95 duration-100">
+            <div class="px-3 py-1.5 border-b border-slate-100 dark:border-zinc-800 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
+              Pilih Set Peperiksaan
+            </div>
+            
+            <button onclick="switchExamSet('official')" class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-slate-50 dark:hover:bg-zinc-800/60 transition-colors">
+              <div>
+                <div class="font-bold text-slate-800 dark:text-zinc-200 flex items-center gap-1.5">
+                  <span>📘</span> Set Latihan Rasmi
+                </div>
+                <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 70.0 Pts (Lulus 49.0 Pts)</div>
+              </div>
+              <span id="check-official" class="text-indigo-600 dark:text-indigo-400 font-bold hidden">✓</span>
+            </button>
+            
+            <button onclick="switchExamSet('predicted')" class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-slate-50 dark:hover:bg-zinc-800/60 transition-colors">
+              <div>
+                <div class="font-bold text-slate-800 dark:text-zinc-200 flex items-center gap-1.5">
+                  <span>🎯</span> Set Ramalan G (Slip Sebenar)
+                </div>
+                <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 72.0 Pts (Lulus 50.40 Pts)</div>
+              </div>
+              <span id="check-predicted" class="text-indigo-600 dark:text-indigo-400 font-bold hidden">✓</span>
+            </button>
+          </div>
+        </div>
+
         <!-- Bookmarks Filter Trigger -->
         <button 
           id="bookmarkFilterBtn" 
@@ -571,20 +614,16 @@
 
       </div>
 
-      <!-- EU Selector Pills -->
-      <div class="flex items-center gap-1.5 overflow-x-auto pt-1.5 pb-2.5 scroll-smooth">
-        <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 mr-1 shrink-0">EU:</span>
-        <button onclick="filterByEU(0)" class="eu-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shrink-0 shadow-xs" data-eu="0">
-          Semua (EU1–7)
-        </button>
-        <!-- EU_BUTTONS_PLACEHOLDER -->
+      <!-- EU Selector Pills (Rendered dynamically) -->
+      <div id="euPillsContainer" class="flex items-center gap-1.5 overflow-x-auto pt-1.5 pb-2.5 scroll-smooth scrollbar-none">
+        <!-- Dynamically rendered by JS based on active set -->
       </div>
 
     </div>
 
     <!-- Questions Counter Header -->
     <div class="flex items-center justify-between text-xs text-slate-500 dark:text-zinc-400 mb-3 px-1">
-      <div>Menunjukkan <span id="visibleCount" class="font-bold font-mono text-slate-900 dark:text-white"><!-- QUESTIONS_COUNT --></span> daripada <!-- QUESTIONS_COUNT --> soalan</div>
+      <div>Menunjukkan <span id="visibleCount" class="font-bold font-mono text-slate-900 dark:text-white">45</span> daripada <span id="totalSetCount" class="font-bold font-mono text-slate-900 dark:text-white">45</span> soalan</div>
       <div id="activeFilterLabel" class="text-[11px]"></div>
     </div>
 
@@ -965,8 +1004,8 @@
       </button>
     </div>
 
-    <div class="space-y-3.5 pb-8">
-      <!-- TOC_DRAWER_PLACEHOLDER -->
+    <div id="tocDrawerContainer" class="space-y-3.5 pb-8">
+      <!-- Dynamically rendered by JS based on active set -->
     </div>
   </div>
 
@@ -1005,20 +1044,37 @@
   <!-- JAVASCRIPT APPLICATION CORE -->
   <script>
     const appData = /* APP_DATA_PLACEHOLDER */ null;
-    const questions = appData.questions;
-    const eus = appData.eus;
 
-    // State Variables
+    // Support dual exam sets: 'official' and 'predicted'
+    let currentExamSet = localStorage.getItem('cpre_active_set') || 'predicted';
+    if (!appData.sets || !appData.sets[currentExamSet]) {
+      currentExamSet = 'official';
+    }
+
+    function getStorageKey(base) {
+      return base + '_' + currentExamSet;
+    }
+
+    let activeSet = (appData.sets && appData.sets[currentExamSet]) ? appData.sets[currentExamSet] : {
+      questions: appData.questions,
+      eus: appData.eus,
+      maxPoints: 70.0,
+      passPoints: 49.0
+    };
+    let questions = activeSet.questions;
+    let eus = activeSet.eus;
+
+    // State Variables (isolated per active set)
     let currentTheme = localStorage.getItem('cpre_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
     let currentMode = 'study'; // 'study' | 'quiz'
     let currentEU = 0; // 0 = all
     let currentType = 'all'; // 'all' | 'K' | 'A' | 'P'
     let searchQuery = '';
     let filterBookmarkedOnly = false;
-    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('cpre_bookmarks') || '[]'));
-    let userQuizAnswers = JSON.parse(localStorage.getItem('cpre_quiz_answers') || '{}');
-    let quizSubmitted = localStorage.getItem('cpre_quiz_submitted') === 'true';
-    let revealedAnswers = new Set(JSON.parse(localStorage.getItem('cpre_revealed_qids') || '[]'));
+    let bookmarkedIds = new Set(JSON.parse(localStorage.getItem(getStorageKey('cpre_bookmarks')) || '[]'));
+    let userQuizAnswers = JSON.parse(localStorage.getItem(getStorageKey('cpre_quiz_answers')) || '{}');
+    let quizSubmitted = localStorage.getItem(getStorageKey('cpre_quiz_submitted')) === 'true';
+    let revealedAnswers = new Set(JSON.parse(localStorage.getItem(getStorageKey('cpre_revealed_qids')) || '[]'));
     let collapsedExplanations = new Set();
 
     // DOM Elements
@@ -1032,6 +1088,11 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       applyTheme(currentTheme);
+      updateSetSwitcherUI();
+      updateHeaderBadge();
+      updateStrategyDashboard();
+      renderEUPills();
+      renderTOCDrawer();
       updateBookmarkUI();
       renderQuestions();
       updateQuizHud();
@@ -1218,7 +1279,7 @@
       } else {
         bookmarkedIds.add(qId);
       }
-      localStorage.setItem('cpre_bookmarks', JSON.stringify(Array.from(bookmarkedIds)));
+      localStorage.setItem(getStorageKey('cpre_bookmarks'), JSON.stringify(Array.from(bookmarkedIds)));
       updateBookmarkUI();
       renderQuestions();
     }
@@ -1408,7 +1469,7 @@
       } else {
         userQuizAnswers[qId][optId] = boolVal;
       }
-      localStorage.setItem('cpre_quiz_answers', JSON.stringify(userQuizAnswers));
+      localStorage.setItem(getStorageKey('cpre_quiz_answers'), JSON.stringify(userQuizAnswers));
       updateQuizHud();
       renderQuestions();
     }
@@ -1436,16 +1497,318 @@
           userQuizAnswers[qId].push(optId);
         }
       }
-      localStorage.setItem('cpre_quiz_answers', JSON.stringify(userQuizAnswers));
+      localStorage.setItem(getStorageKey('cpre_quiz_answers'), JSON.stringify(userQuizAnswers));
       updateQuizHud();
       renderQuestions();
     }
 
     function revealAnswer(qId) {
       revealedAnswers.add(qId);
-      localStorage.setItem('cpre_revealed_qids', JSON.stringify(Array.from(revealedAnswers)));
+      localStorage.setItem(getStorageKey('cpre_revealed_qids'), JSON.stringify(Array.from(revealedAnswers)));
       renderQuestions();
       updateQuizHud();
+    }
+
+
+    // Set Switcher and UI Helpers
+    function toggleSetDropdown(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('setDropdownMenu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    function closeSetDropdown() {
+      const menu = document.getElementById('setDropdownMenu');
+      if (menu) menu.classList.add('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      const wrapper = document.getElementById('setSelectorWrapper');
+      if (wrapper && !wrapper.contains(e.target)) {
+        closeSetDropdown();
+      }
+    });
+
+    function switchExamSet(setKey) {
+      if (!appData.sets || !appData.sets[setKey]) return;
+      currentExamSet = setKey;
+      localStorage.setItem('cpre_active_set', setKey);
+      
+      activeSet = appData.sets[currentExamSet];
+      questions = activeSet.questions;
+      eus = activeSet.eus;
+      
+      // Reload state for active set
+      bookmarkedIds = new Set(JSON.parse(localStorage.getItem(getStorageKey('cpre_bookmarks')) || '[]'));
+      userQuizAnswers = JSON.parse(localStorage.getItem(getStorageKey('cpre_quiz_answers')) || '{}');
+      quizSubmitted = localStorage.getItem(getStorageKey('cpre_quiz_submitted')) === 'true';
+      revealedAnswers = new Set(JSON.parse(localStorage.getItem(getStorageKey('cpre_revealed_qids')) || '[]'));
+      collapsedExplanations.clear();
+      
+      // Reset active filters
+      currentEU = 0;
+      currentType = 'all';
+      searchQuery = '';
+      filterBookmarkedOnly = false;
+      if (searchInput) searchInput.value = '';
+      if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
+      if (bookmarkFilterBanner) bookmarkFilterBanner.classList.add('hidden');
+
+      closeSetDropdown();
+      updateSetSwitcherUI();
+      updateHeaderBadge();
+      updateStrategyDashboard();
+      renderEUPills();
+      renderTOCDrawer();
+      updateBookmarkUI();
+      renderQuestions();
+      updateQuizHud();
+    }
+
+    function updateSetSwitcherUI() {
+      const isOfficial = currentExamSet === 'official';
+      const badgeIcon = document.getElementById('activeSetBadgeIcon');
+      const nameText = document.getElementById('activeSetNameText');
+      const nameMobile = document.getElementById('activeSetNameMobile');
+      const chkOff = document.getElementById('check-official');
+      const chkPred = document.getElementById('check-predicted');
+
+      if (badgeIcon) badgeIcon.textContent = isOfficial ? '📘' : '🎯';
+      if (nameText) nameText.textContent = isOfficial ? 'Set Latihan Rasmi (70 Pts)' : 'Set Ramalan G (72 Pts)';
+      if (nameMobile) nameMobile.textContent = isOfficial ? 'Set Rasmi' : 'Set G';
+
+      if (chkOff) chkOff.classList.toggle('hidden', !isOfficial);
+      if (chkPred) chkPred.classList.toggle('hidden', isOfficial);
+    }
+
+    function updateHeaderBadge() {
+      const badge = document.getElementById('headerBadgeText');
+      if (badge) {
+        if (currentExamSet === 'official') {
+          badge.textContent = '45 Soalan • 70.0 Pts (Lulus 49.0 Pts)';
+        } else {
+          badge.textContent = '45 Soalan • 72.0 Pts (Lulus 50.40 Pts)';
+        }
+      }
+    }
+
+    function renderEUPills() {
+      const container = document.getElementById('euPillsContainer');
+      if (!container) return;
+
+      let html = `
+        <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 mr-1 shrink-0">EU:</span>
+        <button onclick="filterByEU(0)" class="eu-btn ${currentEU === 0 ? 'active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shrink-0 shadow-xs' : 'px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 shrink-0 border border-slate-200 dark:border-zinc-700/60'}" data-eu="0">
+          Semua (EU1–7)
+        </button>
+      `;
+
+      eus.forEach(eu => {
+        const isActive = currentEU === eu.no;
+        const btnCls = isActive 
+          ? 'eu-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shrink-0 shadow-xs'
+          : 'eu-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 shrink-0 flex items-center gap-1.5 border border-slate-200 dark:border-zinc-700/60';
+        
+        html += `
+          <button onclick="filterByEU(${eu.no})" class="${btnCls}" data-eu="${eu.no}">
+            <span>EU${eu.no}</span>
+            <span class="text-[10px] font-mono px-1 rounded bg-black/10 dark:bg-white/10 opacity-80">${eu.qCount}Q • ${eu.pts}P</span>
+          </button>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function renderTOCDrawer() {
+      const container = document.getElementById('tocDrawerContainer');
+      if (!container) return;
+
+      let html = '';
+      eus.forEach(eu => {
+        const euQs = questions.filter(q => q.euNo === eu.no);
+        html += `
+          <div>
+            <div class="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1.5">
+              <span>EU${eu.no}: ${eu.name}</span>
+              <span class="font-mono text-[10.5px] text-slate-500 dark:text-zinc-400">${eu.range} • ${eu.pts} Pts (${eu.qCount}Q)</span>
+            </div>
+            <div class="grid grid-cols-5 sm:grid-cols-9 gap-1.5">
+        `;
+        euQs.forEach(q => {
+          const isBm = bookmarkedIds.has(q.id);
+          const ans = userQuizAnswers[q.id];
+          let btnClass = "bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/60";
+          if (quizSubmitted) {
+            btnClass = ans ? "bg-indigo-600 text-white font-bold" : btnClass;
+          } else if (ans) {
+            btnClass = "bg-indigo-600 text-white font-bold";
+          }
+          
+          html += `
+            <button onclick="jumpToQuestion(${q.id})" class="h-8 rounded-lg text-xs font-mono font-medium flex items-center justify-center transition-transform active:scale-95 relative ${btnClass}">
+              ${q.id}
+              ${isBm ? '<span class="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-amber-400"></span>' : ''}
+            </button>
+          `;
+        });
+        html += `
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function updateStrategyDashboard() {
+      const grid = document.getElementById('strategyCardsGrid');
+      if (!grid) return;
+      if (currentExamSet === 'official') {
+        grid.innerHTML = `
+          <!-- Target Score Math Card -->
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Formula Kelayakan</span>
+                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                  Lulus: 70% (49.0 Pts)
+                </span>
+              </div>
+              <div class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white">Latihan Skema Rasmi IREB</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                45 soalan rasmi ground-truth dengan semakan 0 perbezaan terhadap IREB Correction Aid. Target markah selamat ialah <strong>52.5 Pts (75%+)</strong>.
+              </p>
+            </div>
+            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
+              <div class="flex justify-between text-[11px] font-mono text-slate-500 mb-1">
+                <span>Skor Lulus: 49.0 Pts</span>
+                <span class="text-emerald-600 dark:text-emerald-400 font-bold">Max: 70.0 Pts</span>
+              </div>
+              <div class="w-full bg-slate-100 dark:bg-zinc-800 h-2 rounded-full overflow-hidden flex">
+                <div class="bg-indigo-500 h-full" style="width: 70%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Strategy Card: Focus Areas -->
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Topik Tumpuan</span>
+                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+                  8 Soalan (13 Pts)
+                </span>
+              </div>
+              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">EU5 (Process) + EU6 (Management)</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                Kelemahan biasa calon ialah pada proses kerja (EU5) dan pengurusan keperluan (EU6). Kuasai 2 bab ini untuk menjamin kelulusan selesa.
+              </p>
+            </div>
+            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-1.5 overflow-x-auto text-[10px] font-mono text-slate-600 dark:text-zinc-400 scrollbar-none">
+              <span class="px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800 rounded border border-slate-200 dark:border-zinc-700/60">Time Facet</span>
+              <span class="px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800 rounded border border-slate-200 dark:border-zinc-700/60">Traceability</span>
+              <span class="px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800 rounded border border-slate-200 dark:border-zinc-700/60">Baselines</span>
+            </div>
+          </div>
+
+          <!-- Main View Card -->
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Paparan Utama</span>
+                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-700/60">
+                  45 Soalan (70 Pts)
+                </span>
+              </div>
+              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">Struktur Silibus Rasmi IREB</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                Tukar antara bank soalan lengkap (Q1–Q45) atau ringkasan nota padat 1-muka surat.
+              </p>
+            </div>
+            <div class="grid grid-cols-2 gap-2 mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
+              <button onclick="switchTab('questions')" id="tabQuestionsBtn" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold text-xs shadow-xs transition-all flex items-center justify-center">
+                Bank Soalan
+              </button>
+              <button onclick="switchTab('cheatsheet')" id="tabCheatsheetBtn" class="h-8 px-3 rounded-lg bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs border border-slate-200 dark:border-zinc-700 transition-all flex items-center justify-center">
+                Cheat Sheet
+              </button>
+            </div>
+          </div>
+        `;
+      } else {
+        grid.innerHTML = `
+          <!-- Target Score Math Card -->
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Formula Kelayakan</span>
+                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                  Lulus: 70% (50.40 Pts)
+                </span>
+              </div>
+              <div class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white">49.70 Pts ➔ 54.0+ Target Push</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                Slip sebenar anda: <strong>49.70 Pts (69.02%)</strong> daripada 72.00 Pts. Jurang lulus hanya <strong>+0.70 Mata</strong> sahaja lagi (hanya 1 jawapan tepat!).
+              </p>
+            </div>
+            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
+              <div class="flex justify-between text-[11px] font-mono text-slate-500 mb-1">
+                <span>Terdahulu: 49.70 (69.02%)</span>
+                <span class="text-emerald-600 dark:text-emerald-400 font-bold">Lulus: 50.40 (70%)</span>
+              </div>
+              <div class="w-full bg-slate-100 dark:bg-zinc-800 h-2 rounded-full overflow-hidden flex">
+                <div class="bg-rose-500 h-full" style="width: 69.02%"></div>
+                <div class="bg-emerald-500 h-full animate-pulse" style="width: 5.98%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Strategy Card: Focus Areas based on actual exam score -->
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Topik Kelemahan Terdahulu</span>
+                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+                  EU4, EU5, EU6
+                </span>
+              </div>
+              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">Lonjakan Markah di EU5 (30%) & EU6 (45%)</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                EU5: dapat 1.50/5.00 Pts (30%). EU6: 4.50/10.00 Pts (45%). EU4: 9.30/15.00 Pts (62%). Memperbaiki 2 soalan sahaja di sini sudah mencukupi untuk lulus!
+              </p>
+            </div>
+            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-1.5 overflow-x-auto text-[10px] font-mono text-slate-600 dark:text-zinc-400 scrollbar-none">
+              <span class="px-1.5 py-0.5 bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 rounded border border-rose-200 dark:border-rose-900">EU5 (1.5/5.0)</span>
+              <span class="px-1.5 py-0.5 bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 rounded border border-amber-200 dark:border-amber-900">EU6 (4.5/10.0)</span>
+              <span class="px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800 rounded border border-slate-200 dark:border-zinc-700/60">EU4 (9.3/15.0)</span>
+            </div>
+          </div>
+
+          <!-- Main View Card -->
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Paparan Utama</span>
+                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                  45 Soalan (72 Pts)
+                </span>
+              </div>
+              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">34 Soalan Teras + 11 Varian Target</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                Gabungan soalan sebijik sama yang berulang dalam peperiksaan + soalan ramalan varian khas untuk lonjakan markah.
+              </p>
+            </div>
+            <div class="grid grid-cols-2 gap-2 mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
+              <button onclick="switchTab('questions')" id="tabQuestionsBtn" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold text-xs shadow-xs transition-all flex items-center justify-center">
+                Bank Soalan
+              </button>
+              <button onclick="switchTab('cheatsheet')" id="tabCheatsheetBtn" class="h-8 px-3 rounded-lg bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs border border-slate-200 dark:border-zinc-700 transition-all flex items-center justify-center">
+                Cheat Sheet
+              </button>
+            </div>
+          </div>
+        `;
+      }
     }
 
     function submitAndScoreQuiz() {
@@ -1464,9 +1827,9 @@
         desc,
         () => {
           quizSubmitted = true;
-          localStorage.setItem('cpre_quiz_submitted', 'true');
+          localStorage.setItem(getStorageKey('cpre_quiz_submitted'), 'true');
           questions.forEach(q => revealedAnswers.add(q.id));
-          localStorage.setItem('cpre_revealed_qids', JSON.stringify(Array.from(revealedAnswers)));
+          localStorage.setItem(getStorageKey('cpre_revealed_qids'), JSON.stringify(Array.from(revealedAnswers)));
           
           updateQuizHud();
           renderQuestions();
@@ -1537,9 +1900,9 @@
           userQuizAnswers = {};
           quizSubmitted = false;
           revealedAnswers.clear();
-          localStorage.removeItem('cpre_quiz_answers');
-          localStorage.removeItem('cpre_quiz_submitted');
-          localStorage.removeItem('cpre_revealed_qids');
+          localStorage.removeItem(getStorageKey('cpre_quiz_answers'));
+          localStorage.removeItem(getStorageKey('cpre_quiz_submitted'));
+          localStorage.removeItem(getStorageKey('cpre_revealed_qids'));
           closeExamResultsModal();
           updateQuizHud();
           renderQuestions();
@@ -1552,13 +1915,20 @@
     // Official IREB Correction Aid Scoring Engine
     function calculateScoreSummary() {
       let totalScore = 0;
-      const maxScore = 70;
+      const maxScore = activeSet ? activeSet.maxPoints : 70.0;
+      const passScore = activeSet ? activeSet.passPoints : 49.0;
       
       const typeStats = {
-        K: { earned: 0, max: 30, count: 15 },
-        A: { earned: 0, max: 19, count: 18 },
-        P: { earned: 0, max: 21, count: 12 },
+        K: { earned: 0, max: 0, count: 0 },
+        A: { earned: 0, max: 0, count: 0 },
+        P: { earned: 0, max: 0, count: 0 },
       };
+      questions.forEach(q => {
+        if (typeStats[q.type]) {
+          typeStats[q.type].max += q.pts;
+          typeStats[q.type].count += 1;
+        }
+      });
 
       const euStats = {};
       eus.forEach(eu => {
@@ -1620,7 +1990,7 @@
 
       totalScore = Math.round(totalScore * 100) / 100;
       const percentage = Math.round((totalScore / maxScore) * 1000) / 10;
-      const isPassed = Math.round(totalScore * 100) >= Math.round(maxScore * 0.7 * 100); // >= 49.00 Pts
+      const isPassed = Math.round(totalScore * 100) >= Math.round(passScore * 100);
 
       return {
         totalScore,
@@ -1718,7 +2088,7 @@
               </span>
               <div class="text-xl sm:text-2xl font-black">🎉 TAHNIAH! ANDA TELAH LULUS!</div>
               <p class="text-xs text-emerald-100 max-w-md leading-relaxed">
-                Skor anda <strong>${summary.totalScore.toFixed(2)} Pts (${summary.percentage.toFixed(1)}%)</strong> melepasi syarat kelayakan minimum IREB <strong>49.00 Pts (70.0%)</strong> dengan kelebihan <strong>+${(summary.totalScore - 49).toFixed(2)} Pts</strong>!
+                Skor anda <strong>${summary.totalScore.toFixed(2)} Pts (${summary.percentage.toFixed(1)}%)</strong> melepasi syarat kelayakan minimum <strong>${(activeSet ? activeSet.passPoints : 49.0).toFixed(2)} Pts (70.0%)</strong> dengan kelebihan <strong>+${(summary.totalScore - (activeSet ? activeSet.passPoints : 49.0)).toFixed(2)} Pts</strong>!
               </p>
             </div>
             <div class="font-mono text-3xl sm:text-4xl font-black shrink-0 px-4 py-2 bg-white/10 rounded-xl border border-white/20 text-center">
@@ -1726,7 +2096,8 @@
             </div>
           `;
         } else {
-          const diff = (49 - summary.totalScore).toFixed(2);
+          const passPts = activeSet ? activeSet.passPoints : 49.0;
+          const diff = (passPts - summary.totalScore).toFixed(2);
           banner.className = 'rounded-2xl p-5 sm:p-6 mb-5 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md bg-gradient-to-r from-rose-600 to-rose-700';
           banner.innerHTML = `
             <div class="space-y-1 text-center sm:text-left">
@@ -1735,7 +2106,8 @@
               </span>
               <div class="text-xl sm:text-2xl font-black">BELUM LULUS (FAILED)</div>
               <p class="text-xs text-rose-100 max-w-md leading-relaxed">
-                Skor anda <strong>${summary.totalScore.toFixed(2)} Pts (${summary.percentage.toFixed(1)}%)</strong>. Syarat lulus rasmi IREB ialah <strong>49.00 Pts (70.0%)</strong>. Anda hanya kekurangan <strong>${diff} Pts</strong> lagi (sekitar 1–2 soalan betul).
+                Skor anda <strong>${summary.totalScore.toFixed(2)} Pts (${summary.percentage.toFixed(1)}%)</strong>. Syarat lulus set ini ialah <strong>${passPts.toFixed(2)} Pts (70.0%)</strong>. Anda hanya kekurangan <strong>${diff} Pts</strong> lagi (sekitar 1–2 soalan betul).
+                ${currentExamSet === 'predicted' ? '<br/><span class="text-[11px] text-amber-200 mt-1 block">* Rekod slip sebenar anda terdahulu: <strong>49.70 Pts (69.02%)</strong> — hanya beza 0.70 Pts sahaja!</span>' : ''}
               </p>
             </div>
             <div class="font-mono text-3xl sm:text-4xl font-black shrink-0 px-4 py-2 bg-white/10 rounded-xl border border-white/20 text-center">
