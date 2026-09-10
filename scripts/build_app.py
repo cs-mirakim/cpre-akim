@@ -43,6 +43,8 @@ def wrap_diagrams(questions_list, prefix=""):
 if 'sets' in app_data:
     wrap_diagrams(app_data['sets']['official']['questions'], prefix="off-")
     wrap_diagrams(app_data['sets']['predicted']['questions'], prefix="pred-")
+    if 'predicted_maritime' in app_data['sets']:
+        wrap_diagrams(app_data['sets']['predicted_maritime']['questions'], prefix="mar-")
     # default questions point to official or predicted
     app_data['questions'] = app_data['sets']['official']['questions']
 else:

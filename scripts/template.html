@@ -168,11 +168,31 @@
                   </svg>
                 </div>
                 <div>
-                  <div class="font-bold text-slate-800 dark:text-zinc-200">Set Ramalan G (Slip Sebenar)</div>
+                  <div class="font-bold text-slate-800 dark:text-zinc-200">Set Ramalan G (Asas Slip 72 Pts)</div>
                   <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 72.0 Pts (Lulus 50.40 Pts)</div>
                 </div>
               </div>
               <span id="check-predicted" class="text-indigo-600 dark:text-indigo-400 font-bold hidden">✓</span>
+            </button>
+
+            <button onclick="switchExamSet('predicted_maritime')" class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-slate-50 dark:hover:bg-zinc-800/60 transition-colors">
+              <div class="flex items-start gap-2.5">
+                <div class="w-6 h-6 rounded-md bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                    <path d="M2 12h20" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="font-bold text-slate-800 dark:text-zinc-200 flex items-center gap-1.5">
+                    Set Ramalan G+ (Varian Maritim)
+                    <span class="text-[9px] px-1 py-0.2 rounded bg-teal-100 dark:bg-teal-900/60 text-teal-800 dark:text-teal-300 font-mono font-bold">Rajah Kapal</span>
+                  </div>
+                  <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 72.0 Pts (Rajah Kapal Q20)</div>
+                </div>
+              </div>
+              <span id="check-predicted-maritime" class="text-teal-600 dark:text-teal-400 font-bold hidden">✓</span>
             </button>
           </div>
         </div>
@@ -1587,22 +1607,38 @@
 
     function updateSetSwitcherUI() {
       const isOfficial = currentExamSet === 'official';
+      const isMaritime = currentExamSet === 'predicted_maritime';
       const badgeIcon = document.getElementById('activeSetBadgeIcon');
       const nameText = document.getElementById('activeSetNameText');
       const nameMobile = document.getElementById('activeSetNameMobile');
       const chkOff = document.getElementById('check-official');
       const chkPred = document.getElementById('check-predicted');
+      const chkMar = document.getElementById('check-predicted-maritime');
 
       if (badgeIcon) {
-        badgeIcon.innerHTML = isOfficial 
-          ? `<svg class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>`
-          : `<svg class="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>`;
+        if (isOfficial) {
+          badgeIcon.innerHTML = `<svg class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>`;
+        } else if (isMaritime) {
+          badgeIcon.innerHTML = `<svg class="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /><path d="M2 12h20" /></svg>`;
+        } else {
+          badgeIcon.innerHTML = `<svg class="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>`;
+        }
       }
-      if (nameText) nameText.textContent = isOfficial ? 'Set Latihan Rasmi (70 Pts)' : 'Set Ramalan G (72 Pts)';
-      if (nameMobile) nameMobile.textContent = isOfficial ? 'Set Rasmi' : 'Set G';
+
+      if (nameText) {
+        if (isOfficial) nameText.textContent = 'Set Latihan Rasmi (70 Pts)';
+        else if (isMaritime) nameText.textContent = 'Set Ramalan G+ (Maritim 72 Pts)';
+        else nameText.textContent = 'Set Ramalan G (72 Pts)';
+      }
+      if (nameMobile) {
+        if (isOfficial) nameMobile.textContent = 'Set Rasmi';
+        else if (isMaritime) nameMobile.textContent = 'Ramalan G+';
+        else nameMobile.textContent = 'Set G';
+      }
 
       if (chkOff) chkOff.classList.toggle('hidden', !isOfficial);
-      if (chkPred) chkPred.classList.toggle('hidden', isOfficial);
+      if (chkPred) chkPred.classList.toggle('hidden', isOfficial || isMaritime);
+      if (chkMar) chkMar.classList.toggle('hidden', !isMaritime);
     }
 
     function updateHeaderBadge() {
@@ -1610,6 +1646,8 @@
       if (badge) {
         if (currentExamSet === 'official') {
           badge.textContent = '45 Soalan • 70.0 Pts (Lulus 49.0 Pts)';
+        } else if (currentExamSet === 'predicted_maritime') {
+          badge.textContent = '45 Soalan • 72.0 Pts (Rajah Kapal Q20 • Lulus 50.40 Pts)';
         } else {
           badge.textContent = '45 Soalan • 72.0 Pts (Lulus 50.40 Pts)';
         }
@@ -1761,6 +1799,79 @@
               <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">Struktur Silibus Rasmi IREB</div>
               <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
                 Tukar antara bank soalan lengkap (Q1–Q45) atau ringkasan nota padat 1-muka surat.
+              </p>
+            </div>
+            <div class="grid grid-cols-2 gap-2 mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
+              <button onclick="switchTab('questions')" id="tabQuestionsBtn" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold text-xs shadow-xs transition-all flex items-center justify-center">
+                Bank Soalan
+              </button>
+              <button onclick="switchTab('cheatsheet')" id="tabCheatsheetBtn" class="h-8 px-3 rounded-lg bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs border border-slate-200 dark:border-zinc-700 transition-all flex items-center justify-center">
+                Cheat Sheet
+              </button>
+            </div>
+          </div>
+        `;
+      } else if (currentExamSet === 'predicted_maritime') {
+        grid.innerHTML = `
+          <!-- Target Score Math Card -->
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Formula Kelayakan</span>
+                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800">
+                  Lulus: 70% (50.40 Pts)
+                </span>
+              </div>
+              <div class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white">49.70 Pts ➔ 50.40 Pts (Sasaran Lulus +0.70)</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                Set G+ ini menyepadukan soalan rajah <strong>State Machine Kapal di Laut (Q20)</strong> serta varian berketepatan tinggi daripada arkib bocor sebenar.
+              </p>
+            </div>
+            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
+              <div class="flex justify-between text-[11px] font-mono text-slate-500 mb-1">
+                <span>Terdahulu: 49.70 (69.02%)</span>
+                <span class="text-teal-600 dark:text-teal-400 font-bold">Lulus: 50.40 (70%)</span>
+              </div>
+              <div class="w-full bg-slate-100 dark:bg-zinc-800 h-2 rounded-full overflow-hidden flex">
+                <div class="bg-rose-500 h-full" style="width: 69.02%"></div>
+                <div class="bg-teal-500 h-full animate-pulse" style="width: 5.98%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Strategy Card: Focus Areas -->
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Topik Kelemahan Terdahulu</span>
+                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+                  EU4, EU5, EU6
+                </span>
+              </div>
+              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">Lonjakan Markah di EU5 (30%) & EU6 (45%)</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                Soalan proses (EU5) dan pengurusan (EU6) dipertingkatkan dengan senario keselamatan maritim dan formula Karl Wiegers sebenar.
+              </p>
+            </div>
+            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-1.5 overflow-x-auto text-[10px] font-mono text-slate-600 dark:text-zinc-400 scrollbar-none">
+              <span class="px-1.5 py-0.5 bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 rounded border border-rose-200 dark:border-rose-900">EU5 (1.5/5.0)</span>
+              <span class="px-1.5 py-0.5 bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 rounded border border-amber-200 dark:border-amber-900">EU6 (4.5/10.0)</span>
+              <span class="px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800 rounded border border-slate-200 dark:border-zinc-700/60">Rajah Kapal Q20</span>
+            </div>
+          </div>
+
+          <!-- Main View Card -->
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Paparan Utama</span>
+                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800">
+                  Set G+ Maritim (72 Pts)
+                </span>
+              </div>
+              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">Varian Maritim & Arkib Bocor Sebenar</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                Ujian simulasi paling hampir dengan memori peperiksaan sebenar anda.
               </p>
             </div>
             <div class="grid grid-cols-2 gap-2 mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
