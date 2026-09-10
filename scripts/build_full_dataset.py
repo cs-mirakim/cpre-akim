@@ -1,6 +1,7 @@
 import json
 import base64
 import os
+import re
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS_DIR = os.path.join(ROOT_DIR, 'assets', 'diagrams')
@@ -28,16 +29,71 @@ eus = [
   { "no": 7, "name": "Tool Support", "range": "Q44–Q45", "pts": 3, "qCount": 2 }
 ]
 
-with open(os.path.join(ROOT_DIR, 'scripts', 'scratch', 'questions_authentic_base.json'), 'r', encoding='utf-8') as f:
-    raw_questions = json.load(f)
+def clean_pdf_artifacts(text):
+    if not text:
+        return ""
+    # Remove running footer text like "Foundation Level | Examination  IREB 22 | 27"
+    text = re.sub(r'Foundation Level\s*\|\s*Examination\s*[\uFFFD\u2013\-\?A-Za-z0-9\s]+\|\s*27', '', text)
+    # Remove trailing K-type table headers
+    text = re.sub(r'\s+(True\s+False|Needs to be considered\s+Does not need to be considered|Matches\s+Does not match|Correctly modeled\s+Incorrect or not modeled|Applies\s+Does not apply)$', '', text.strip())
+    text = re.sub(r'[ \t]+', ' ', text)
+    return text.strip()
 
-# Comprehensive High-Yield Explanations & Meta
+# Formatted authentic questions data
+formatted_stems = {
+  1: "Which of the following statements on quality requirements are true and which are false?",
+  2: "Which of the following tasks is NOT a core task of the Requirements Engineer? (1 answer)",
+  3: "Amongst other things, the customer demands the following from the contractor responsible for delivering an information system:\n\n• A) The contractor shall process a change request within five days.\n• B) The test reports from the integration test must be disclosed for examination and the test report from the system test must be handed over.\n• C) At any time, the system shall enable a throughput of 100 transactions per second.\n• D) The Subversion tool must be used for configuration management.\n• E) Under normal load, the response time must be no more than two seconds in 90 percent of the cases.\n\nWhich two requirements refer to the system to be realized? (2 answers)",
+  4: "Which of the following statements does NOT represent a fundamental principle of Requirements Engineering? (1 answer)",
+  5: "Shared understanding is a principle of Requirements Engineering.\n\nFor each of the following statements about shared understanding decide, whether it is true or false.",
+  6: "When defining the system boundary and the context boundary, which aspects need to be considered and which do not need to be considered?",
+  7: "During the Requirements Engineering process for an online database application, you find out that data protection regulations do not apply, as the data processed by the system is anonymized.\n\nWhat will be influenced by this finding? (1 answer)",
+  8: "Which of the following statements regarding work products is NOT correct? (1 answer)",
+  9: "Which of the following concepts CANNOT be found in UML class diagrams? (1 answer)",
+  10: "You want to design a requirements document in such a way that it is particularly well suited for the people who will work with the document in further phases of the development process.\n\nFrom the following sentences, choose the two best combinations of the role and its criteria for the requirements. (2 answers)",
+  11: "A company wants to support its process of tender preparation with an information system. You are the Requirements Engineer responsible in this project. During initial discussions with different representatives, you discover, among other aspects, the following:\n\n• You do not understand some of the company's terminology.\n• It is obvious that the company representatives do not use consistent terminology.\n• Your main contact person at the company described their ideas by telling you the expected interactions between specialists and the information system in the form of different flows of user actions and system reactions.\n\nWhich two of the following approaches are particularly well suited to eliciting and documenting the requirements in this case? (2 answers)",
+  12: "Which of the following statements on the choice of notations for the documentation of functional requirements apply and which do not apply?",
+  13: "IREB defines quality criteria for work products.\n\nWhich of the following statements about quality criteria are true and which are false?",
+  14: "A phrase template can be used to document natural-language requirements. You want to introduce such a template in your project and have to convince your project manager of the benefits.\n\nWhich are the two best arguments? (2 answers)",
+  15: "You are given the following requirement:\n\n\"The system Alpha should display all data sets in all submenus\".\n\nWhat is the most severe issue in this requirement? (1 answer)",
+  16: "Requirements can be documented using different forms of work products.\n\nFor each of the work products listed below, decide whether it is a template-based work product or not.",
+  17: "A system needs to be developed for managing the fleet of a courier service. The system shall periodically transmit the geographical position of a vehicle to the central unit. The following requirements were documented:\n\n• R1: \"The system should be in operation as long as the ignition key is in the ignition lock.\"\n• R2: \"The system should be in operation as long as a driver is seated in the driver's seat.\"\n• R3: \"The system should switch to lost-signal if less than three satellites are available.\"\n\nWhich diagram best supports this type of requirement? (1 answer)",
+  18: "To support young actors and directors, a contest for short films is held. The three best films will be presented with an award. The films submitted must have a maximum length of 20 minutes and must take the constraints depicted in the following diagram into consideration:\n\nDo the following statements match the above diagram?",
+  19: "What is NOT depicted in a use case diagram? (1 answer)",
+  20: "A company wants to introduce an authorization process for accessing confidential parts of the company's intranet by issuing time-limited passwords. For that reason a state diagram is modeled to express the possible states and state transitions for a user.\n\nDetermine which of the following requirements are modeled correctly in the state diagram above and which are modeled incorrectly or are not modeled at all.",
+  21: "The following activity diagram represents performing a measurement:\n\nDo the following statements match the above diagram?",
+  22: "In Requirements Engineering, which two substantial advantages do graphical models (e.g., use case models or state machines) have over plain textual specifications in natural language? (2 answers)",
+  23: "The following activity diagram models the route calculation process for a vehicle navigation system:\n\nFor each of the statements on the diagram below, decide whether it is true or false.",
+  24: "You are modeling the requirements for a management system to be applied in universities. The steps for enrollment of a new student at a university are to be documented using a model-based approach.\n\nWhich two of the following diagrams are best suited to this aim? (2 answers)",
+  25: "When specifying a system, different aspects have to be considered.\n\nWhat is described in the function and flow aspect? (1 answer)",
+  26: "You have been appointed as a Requirements Engineer in a company and are in the process of eliciting detailed requirements for a use case. To do this, you run through a series of interviews with various stakeholders. In the interview follow-up, you notice an inconsistency in the statements about the arrangement of functions in the menu on the user interface.\n\nWhat is the best way to deal with this situation? (1 answer)",
+  27: "Which two of the following statements best characterize the relationship between a Requirements Engineer and a stakeholder in the role of a tester? (2 answers)",
+  28: "The Kano model states that dissatisfiers (basic factors) are hard to elicit.\n\nWhich of the techniques mentioned below is the most effective elicitation technique for dissatisfiers? (1 answer)",
+  29: "Which two of the following aspects are the most important to consider when choosing suitable elicitation techniques? (2 answers)",
+  30: "Which of the following techniques is NOT suitable for resolving requirements conflicts? (1 answer)",
+  31: "Which are the two most important attributes in a stakeholder list? (2 answers)",
+  32: "What are the two key advantages of using questionnaires for requirements elicitation? (2 answers)",
+  33: "Which of the following statements about elicitation techniques are true and which are false?",
+  34: "For a navigation system that is to be used internationally, a stakeholder demands a female voice only for the voice output. Another stakeholder considers this discriminatory and demands a male voice in addition.\n\nWhich of the following types of conflicts describes this conflict best? (1 answer)",
+  35: "In your project, a new braking system for high speed trains is developed.\n\nWhich validation technique is most suitable for this situation, where the system requirements of a safety-critical component should be validated? (1 answer)",
+  36: "Which two major facets below are the most important to consider when configuring an RE process? (2 answers)",
+  37: "Based on an analysis of the influencing factors, a suitable combination of process facets should be configured. In practice, some specific combinations of facets frequently occur.\n\nWhich one of the combinations mentioned below is NOT recognized as such? (1 answer)",
+  38: "Which of the following statements about views on requirements are true and which are false?",
+  39: "The traceability of requirements has several goals.\n\nIndicate the statement that is NOT correct. (1 answer)",
+  40: "Additional information on requirements is managed using attributes. An example of such additional information is a unique identifier.\n\nWhich of the following statements regarding the purpose of unique identifiers are true and which are false?",
+  41: "You have produced a requirements baseline and delivered it to development. In the meantime, stakeholders have submitted change requests for requirements of this baseline.\n\nWhich of the following answers represent correct change management for requirements? (2 answers)",
+  42: "Attributes are used to manage additional characteristics of requirements. Priority is one example of such a requirements attribute.\n\nWhich of the following statements on the reason for prioritizing requirements are true and which are false?",
+  43: "Version and configuration management are used for managing requirements and requirements specifications. \"Version\" and \"baseline\" are two frequently used terms in this context.\n\nSelect the best description of a baseline. (1 answer)",
+  44: "As a Requirements Engineer for a company, you have to choose a tool to support your Requirements Engineering process.\n\nIn this context, which of the following statements are true and which are false?",
+  45: "Which of the following tasks is NOT a capability of a tool that supports the management of requirements in the Requirements Engineering process? (1 answer)"
+}
+
 meta_data = {
   1: {
     "euNo": 1,
     "title": "Quality Requirements vs Functional Requirements",
     "correctDisplay": "A=False, B=True, C=False, D=True",
-    "whyCorrect": "• B: True. Quality requirements melengkapi functional requirements dengan menetapkan tahap kualiti (cth: performance, usability, security, reliability) yang perlu dicapai oleh fungsi tersebut.\n• D: True. Quality requirements boleh diperincikan (substantiated) menjadi functional requirements baharu (contoh: keperluan keselamatan 'Akses mesti dilindungi' diperincikan kepada fungsi 'Sistem mesti menyediakan Two-Factor Authentication').",
+    "whyCorrect": "• B: True. Quality requirements melengkapi functional requirements dengan menetapkan tahap kualiti (seperti performance, usability, security, reliability) yang perlu dicapai oleh sesuatu fungsi.\n• D: True. Quality requirements boleh diperincikan (substantiated) menjadi functional requirements baharu (contoh: keperluan keselamatan 'Akses mesti dilindungi' diperincikan kepada fungsi 'Sistem mesti menyediakan Two-Factor Authentication').",
     "whyWrong": "• A: False. Quality requirements merujuk kepada kualiti PRODUK (sistem), bukannya proses pembangunan (keperluan proses dirujuk sebagai Project / Process Requirements).\n• C: False. Quality requirements TIDAK semestinya di-elicit selepas fungsi; dalam praktis RE sebenar, kedua-duanya di-elicit serentak secara berulang (intertwined).",
     "extra": "Handbook Bab 1.1 / Syllabus EO 1.1.1: 3 jenis keperluan mengikut piawaian IREB ialah: 1. Functional Requirements, 2. Quality Requirements, 3. Constraints.",
     "mnemonic": "Quality = Sifat Produk. Boleh melahirkan Functional Requirement baharu (Substantiated)."
@@ -58,29 +114,29 @@ meta_data = {
     "whyCorrect": "• C (Requirement C): Betul. 'Throughput 100 transactions/sec' adalah Quality Requirement (Performance) yang merujuk terus kepada keupayaan sistem yang direalisasikan.\n• E (Requirement E): Betul. 'Response time <= 2 seconds dalam 90% kes' adalah Quality Requirement (Performance) yang merujuk kepada kelajuan operasi sistem.",
     "whyWrong": "• A (Requirement A): Ini adalah Process / Project Requirement bagi kontraktor (tempoh masa memproses change request).\n• B (Requirement B): Ini adalah Project Deliverable / Management Requirement (penyerahan laporan ujian).\n• D (Requirement D): Ini adalah Project Constraint untuk pengurusan konfigurasi kontraktor.",
     "extra": "Handbook Bab 1.1 / Syllabus EO 1.1.2: Bezakan antara System Requirements (keperluan produk akhir) dengan Project/Process Requirements (cara projek/organisasi dijalankan).",
-    "mnemonic": "System Requirement = Sifat & tingkah laku perisian yang siap (Throughput, Response Time)."
+    "mnemonic": "System Requirement = Sifat sistem yang dibina (Throughput & Response Time). Bukan proses kerja kontraktor."
   },
   4: {
     "euNo": 2,
-    "title": "Fundamental Principles of Requirements Engineering",
-    "correctDisplay": "C (Regular retrospectives)",
-    "whyCorrect": "• Pilihan C adalah jawapan yang betul (bukan prinsip asas RE). 'Regular retrospectives' adalah amalan proses Agile / Scrum (Process Practice), bukan salah satu daripada 9 Prinsip Asas RE yang digariskan oleh IREB.",
-    "whyWrong": "• A (Value orientation): Prinsip 1 RE — Requirements are a means to an end, not an end in themselves.\n• B (Problem - requirement - solution): Prinsip 5 RE — Memahami masalah sebelum melompat ke solusi teknikal.\n• D (Systematic and disciplined work): Prinsip 9 RE — RE memerlukan kaedah kerja yang berdisiplin dan boleh diulang.",
-    "extra": "Handbook Bab 2 / Syllabus EO 2.1.1: 9 Prinsip Asas RE IREB:\n1. Value-Orientation\n2. Stakeholders\n3. Shared Understanding\n4. Context\n5. Problem-Requirement-Solution\n6. Validation\n7. Evolution\n8. Innovation\n9. Systematic Work.",
-    "mnemonic": "9 Prinsip IREB: V-S-S-C-P-V-E-I-S. 'Retrospectives' adalah amalan Agile, bukan prinsip teras RE."
+    "title": "9 Fundamental Principles of Requirements Engineering",
+    "correctDisplay": "D (Requirements that have been completely documented...)",
+    "whyCorrect": "• Pilihan D adalah jawapan yang betul (BUKAN prinsip RE). Prinsip 7 (Evolution) menegaskan bahawa keperluan TIDAK statik dan akan sentiasa berubah (evolving) sepanjang kitaran hayat sistem.",
+    "whyWrong": "• A, B, C mematuhi 9 Prinsip RE:\n- A = Prinsip 1 (Value-Orientation: Keperluan adalah alat capai nilai, bukan matlamat mutlak).\n- B = Prinsip 3 (Shared Understanding: Gabungan pemahaman eksplisit & implisit).\n- C = Prinsip 4 (Context: RE tidak boleh dilakukan secara terasing tanpa memahami konteks).",
+    "extra": "Handbook Bab 2 / Syllabus EO 2.1.1: 9 Prinsip Asas RE: 1. Value-Orientation, 2. Stakeholders, 3. Shared Understanding, 4. Context, 5. Problem-Req-Solution, 6. Validation, 7. Evolution, 8. Innovation, 9. Systematic Work.",
+    "mnemonic": "9 Prinsip: Nilai, Stakeholder, Kefahaman, Konteks, Masalah, Validasi, Evolusi, Inovasi, Sistematik."
   },
   5: {
     "euNo": 2,
-    "title": "Principle 3: Shared Understanding",
-    "correctDisplay": "A=True, B=True, C=True, D=True",
-    "whyCorrect": "• A: True. Mencapai explicit shared understanding adalah salah satu matlamat utama RE untuk mengelakkan salah faham antara stakeholder dan pembangun.\n• B: True. Tanpa shared understanding asas, mustahil untuk mengenal pasti punca dan sumber keperluan (requirements sources) yang tepat dan relevan.\n• C: True. Sesetengah tahap implicit shared understanding adalah sangat penting kerana mustahil untuk mendokumentasikan setiap butiran secara eksplisit.\n• D: True. RE dalam pembangunan Agile sangat bergantung kepada implicit shared understanding (kerjasama rapat dan komunikasi bersemuka).",
-    "whyWrong": "• Kesemua 4 kenyataan (A, B, C, D) adalah TEPAT dan BENAR (True) mengikut perbincangan Prinsip 3: Shared Understanding dalam IREB Handbook Bab 2.3.",
-    "extra": "Handbook Bab 2.3 / Syllabus EO 2.2.1 (Principle 3: Shared Understanding):\n• Shared understanding terdiri daripada Explicit (didokumenkan) dan Implicit (pengetahuan bersama yang difahami).\n• Alat meningkatkan Shared Understanding: Glossary, Prototaip, Model Visual, dan Analogi.",
-    "mnemonic": "Shared Understanding = Explicit (ditulis) + Implicit (difahami bersama). Agile bersandar pada Implicit."
+    "title": "Principle 3: Shared Understanding (Explicit vs Implicit)",
+    "correctDisplay": "A=True, B=True, C=False, D=False",
+    "whyCorrect": "• A: True. Shared understanding dibina daripada gabungan pemahaman eksplisit (ditulis/dimodelkan) dan pemahaman implisit (difahami bersama melalui budaya/pengalaman).\n• B: True. Istilah teknikal yang ditakrifkan dalam Glossary membolehkan pemahaman eksplisit yang tepat dan mengelakkan kekeliruan sinonim.",
+    "whyWrong": "• C: False. Shared understanding TIDAK semestinya didokumentasikan sepenuhnya; dalam pasukan Agile yang matang, pemahaman implisit yang kukuh memadai tanpa perlu mendokumentasikan setiap butiran kecil.\n• D: False. Pasukan baharu yang belum pernah bekerjasama mempunyai pemahaman implisit yang rendah, maka mereka memerlukan dokumentasi eksplisit yang LEBIH banyak (bukan kurang).",
+    "extra": "Handbook Bab 2.3 / Syllabus EO 2.3.1 (Principle 3: Shared Understanding): Komunikasi berkesan mengurangkan jarak pemahaman antara stakeholder dan pasukan teknikal.",
+    "mnemonic": "Shared Understanding = Explicit (Glossary/Model) + Implicit (Pengalaman/Budaya). Pasukan baharu perlu lebih banyak eksplisit."
   },
   6: {
     "euNo": 2,
-    "title": "Principle 4: Context Boundaries",
+    "title": "Principle 4: Context Boundaries (System vs Context)",
     "correctDisplay": "A=Needs to be considered, B=Needs to be considered, C=Needs to be considered, D=Needs to be considered",
     "whyCorrect": "• A: Needs to be considered. Sistem itu sendiri mentakrifkan apa yang berada di dalam System Boundary.\n• B: Needs to be considered. System Context adalah persekitaran relevan yang berinteraksi dengan sistem (Stakeholders, sistem luaran, proses perniagaan, undang-undang).\n• C: Needs to be considered. Application Domain adalah domain aplikasi di mana sistem dan konteks beroperasi (mempunyai peraturan dan kekangan domain tersendiri).\n• D: Needs to be considered. Antara muka (Interfaces) menghubungkan sistem dengan konteks sistem merentasi System Boundary.",
     "whyWrong": "• Kesemua 4 aspek (A, B, C, D) WAJIB dipertimbangkan semasa mentakrifkan System Boundary dan Context Boundary mengikut IREB Handbook Bab 2.4.",
@@ -116,333 +172,332 @@ meta_data = {
   },
   10: {
     "euNo": 3,
-    "title": "Work Products for Stakeholder Comprehensibility",
+    "title": "Roles and Criteria for Requirements Work Products",
     "correctDisplay": "C, D",
-    "whyCorrect": "• C (Establishing a glossary): Betul. Glossary menyelaraskan istilah domain, menghapuskan sinonim/homonim yang mengelirukan antara stakeholder dan pemaju.\n• D (Creating a use case diagram and specifying the use cases): Betul. Use case diagram memberikan gambaran visual skop sistem yang mudah difahami oleh stakeholder dari perspektif perniagaan.",
-    "whyWrong": "• A (Writing formal mathematical specifications): Bahasa formal menyukarkan stakeholder biasa memahami keperluan.\n• B (Documenting in code comments): Komen kod tidak boleh diakses atau dinilai oleh stakeholder perniagaan.\n• E (Avoiding functional requirements): Menghapuskan keperluan fungsi menyebabkan sistem tidak mempunyai panduan binaan.",
-    "extra": "Handbook Bab 3.1 / Syllabus EO 3.1.3: Cara meningkatkan kefahaman stakeholder: Gunakan Glossary, Model Visual (Use Cases/Activity), dan Teks Berstruktur.",
-    "mnemonic": "Fahamkan Stakeholder = Glossary (Kamus Istilah) + Use Case (Model Skop Visual)."
+    "whyCorrect": "• C (System architects / Non-ambiguity & Completeness): Betul. System Architects memerlukan keperluan yang lengkap dan tidak kabur untuk mereka bentuk struktur seni bina teknikal yang kukuh.\n• D (Testers / Verifiability): Betul. Jurutera Ujian (Testers) memerlukan keperluan yang boleh disahkan (Verifiable / Testable) agar kriteria penerimaan ujian dapat dibina.",
+    "whyWrong": "• A (Developers / Redundancy): Pembangun perisian TIDAK mahu redundansi (pengulangan maklumat); redundansi meningkatkan risiko ketidakkonsistenan.\n• B (Project managers / Detailedness): Pengurus projek fokus pada skop dan nilai perniagaan, bukan butiran teknikal peringkat rendah.",
+    "extra": "Handbook Bab 3.1 / Syllabus EO 3.1.4: Menyesuaikan gaya dokumentasi mengikut peranan pengguna hiliran (Downstream Roles).",
+    "mnemonic": "Architect = Complete & Unambiguous. Tester = Verifiable (Boleh Diuji)."
   },
   11: {
     "euNo": 3,
-    "title": "Tender Preparation Activity Diagram Execution",
+    "title": "Approaches for Terminology & Interaction Flows (Tender Preparation)",
     "correctDisplay": "B, D",
-    "whyCorrect": "• B: Betul. Aliran proses menunjukkan aktiviti analisis risiko projek dan analisis teknikal berjalan selari (parallel branches).\n• D: Betul. Menyediakan cadangan (Prepare proposal) memerlukan aktiviti analisis selesai sebelum diteruskan.",
-    "whyWrong": "• A, C, E tidak mematuhi logik aliran token Fork dan Join pada rajah aktiviti.",
-    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.3: Activity Diagram Control Flows: Fork Node (Cabang Selari) & Join Node (Penyelarasan Aliran).",
-    "mnemonic": "Fork = Aliran Selari. Join = Penyatuan Aliran."
+    "whyCorrect": "• B (Creating a use case diagram and specifying the use cases): Betul. Interaksi antara pakar dan sistem dalam bentuk aliran tindakan pengguna & tindak balas sistem paling tepat dimodelkan menggunakan Use Case Diagram & spesifikasi Use Case.\n• D (Establishing a glossary): Betul. Menghadapi masalah istilah syarikat yang tidak difahami dan tidak konsisten diselesaikan secara langsung dengan membina Glossary (Kamus Istilah).",
+    "whyWrong": "• A (Writing formal mathematical specifications): Notasi matematik formal tidak menyelesaikan masalah salah faham istilah dan menyukarkan komunikasi dengan wakil syarikat.\n• C (Documenting interactions exclusively in code comments): Komen kod tidak boleh disemak oleh stakeholder perniagaan.\n• E (Avoiding functional requirements): Menolak keperluan fungsi merosakkan projek.",
+    "extra": "Handbook Bab 3.1 & 3.2 / Syllabus EO 3.1.3 & 3.2.2: Masalah istilah ➔ Glossary. Aliran tindakan pengguna vs sistem ➔ Use Cases.",
+    "mnemonic": "Istilah tak faham ➔ Glossary. Interaksi Pengguna & Sistem ➔ Use Case."
   },
   12: {
     "euNo": 3,
-    "title": "Notations for Requirements Documentation",
-    "correctDisplay": "A=True, B=False, C=True, D=True",
-    "whyCorrect": "• A: True. Notasi standard (UML/SysML/BPMN) memastikan konsistensi dan mengurangkan kekaburan.\n• C: True. Menggabungkan model grafik bersama teks penerangan (Hybrid) memberikan kejelasan maksimum.\n• D: True. Bahasa semulajadi adalah format paling universal untuk disemak oleh semua stakeholder.",
-    "whyWrong": "• B: False. Model grafik tidak sepatutnya diabaikan; rajah visual mengurangkan beban kognitif secara signifikan.",
-    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.1: Bentuk dokumentasi: Natural Language, Conceptual Models, dan Hybrid.",
-    "mnemonic": "Dokumentasi Terbaik = Gabungan Teks Semulajadi + Model Konseptual (Hybrid)."
+    "title": "Notations for Requirements Documentation (Natural vs Model vs Hybrid)",
+    "correctDisplay": "A=Applies, B=Does not apply, C=Applies, D=Applies",
+    "whyCorrect": "• A: Applies. Notasi standard (UML/SysML/BPMN) memastikan konsistensi dan mengurangkan kekaburan antara pihak berkepentingan.\n• C: Applies. Menggabungkan model grafik bersama teks penerangan (Hybrid Representation) memberikan kejelasan maksimum.\n• D: Applies. Bahasa semulajadi adalah format paling fleksibel dan universal untuk disemak oleh semua jenis stakeholder.",
+    "whyWrong": "• B: Does not apply. Model grafik TIDAK sepatutnya diabaikan; rajah visual mengurangkan beban kognitif pembaca dengan sangat ketara.",
+    "extra": "Handbook Bab 3.1 / Syllabus EO 3.1.5: 3 bentuk dokumentasi: Natural Language, Conceptual Models, Hybrid.",
+    "mnemonic": "Notasi: Standard kurangkan salah faham, Hybrid paling berkesan, Teks biasa paling universal."
   },
   13: {
     "euNo": 3,
     "title": "Quality Criteria for Work Products (IREB Standards)",
-    "correctDisplay": "A=True, B=True, C=True, D=False",
-    "whyCorrect": "• A: True. Keperluan yang tidak boleh diuji (untestable) tidak mempunyai sifat Verifiability.\n• B: True. Traceability mempermudah penilaian impak (Impact Analysis) apabila berlaku perubahan.\n• C: True. Kelengkapan (Completeness) perlu diseimbangkan dengan kos penyediaannya (Prinsip Value-Orientation).",
-    "whyWrong": "• D: False. Format perwakilan yang seragam untuk semua keperluan tidak semestinya menjamin kebolehfahaman; variasi format (teks, jadual, model) selalunya lebih berkesan.",
-    "extra": "Handbook Bab 3.1 / Syllabus EO 3.1.4: Kriteria Kualiti: Unambiguous, Complete, Consistent, Verifiable, Modifiable, Traceable.",
-    "mnemonic": "Kualiti = Verifiable (Boleh Uji) + Traceable (Boleh Kesan) + Value-Oriented."
+    "correctDisplay": "A=False, B=True, C=True, D=False",
+    "whyCorrect": "• B: True. Kriteria kualiti untuk himpunan keperluan (Work Product Sets) termasuklah: Completeness, Consistency, Non-redundancy, Modifiability, dan Traceability.\n• C: True. Keperluan individu mestilah: Unambiguous, Atomic, Verifiable, dan Necessary.",
+    "whyWrong": "• A: False. Work products TIDAK boleh dinilai hanya berdasarkan ketebalan dokumen; kualiti diukur dari segi ketepatan dan kegunaan sebenar.\n• D: False. Kriteria kualiti berbeza antara Individual Work Products (Atomic, Verifiable) dengan Sets (Completeness, Consistency).",
+    "extra": "Handbook Bab 3.1 / Syllabus EO 3.1.6: Kualiti Keperluan: 1. Individual Requirements Criteria vs 2. Work Product Set Criteria.",
+    "mnemonic": "Individu = Atomic, Verifiable, Unambiguous. Set = Complete, Consistent, Traceable."
   },
   14: {
     "euNo": 3,
-    "title": "Benefits of Phrase Templates (Sentence Templates)",
+    "title": "Benefits of Phrase Templates (Sentence Templates / SOPHIST / MARE)",
     "correctDisplay": "A, C",
-    "whyCorrect": "• A: Betul. Penulis dibimbing oleh struktur templat semasa merumuskan keperluan.\n• C: Betul. Keperluan yang ditulis menggunakan templat mengandungi kurang kekaburan linguistik (fewer linguistic ambiguities).",
-    "whyWrong": "• B: Templat tidak menjamin kelengkapan isi kandungan semantik.\n• D & E: Templat tidak memendekkan masa berfikir dan tidak secara automatik mematuhi kekangan undang-undang.",
-    "extra": "Handbook Bab 3.3 / Syllabus EO 3.3.2: Sentence Template (SOPHIST): [Condition] [System] <SHALL/SHOULD/WILL> [Action] [Object].",
-    "mnemonic": "Sentence Template = Membimbing Penulis (Guided) + Kurang Kekaburan (Less Ambiguity)."
+    "whyCorrect": "• A (Requirements written using a phrase template contain fewer linguistic defects): Betul. Templat ayat mengelakkan kecacatan bahasa seperti Nominalization dan ayat pasif.\n• C (Using phrase templates is easy to learn for everyone): Betul. Struktur templat ayat mudah dipelajari oleh jurutera dan stakeholder dalam masa yang singkat.",
+    "whyWrong": "• B (Phrase templates eliminate the need to write functional requirements): Salah, templat ayat digunakan khusus untuk MENULIS functional requirements.\n• D (Using phrase templates completely avoids any ambiguities): Tiada templat yang dapat menghapuskan kekaburan 100% jika perkataan yang diisi tidak jelas.",
+    "extra": "Handbook Bab 3.3 / Syllabus EO 3.3.1: Sentence Templates (SOPHIST/MARE): Mengurangkan kecacatan bahasa dan membina struktur konsisten.",
+    "mnemonic": "Sentence Template: Kurangkan kecacatan bahasa & Mudah dipelajari."
   },
   15: {
     "euNo": 3,
-    "title": "Transformation Effects (Universal Quantifiers)",
-    "correctDisplay": "B (Universal quantifiers have been used)",
-    "whyCorrect": "• Pilihan B adalah jawapan yang betul. Penggunaan kata penentu sejagat (Universal Quantifiers) seperti 'all', 'always', 'every', 'never' sering kali tidak tepat dan menyembunyikan kekecualian (exceptions) yang wujud dalam situasi sebenar.",
-    "whyWrong": "• A (Nominalization), C (Incomplete condition), D (Passive voice) merujuk kepada kesan transformasi bahasa yang lain.",
-    "extra": "Handbook Bab 3.3 / Syllabus EO 3.3.1: 4 Kesan Transformasi Bahasa: 1. Nominalization, 2. Deletion/Omission, 3. Incomplete Condition, 4. Universal Quantification.",
-    "mnemonic": "Universal Quantifiers = Perkataan melampau (All, Always, Every, Never)."
+    "title": "Natural Language Defects: Universal Quantifiers",
+    "correctDisplay": "B (Universal quantifiers)",
+    "whyCorrect": "• Pilihan B adalah jawapan yang betul. Perkataan 'ALL data sets' dan 'ALL submenus' adalah contoh Universal Quantifiers (Kuantifier Universal). Ia mengitlakkan keadaan secara melampau dan menyembunyikan pengecualian (exceptions) yang perlu dikendalikan.",
+    "whyWrong": "• A (Nominalization): Tiada kata kerja yang diubah menjadi kata nama dalam ayat tersebut.\n• C (Passive voice): Ayat menggunakan struktur aktif ('The system Alpha should display...').\n• D (Incompletely specified process words): Masalah paling utama dalam ayat ini ialah generalisasi melampau perkataan 'ALL'.",
+    "extra": "Handbook Bab 3.3 / Syllabus EO 3.3.2: 4 Kecacatan Bahasa Semulajadi: 1. Nominalization, 2. Universal Quantifiers, 3. Incompletely Specified Conditions, 4. Passive Voice.",
+    "mnemonic": "All, Every, Always, Never = Universal Quantifiers (Bahaya generalisasi tanpa pengecualian)."
   },
   16: {
     "euNo": 3,
-    "title": "Template-based Work Products",
-    "correctDisplay": "A=True, B=True, C=False, D=False",
-    "whyCorrect": "• A: True. Struktur templat dokumen boleh disesuaikan (tailored) mengikut keperluan projek spesifik.\n• B: True. Menggunakan templat standard memudahkan perkongsian dan guna semula (reuse) keperluan antara projek berbeza.",
-    "whyWrong": "• C: False. Templat tidak menjamin kandungan lengkap sepenuhnya.\n• D: False. Templat bukan bersifat 'wajib rigid tanpa pengubahsuaian'; ia boleh diadaptasi.",
-    "extra": "Handbook Bab 3.1 / Syllabus EO 3.1.5: Template dokumen menyediakan standardisasi dan mempermudah navigasi pembaca.",
-    "mnemonic": "Template Dokumen = Boleh Disesuaikan (Tailored) + Memudahkan Guna Semula (Reuse)."
+    "title": "Classification of Template-based Work Products",
+    "correctDisplay": "A=False, B=True, C=False, D=True",
+    "whyCorrect": "• B (User Story): True. User Story mempunyai struktur templat piawai: 'As a <role>, I want <feature>, so that <benefit>'.\n• D (Use Case Template): True. Use case specification ditulis menggunakan templat berstruktur (Preconditions, Main Flow, Alternate Flows, Postconditions).",
+    "whyWrong": "• A (Free textual documentation): False. Teks bebas tidak mempunyai struktur templat tetap.\n• C (Mind map): False. Mind map adalah graf pokok visual tanpa templat ayat tetap.",
+    "extra": "Handbook Bab 3.1 / Syllabus EO 3.1.2: Template-based Work Products: User Stories, Use Case Templates, Quality Requirements Templates.",
+    "mnemonic": "User Story (As a... I want...) & Use Case Specification = Template-based Work Products."
   },
   17: {
     "euNo": 3,
-    "title": "Use Case Modeling Diagram Choice",
-    "correctDisplay": "A (Use case diagram)",
-    "whyCorrect": "• Pilihan A adalah jawapan yang betul. Use Case Diagram adalah model terbaik untuk memberikan gambaran keseluruhan (overview) perkhidmatan sistem dan pelakunya (actors) kepada pihak pengurusan.",
-    "whyWrong": "• B (State machine): Model kitaran hayat status dalaman.\n• C (Class diagram): Model struktur data teknikal.\n• D (Deployment diagram): Model seni bina perkakasan fizikal.",
-    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.4: Use Case Diagram memaparkan skop fungsi dari perspektif pengguna luar.",
-    "mnemonic": "Gambaran Skop Pengguna = Use Case Diagram."
+    "title": "Modeling Fleet Management States & Transitions (State Machine)",
+    "correctDisplay": "A (State machine)",
+    "whyCorrect": "• Pilihan A adalah jawapan yang betul. Keperluan R1, R2, dan R3 memodelkan mod operasi kenderaan berdasarkan keadaan tertentu (kunci dalam suis, pemandu duduk, kehilangan isyarat satelit). Ini adalah model keadaan dinamik dan transisi yang paling tepat dimodelkan menggunakan State Machine Diagram.",
+    "whyWrong": "• B (Class diagram): Memodelkan struktur data statik, bukan mod operasi.\n• C (Use case diagram): Memodelkan skop interaksi perniagaan peringkat tinggi.\n• D (Deployment diagram): Memodelkan penempatan fizikal perkakasan.",
+    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.7: Behavior Perspective: UML State Machine Diagram memodelkan States, Transitions, Events, dan Guards.",
+    "mnemonic": "In operation / Lost-signal / Conditions ➔ State Machine Diagram (Behavior Perspective)."
   },
   18: {
     "euNo": 3,
-    "title": "UML Class Diagram: Film Contest Multiplicities",
-    "diagramHtml": f"<img src='{img_q18}' alt='Diagram Q18' />",
-    "correctDisplay": "A=False, B=True, C=True, D=True, E=False",
-    "whyCorrect": "• B: True. Filem dengan hanya seorang pelakon boleh dihantar mengikut multiplicity (1..*).\n• C: True. Pengarah boleh mengarah dua filem yang dihantar (0..*).\n• D: True. Pelakon boleh berlakon dalam sebarang bilangan filem (*).",
-    "whyWrong": "• A: False. Multiplicity membenarkan pengarah mengarah bersama secara kolaboratif.\n• E: False. Filem TIDAK diwajibkan mempunyai 10 pelakon (multiplicity ialah 1..*, bukan 10).",
-    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.6: Membaca Multiplicities UML Class Diagram (1..*, 0..*, 1, *).",
-    "mnemonic": "Semak multiplicities pada hujung kelas persatuan dengan teliti."
+    "title": "UML Class Diagram: Film Contest Multiplicities & Associations",
+    "correctDisplay": "A=Does not match, B=Matches, C=Matches, D=Matches, E=Does not match",
+    "whyCorrect": "• B: Matches. Hubungan Actor ➔ Film mempunyai multiplicity `1..10` ke `0..*`. Ini bermaksud satu filem boleh dilakonkan oleh sekurang-kurangnya 1 dan maksimum 10 orang pelakon.\n• C: Matches. Multiplicity `0..*` pada Film bermaksud seseorang pelakon boleh tidak berlakon dalam mana-mana filem yang bertanding (0) atau membintangi banyak filem (*).\n• D: Matches. Hubungan Film ➔ Director mempunyai multiplicity `1..3` ke `1`. Ini bermaksud sebuah filem diarahkan oleh 1 hingga 3 orang pengarah.",
+    "whyWrong": "• A: Does not match. Multiplicity Director ialah `1`, bermaksud seorang pengarah HANYA boleh mengarah 1 filem (tidak boleh mengarah pelbagai filem serentak dalam model ini).\n• E: Does not match. Hubungan pengarah ke pelakon tidak dimodelkan secara langsung.",
+    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.6: UML Class Diagram Multiplicities: 0..1 (Optional), 1 (Exact one), 1..* (At least one), 0..* / * (Any number), 1..10 (Min 1, Max 10).",
+    "mnemonic": "Baca multiplicity dari hujung bertentangan garisan persatuan (Association Ends)."
   },
   19: {
     "euNo": 3,
-    "title": "What is NOT Depicted in a Use Case Diagram",
-    "correctDisplay": "A (The process steps of an application)",
-    "whyCorrect": "• Pilihan A adalah jawapan yang betul. Use Case Diagram TIDAK memaparkan langkah-langkah proses terperinci (process steps / sequence of actions). Langkah proses hanya dipaparkan dalam Activity Diagram atau Use Case Specification bertulis.",
-    "whyWrong": "• B (Actors), C (System boundary), D (Use cases) kesemuanya dipaparkan dalam Use Case Diagram.",
-    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.4: Use Case Diagram = Gambaran Skop Fungsi (Bukan Urutan Proses).",
-    "mnemonic": "Use Case Diagram = Skop Sistem (Bukan Langkah Proses Dalaman)."
+    "title": "Elements NOT Depicted in a Use Case Diagram",
+    "correctDisplay": "A (The internal flow of events in the use case)",
+    "whyCorrect": "• Pilihan A adalah jawapan yang betul (TIDAK dipaparkan). Aliran peristiwa terperinci di dalam use case (aliran langkah 1, 2, 3) diterangkan dalam spesifikasi teks Use Case atau Activity Diagram, bukannya di atas rajah Use Case Diagram itu sendiri.",
+    "whyWrong": "• B (Actors), C (Use cases / Elips), dan D (System boundary / Kotak sempadan) kesemuanya merupakan komponen grafik rasmi dalam UML Use Case Diagram.",
+    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.2: Use Case Diagram memaparkan: System Boundary, Actors, Use Cases, Associations, <<include>>, <<extend>>, Generalization.",
+    "mnemonic": "Use Case Diagram = Pandangan Luar / Black Box (Actors & Use Cases). Aliran dalaman = Spesifikasi Use Case / Activity Diagram."
   },
   20: {
     "euNo": 3,
-    "title": "State Machine Diagram: Token Lifecycle",
-    "diagramHtml": f"<img src='{img_q20}' alt='Diagram Q20' />",
-    "correctDisplay": "A=False, B=True, C=True, D=False",
-    "whyCorrect": "• B: True. Dari keadaan 'Active', sistem boleh kembali ke 'Idle' melalui timeout/expiration atau token returned.\n• C: True. Peralihan berlaku apabila token tamat tempoh masa yang ditetapkan.",
-    "whyWrong": "• A & D: Tidak mematuhi laluan peralihan dan guard condition yang dipaparkan dalam rajah.",
-    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.5: State Machine Diagram: States, Transitions, Events, Guards, Actions.",
-    "mnemonic": "State Machine = Kitaran Hayat Keadaan Objek (State Transitions)."
+    "title": "State Machine Diagram: Intranet Password Lifecycle Verification",
+    "correctDisplay": "A=Incorrect or not modeled, B=Correctly modeled, C=Incorrect or not modeled, D=Incorrect or not modeled",
+    "whyCorrect": "• B: Correctly modeled. Transisi daripada 'not entitled' ke 'application in progress' berlaku apabila event 'application filed / check application' dipicu.",
+    "whyWrong": "• A: Incorrect or not modeled. Kitaran tamat tempoh kata laluan tidak membolehkan pembaharuan automatik terus tanpa melalui proses semakan semula.\n• C: Incorrect or not modeled. Transisi penolakan permohonan mengembalikan status ke 'not entitled' dan bukannya 'blocked'.\n• D: Incorrect or not modeled. Keadaan 'blocked' adalah sink state yang memerlukan tindakan pentadbir khas, bukan transisi terus.",
+    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.7: Semak ketepatan model State Machine: Source State, Event [Guard] / Action, Target State.",
+    "mnemonic": "Semak setiap anak panah transisi: Keadaan Asal ➔ Event/Action ➔ Keadaan Sasaran."
   },
   21: {
     "euNo": 3,
-    "title": "Activity Diagram: Performing a Measurement",
-    "diagramHtml": f"<img src='{img_q21}' alt='Diagram Q21' />",
-    "correctDisplay": "A=Does not match, B=Does not match, C=Does not match, D=Matches",
-    "whyCorrect": "• D: Matches. Berdasarkan rajah aktiviti, 'Deactivate measuring device' dieksekusi sebaik sahaja isyarat 'Data receipt confirmed' diterima (True).",
-    "whyWrong": "• A: Does not match. 'Initialize measuring device' dan 'Initialize network connection' berada dalam cabang Fork selari, urutannya bebas.\n• B: Does not match. 'Register at server' memerlukan KEDUA-DUA aliran masuk ke Join Node selesai (Network initialized DAN Certificates loaded).\n• C: Does not match. Join node menunggu kedua-dua cabang selesai, tetapi tidak mewajibkan ia selesai serentak pada detik masa yang sama.",
-    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.3: Activity Diagram Control Flows: Fork Node (Split) & Join Node (Synchronization).",
-    "mnemonic": "Join Node = Tunggu kedua-dua cabang siap (tak semestinya siap serentak)."
+    "title": "Activity Diagram: Performing Measurement Control Flow Verification",
+    "correctDisplay": "A=Matches, B=Does not match, C=Matches, D=Matches",
+    "whyCorrect": "• A: Matches. 'Initialize network connection' dan 'Load certificates' berada di antara Fork dan Join bar, maka kedua-duanya dilaksanakan secara selari (parallel).\n• C: Matches. Transisi gelung 'Resend measurement data' berlaku jika 'waiting time elapsed' tercapai.\n• D: Matches. Aktiviti 'Deactivate measuring device' dilaksanakan sebaik sahaja guard condition '[Data receipt confirmed]' bernilai benar.",
+    "whyWrong": "• B: Does not match. 'Register at server' hanya boleh bermula selepas KEDUA-DUA aktiviti selari (network connection & certificates) selesai pada Join bar (bukan serta merta selepas satu sahaja selesai).",
+    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.3: Activity Diagram: Fork Node memecahkan aliran kepada selari; Join Node menyegerakkan semua aliran sebelum mara ke hadapan.",
+    "mnemonic": "Fork = Mula Selari. Join = Tunggu Semua Cawangan Selesai."
   },
   22: {
     "euNo": 3,
-    "title": "Advantages of Graphical Conceptual Models",
-    "correctDisplay": "A, C",
-    "whyCorrect": "• A: Betul. Model grafik menumpukan perhatian kepada perspektif tertentu dan mengurangkan beban kognitif (cognitive load).\n• C: Betul. Model mempunyai sintaksis terhad (restricted syntax) yang mengurangkan kekaburan berbanding teks semulajadi bebas.",
-    "whyWrong": "• B: Model tidak boleh menggambarkan 100% perincian tanpa sokongan teks.\n• D & E: Model tidak secara automatik menghapuskan keperluan ujian perisian.",
-    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.1: 3 Perspektif Model RE: Structure, Function, Behavior.",
-    "mnemonic": "Kelebihan Model Visual = Kurang Beban Kognitif (Focus) + Sintaksis Ketat (Kurang Kabur)."
+    "title": "Advantages of Graphical Conceptual Models over Textual Specifications",
+    "correctDisplay": "B, C",
+    "whyCorrect": "• B (A model can be verified more easily): Betul. Model grafik mempunyai sintaks formal yang memudahkan pengesahan logik dan integriti berbanding teks panjang.\n• C (A model allows a faster overview of the requirements): Betul. Rajah visual memberikan gambaran skop menyeluruh sepintas lalu (higher comprehensibility & lower cognitive load).",
+    "whyWrong": "• A (Models can only be interpreted in one way): Salah, model yang kurang dianotasi juga boleh disalah tafsir jika pembaca tidak memahami notasi.\n• D (Models are always completely error-free): Salah, pencipta model masih boleh membuat kesilapan logik domain.\n• E (Models eliminate all documentation effort): Salah, membina model memerlukan kemahiran dan usaha masa.",
+    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.1: Nilai Model Konseptual: Gambaran pantas, fokus perspektif khusus, dan mudah disahkan.",
+    "mnemonic": "Model Grafik = Gambaran Pantas (Faster Overview) + Mudah Disahkan (Easier Verification)."
   },
   23: {
     "euNo": 3,
-    "title": "UML Class Diagram: Route Calculation System",
-    "diagramHtml": f"<img src='{img_q23}' alt='Diagram Q23' />",
-    "correctDisplay": "A=True, B=True, C=False, D=True",
-    "whyCorrect": "• A: True. Laluan (route) boleh dikira tanpa maklumat trafik (0..1).\n• B: True. Laluan boleh dikira selepas mendapatkan maklumat trafik.\n• D: True. Urutan memasukkan destinasi dan koordinat GPS adalah bebas mengikut model.",
-    "whyWrong": "• C: False. Kenyataan C menyalahi penggandaan (multiplicity) persatuan yang ditetapkan.",
-    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.6: Membaca Multiplicities UML Class Diagram (0..1, 1..*, *).",
-    "mnemonic": "Baca multiplicities pada hujung kelas sasaran persatuan."
+    "title": "Activity Diagram: Vehicle Navigation Route Calculation Flow",
+    "correctDisplay": "A=True, B=False, C=False, D=True",
+    "whyCorrect": "• A: True. 'Enter destination' dan 'Determine GPS coordinates' berada di bawah Fork bar, maka kedua-duanya dilaksanakan secara serentak/selari (concurrently).\n• D: True. Aktiviti 'Calculate route' hanya boleh dilaksanakan selepas cawangan keputusan (sama ada Query traffic information atau pintasan cawangan lain) disatukan pada Merge node.",
+    "whyWrong": "• B: False. 'Query traffic information' HANYA dilaksanakan jika pengguna memilih guard '[Avoid congestions]', bukan dalam semua keadaan.\n• C: False. 'Display route' adalah aktiviti selepas laluan dikira, bukan dilaksanakan serentak.",
+    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.3: UML Activity Diagram Nodes: Initial Node, Activity, Fork (Selari), Decision Diamond (Pilihan bersyarat), Merge, Final Node.",
+    "mnemonic": "Fork = Serentak. Decision Diamond = Bersyarat (Pilih satu ikut Guard)."
   },
   24: {
     "euNo": 3,
-    "title": "Process Flow Modeling Notations (BPMN & Activity)",
+    "title": "Process Flow Modeling Notations (BPMN & Activity Diagram)",
     "correctDisplay": "A, C",
-    "whyCorrect": "• A (BPMN diagram): Betul. BPMN (Business Process Model and Notation) direka khas untuk memodelkan proses perniagaan dan aliran kerja.\n• C (Activity diagram): Betul. UML Activity Diagram memodelkan aliran aktiviti, kawalan dan data dalam proses.",
-    "whyWrong": "• B (Class diagram): Model struktur data statik.\n• D (State machine): Model status kitaran hayat objek.\n• E (Use case diagram): Model skop fungsi peringkat tinggi.",
-    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.2 & 3.2.3: Notasi Aliran Proses: BPMN dan UML Activity Diagram.",
-    "mnemonic": "Model Proses / Aliran Kerja = BPMN Diagram & Activity Diagram."
+    "whyCorrect": "• A (BPMN diagram): Betul. BPMN (Business Process Model and Notation) direka khas oleh industri untuk memodelkan proses perniagaan dan langkah aliran kerja.\n• C (Activity diagram): Betul. UML Activity Diagram memodelkan aliran aktiviti, kawalan proses, dan peralihan data dari satu langkah ke langkah seterusnya.",
+    "whyWrong": "• B (Class diagram): Memodelkan struktur data statik, bukan urutan langkah proses.\n• D (State machine): Memodelkan kitaran hayat status satu objek entiti.\n• E (Use case diagram): Memodelkan skop fungsi peringkat tinggi tanpa butiran aliran langkah dalaman.",
+    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.3 & 3.2.4: Function & Flow Perspective: UML Activity Diagram & BPMN.",
+    "mnemonic": "Aliran Langkah Proses = BPMN + UML Activity Diagram."
   },
   25: {
     "euNo": 3,
-    "title": "Functional Perspective of Conceptual Modeling (DFD)",
-    "correctDisplay": "D (Transformation of input data into output data)",
-    "whyCorrect": "• Pilihan D adalah jawapan yang betul. Perspektif fungsi (Functional Perspective seperti Data Flow Diagram) menggambarkan bagaimana data input ditransformasikan menjadi data output melalui proses pemprosesan.",
-    "whyWrong": "• A, B, C merujuk kepada perspektif tingkah laku (Behavior/States) atau struktur data (Class Diagram).",
-    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.1: Perspektif Fungsi = Transformasi Input ➔ Proses ➔ Output.",
-    "mnemonic": "Perspektif Fungsi (DFD) = Transformasi Data Input kepada Output."
+    "title": "3 Perspectives of Conceptual Modeling: Function and Flow Aspect (DFD)",
+    "correctDisplay": "A (Data flows and the transformation of data by the system)",
+    "whyCorrect": "• Pilihan A adalah jawapan yang betul. Perspektif Fungsi dan Aliran (Function and Flow Perspective) menerangkan bagaimana data bergerak (Data Flows) dan bagaimana data tersebut diproses atau diubah oleh aktiviti sistem (Data Transformation melalui DFD atau Activity Diagram).",
+    "whyWrong": "• B (Structure and relationships of domain objects): Ini adalah Structure Perspective (Class Diagram / ERD).\n• C (State transitions and events): Ini adalah Behavior Perspective (State Machine Diagram).\n• D (Physical deployment nodes): Ini adalah Deployment View.",
+    "extra": "Handbook Bab 3.2 / Syllabus EO 3.2.5: 3 Perspektif IREB:\n1. Structure Perspective (Class / ERD)\n2. Function Perspective (DFD / Activity / BPMN)\n3. Behavior Perspective (State Machine).",
+    "mnemonic": "3 Perspektif: Struktur (Data/Class), Fungsi (Transformasi/DFD), Tingkah Laku (Status/State)."
   },
   26: {
     "euNo": 4,
-    "title": "First Step in Stakeholder Identification",
-    "correctDisplay": "B (Search in the existing project documentation for stakeholders)",
-    "whyCorrect": "• Pilihan B adalah tindakan pertama yang paling efisien dan profesional. Menyemak dokumentasi sedia ada (Project Charter, Kontrak, Carta Organisasi) mengenal pasti stakeholder yang telah direkodkan tanpa membuang masa mereka.",
-    "whyWrong": "• A: Mengadakan bengkel tanpa mengetahui siapa stakeholder adalah pramatang.\n• C: Bergantung kepada ingatan lisan rakan sekerja tidak formal.\n• D: Penentuan sempadan memerlukan penglibatan stakeholder yang telah dikenal pasti.",
-    "extra": "Handbook Bab 4.2 / Syllabus EO 4.2.1: Langkah Pertama Stakeholder Identification = Semak Dokumentasi Projek Sedia Ada.",
-    "mnemonic": "Langkah pertama = Semak Dokumentasi Sedia Ada."
+    "title": "Handling Inconsistencies Discovered in Stakeholder Interviews",
+    "correctDisplay": "C (You consult with the affected stakeholders to agree on a common solution)",
+    "whyCorrect": "• Pilihan C adalah tindakan profesional yang betul. Apabila terdapat percanggahan kenyataan antara stakeholder dalam temubual, jurutera keperluan mesti mengadakan perbincangan/bengkel bersama stakeholder terbabit untuk mencapai kata sepakat (Conflict Resolution).",
+    "whyWrong": "• A (You decide on your own): Jurutera keperluan tidak mempunyai kuasa membuat keputusan sepihak mengenai fungsi perniagaan tanpa persetujuan stakeholder.\n• B (You ignore the inconsistency): Mengabaikan percanggahan akan menyebabkan ralat besar semasa pembangunan.\n• D (You ask the developers to decide): Pembangun tidak bertanggungjawab mentakrifkan keperluan bisnes.",
+    "extra": "Handbook Bab 4.3 / Syllabus EO 4.3.1: Resolusi Konflik: Kenalpasti percanggahan, bincang bersama stakeholder terbabit, dan pilih teknik penyelesaian yang dipersetujui.",
+    "mnemonic": "Ada percanggahan ➔ Bincang bersama stakeholder terbabit (Jangan buat keputusan sendiri)."
   },
   27: {
     "euNo": 4,
-    "title": "Requirements Sources Types (IREB Taxonomy)",
+    "title": "Relationship between Requirements Engineer and Tester",
     "correctDisplay": "A, C",
-    "whyCorrect": "• A (Stakeholders): Betul. Sumber berasaskan manusia (pengguna, penaja, pakar domain).\n• C (Documents): Betul. Sumber bertulis (manual, undang-undang, piawaian industri).",
-    "whyWrong": "• B (Prototypes), D (Tools), E (Templates) bukan jenis sumber keperluan primer (3 sumber utama: Stakeholders, Documents, Systems in Operation).",
-    "extra": "Handbook Bab 4.1 / Syllabus EO 4.1.1: 3 Sumber Keperluan Utama: Stakeholders, Documents, Systems in Operation.",
-    "mnemonic": "3 Sumber Keperluan = Stakeholders (Orang) + Documents (Kertas) + Systems in Operation (Sistem)."
+    "whyCorrect": "• A (The Requirements Engineer supports the tester in creating the acceptance test cases): Betul. Jurutera keperluan membantu jurutera ujian memahami kriteria penerimaan (Acceptance Criteria) untuk membina kes ujian.\n• C (The tester supports the Requirements Engineer in reviewing the requirements for verifiability): Betul. Jurutera ujian membantu menyemak sama ada sesuatu keperluan boleh diuji (Verifiable / Testable) seawal mungkin.",
+    "whyWrong": "• B (The tester defines the business requirements): Penguji tidak mentakrifkan keperluan bisnes.\n• D (The Requirements Engineer executes the integration tests): Pelaksanaan ujian integrasi adalah tugas jurutera perisian/penguji, bukan RE.",
+    "extra": "Handbook Bab 4.1 / Syllabus EO 4.1.2: Hubungan RE & Ujian (Shift-Left Testing): Keperluan yang jelas membolehkan kes ujian dibuat awal.",
+    "mnemonic": "RE bantu Tester faham skop. Tester bantu RE pastikan keperluan boleh diuji (Verifiable)."
   },
   28: {
     "euNo": 4,
-    "title": "Kano Model: Eliciting Basic Factors (Dissatisfiers)",
-    "correctDisplay": "C (Field observation)",
-    "whyCorrect": "• Pilihan C adalah jawapan yang betul. Basic factors (keperluan asas yang dianggap 'taken for granted') jarang dinyatakan dalam temuduga. Teknik Field Observation (Pemerhatian Lapangan / Apprenticeship) membolehkan Requirements Engineer melihat tabiat sebenar pengguna.",
-    "whyWrong": "• A (Interview) & B (Survey): Sesuai untuk Performance Factors (keperluan eksplisit).\n• D (Brainstorming): Sesuai untuk Excitement Factors (faktor inovasi).",
-    "extra": "Handbook Bab 4.3 / Syllabus EO 4.3.3: Basic Factors ➔ Elicit via Observation & System Archeology.",
-    "mnemonic": "Basic Factors (Tersirat) = Field Observation (Pemerhatian Lapangan)."
+    "title": "Kano Model: Most Effective Elicitation Technique for Dissatisfiers (Basic Factors)",
+    "correctDisplay": "C (Observation techniques)",
+    "whyCorrect": "• Pilihan C adalah jawapan yang betul. Faktor Asas (Basic Factors / Dissatisfiers) adalah ciri yang dianggap lumrah oleh pengguna (diambil mudah) sehingga mereka terlupa untuk menyatakannya semasa temubual. Oleh itu, teknik pemerhatian (Observation seperti Field Observation atau Shadowing) adalah kaedah paling berkesan untuk mengenal pasti faktor tersirat ini.",
+    "whyWrong": "• A (Questionnaires) & B (Interviews): Pengguna jarang menyebut ciri asas dalam soal selidik/temubual kerana menganggapnya terlalu jelas.\n• D (Creativity techniques): Teknik kreativiti (Brainstorming) lebih berkesan untuk mencari Excitement Factors (Delighters).",
+    "extra": "Handbook Bab 4.2 / Syllabus EO 4.2.2 (Model Kano):\n1. Basic Factors ➔ Observation & Artifact Analysis\n2. Performance Factors ➔ Interview & Survey\n3. Excitement Factors ➔ Creativity Techniques (Brainstorming).",
+    "mnemonic": "Basic Factors (Dissatisfiers) = Observation (Pemerhatian). Excitement Factors = Creativity."
   },
   29: {
     "euNo": 4,
-    "title": "Factors Influencing Elicitation Technique Selection",
+    "title": "Key Factors for Selecting Requirements Elicitation Techniques",
     "correctDisplay": "A, C",
-    "whyCorrect": "• A (The availability of the involved people): Betul. Ketersediaan masa stakeholder menentukan sama ada temuduga, bengkel, atau soal selidik sesuai dijalankan.\n• C (The category of requirements based on Kano classification): Betul. Jenis keperluan (Basic, Performance, Excitement) memerlukan teknik elisitasi yang berbeza.",
-    "whyWrong": "• B, D, E bukan faktor utama penentu pemilihan teknik elisitasi mengikut silibus IREB.",
-    "extra": "Handbook Bab 4.3 / Syllabus EO 4.3.2: Kriteria Pemilihan Teknik Elisitasi: Ketersediaan Stakeholder, Risiko Projek, Jenis Faktor Kano.",
-    "mnemonic": "Pilih Teknik Elisitasi = Ketersediaan Masa Stakeholder + Kategori Faktor Kano."
+    "whyCorrect": "• A (The availability of the stakeholders): Betul. Ketersediaan masa dan lokasi stakeholder menentukan sama ada bengkel bersemuka atau soal selidik atas talian perlu digunakan.\n• C (The level of detail required for the requirements): Betul. Tahap perincian yang diperlukan menentukan kedalaman teknik elisitasi yang dipilih.",
+    "whyWrong": "• B (The programming language used): Bahasa pengaturcaraan hiliran tidak menentukan teknik elisitasi.\n• D (The test automation framework): Kerangka kerja ujian tidak mempengaruhi cara menyoal stakeholder.",
+    "extra": "Handbook Bab 4.2 / Syllabus EO 4.2.3: Faktor Pemilihan Teknik Elisitasi: Risiko projek, ketersediaan stakeholder, pengalaman RE, kekangan masa/kos.",
+    "mnemonic": "Pilih teknik elisitasi berdasarkan: Ketersediaan Stakeholder + Tahap Perincian Diperlukan."
   },
   30: {
     "euNo": 4,
-    "title": "Document Analysis Elicitation Technique (Sampling)",
-    "correctDisplay": "D (Sampling)",
-    "whyCorrect": "• Pilihan D adalah jawapan yang betul. Apabila berhadapan dengan jumlah dokumen atau data rekod yang sangat besar, teknik pensampelan (Sampling) digunakan untuk menganalisis sampel representatif secara saintifik.",
-    "whyWrong": "• A, B, C bukan teknik persampelan dokumen representatif.",
-    "extra": "Handbook Bab 4.3 / Syllabus EO 4.3.4: Document Analysis Techniques: Content Analysis, Form Analysis, Sampling.",
-    "mnemonic": "Banyak dokumen besar = Sampling (Persampelan Representatif)."
+    "title": "Techniques for Resolving Requirements Conflicts (NOT Suitable)",
+    "correctDisplay": "D (Separation of concerns)",
+    "whyCorrect": "• Pilihan D adalah jawapan yang betul (BUKAN teknik resolusi konflik). 'Separation of concerns' adalah prinsip reka bentuk seni bina perisian, bukannya kaedah menyelesaikan perselisihan pendapat antara stakeholder.",
+    "whyWrong": "• A (Agreement / Persetujuan), B (Compromise / Kompromi), dan C (Voting / Undian) kesemuanya merupakan teknik resolusi konflik standard mengikut IREB.",
+    "extra": "Handbook Bab 4.3 / Syllabus EO 4.3.2: 5 Teknik Resolusi Konflik IREB: 1. Agreement, 2. Compromise, 3. Voting, 4. Overruling, 5. Decision Matrix (Criteria-based evaluation).",
+    "mnemonic": "Resolusi Konflik: Persetujuan, Kompromi, Undian, Overruling, Matriks Keputusan."
   },
   31: {
     "euNo": 4,
-    "title": "Stakeholder Management: Key Stakeholder Attributes",
+    "title": "Stakeholder Management: Key Attributes in a Stakeholder List",
     "correctDisplay": "A, D",
-    "whyCorrect": "• A (Their function/role): Betul. Mengetahui fungsi dan peranan stakeholder dalam organisasi.\n• D (Their relevance): Betul. Menilai tahap relevansi dan pengaruh stakeholder terhadap kejayaan sistem.",
-    "whyWrong": "• B, C, E adalah data peribadi yang tidak relevan dengan pengurusan kejuruteraan keperluan.",
-    "extra": "Handbook Bab 4.2 / Syllabus EO 4.2.2: Atribut Stakeholder Penting: Peranan (Role), Relevansi/Kuasa (Power), Minat (Interest), Ketersediaan (Availability).",
-    "mnemonic": "Atribut Stakeholder = Peranan (Role) + Relevansi & Pengaruh (Relevance/Power)."
+    "whyCorrect": "• A (Name and role in the project): Betul. Nama dan peranan projek adalah atribut asas untuk mengenal pasti tanggungjawab setiap individu.\n• D (Influence and interest with regard to the project): Betul. Tahap pengaruh (Influence/Power) dan kepentingan (Interest) menentukan strategi penglibatan stakeholder (Stakeholder Matrix).",
+    "whyWrong": "• B (Salary) & C (Date of birth): Maklumat peribadi sensitif ini tidak berkaitan dengan pengurusan keperluan projek.",
+    "extra": "Handbook Bab 4.1 / Syllabus EO 4.1.3: Atribut Stakeholder List: Nama, Peranan, Kepentingan (Interest), Pengaruh (Power), Ketersediaan, Saluran Komunikasi.",
+    "mnemonic": "Senarai Stakeholder = Nama & Peranan + Tahap Pengaruh & Kepentingan (Power vs Interest)."
   },
   32: {
     "euNo": 4,
-    "title": "Advantages of Questionnaires (Surveys)",
+    "title": "Advantages of Questionnaires (Surveys) in Requirements Elicitation",
     "correctDisplay": "A, B",
-    "whyCorrect": "• A: Betul. Soal selidik membolehkan penglibatan bilangan responden yang sangat ramai (high number of participants).\n• B: Betul. Data soal selidik membolehkan analisis statistik yang sahih (statistically relevant statements) dilakukan.",
-    "whyWrong": "• C, D, E: Soal selidik tidak sesuai untuk membina hubungan peribadi atau meneroka idea baharu secara mendalam.",
-    "extra": "Handbook Bab 4.3 / Syllabus EO 4.3.2: Kelebihan Soal Selidik (Surveys): Skala Besar, Kos Rendah, Data Kuantitatif Statistik.",
-    "mnemonic": "Soal Selidik = Ramai Responden (Skala Besar) + Analisis Statistik Kuantitatif."
+    "whyCorrect": "• A (Questionnaires allow to elicit information from a large number of participants with little effort): Betul. Soal selidik boleh diedarkan kepada ratusan responden serentak secara kos efektif.\n• B (Questionnaires allow statistically valid evaluations): Betul. Jawapan kuantitatif daripada sampel besar membolehkan analisis statistik yang sah.",
+    "whyWrong": "• C: Soal selidik tidak membolehkan pengesahan kefahaman secara dua hala.\n• D: Soal selidik sukar mencungkil delighters (faktor keterujaan).\n• E: Soal selidik tidak disesuaikan khusus untuk individu secara mendalam.",
+    "extra": "Handbook Bab 4.2 / Syllabus EO 4.2.1: Gathering Techniques: Interview (Mendalam) vs Questionnaire (Meluas & Statistik).",
+    "mnemonic": "Questionnaire / Soal Selidik = Skala Besar (Large Sample) + Analisis Statistik Sah."
   },
   33: {
     "euNo": 4,
-    "title": "Elicitation Techniques Classification",
+    "title": "Classification of Elicitation Techniques (IREB Taxonomy)",
     "correctDisplay": "A=True, B=False, C=False, D=True",
-    "whyCorrect": "• A: True. Temuduga (Interview) ialah Gathering Technique.\n• D: True. Apprenticing (Perantisan) ialah Observation Technique.",
-    "whyWrong": "• B: False. Analogy technique ialah Creativity Technique (bukan Gathering).\n• C: False. System archaeology ialah Artifact-based Technique (bukan Observation).",
-    "extra": "Handbook Bab 4.3 / Syllabus EO 4.3.1: Klasifikasi Teknik Elisitasi IREB: Gathering, Observation, Creativity, Document/Artifact-based.",
-    "mnemonic": "Interview = Gathering. Apprenticing = Observation. Analogy = Creativity."
+    "whyCorrect": "• A: True. Temubual (Interview) tergolong dalam Gathering Techniques.\n• D: True. Perantisan (Apprenticing) tergolong dalam Observation Techniques (pemerhati belajar dan melakukan tugas pengguna sebenar).",
+    "whyWrong": "• B: False. Analogy technique tergolong dalam Creativity Techniques (bukan gathering).\n• C: False. System Archeology tergolong dalam Artifact-based Techniques (bukan observation).",
+    "extra": "Handbook Bab 4.2 / Syllabus EO 4.2.1: 4 Kategori Teknik Elisitasi IREB:\n1. Gathering (Interview, Questionnaire)\n2. Observation (Field Observation, Apprenticing)\n3. Creativity (Brainstorming, Analogy)\n4. Artifact-based (Document Analysis, System Archeology).",
+    "mnemonic": "4 Kategori: Gathering (Tanya), Observation (Tengok), Creativity (Cipta), Artifact-based (Kaji Dokumen/Sistem Lama)."
   },
   34: {
     "euNo": 4,
-    "title": "Types of Conflicts in Requirements Engineering",
+    "title": "Conflict Types: Value Conflict vs Interest vs Structural",
     "correctDisplay": "D (Value conflict)",
-    "whyCorrect": "• Pilihan D adalah jawapan yang betul. Konflik nilai (Value Conflict) berlaku apabila stakeholders mempunyai perbezaan pegangan nilai asas, etika, atau keutamaan falsafah perniagaan yang bercanggah.",
-    "whyWrong": "• A (Data conflict): Percanggahan maklumat data.\n• B (Interest conflict): Percanggahan matlamat keuntungan.\n• C (Structural conflict): Percanggahan kuasa hierarki.",
-    "extra": "Handbook Bab 4.4 / Syllabus EO 4.4.1: 5 Jenis Konflik RE: Subject-matter conflict, Interest conflict, Value conflict, Relationship conflict, Structural conflict.",
-    "mnemonic": "Konflik Nilai & Etika = Value Conflict."
+    "whyCorrect": "• Pilihan D adalah jawapan yang betul. Percanggahan ini berpunca daripada perbezaan pegangan prinsip etika, persepsi diskriminasi jantina, dan nilai moral asas stakeholder (Value Conflict).",
+    "whyWrong": "• A (Relationship conflict): Konflik interpersonal/emosi peribadi.\n• B (Interest conflict): Konflik pertembungan matlamat keuntungan/sumber.\n• C (Structural conflict): Konflik hirarki organisasi/kuasa.",
+    "extra": "Handbook Bab 4.3 / Syllabus EO 4.3.1: Jenis Konflik: 1. Subject Matter Conflict, 2. Interest Conflict, 3. Value Conflict, 4. Relationship Conflict, 5. Structural Conflict.",
+    "mnemonic": "Isu Etika / Diskriminasi / Moral = Value Conflict (Konflik Nilai)."
   },
   35: {
     "euNo": 4,
-    "title": "Validation Techniques (Safety-Critical Train Braking)",
+    "title": "Requirements Validation: Formal Inspection for Safety-Critical Systems",
     "correctDisplay": "D (Inspection)",
-    "whyCorrect": "• Pilihan D adalah jawapan yang betul. Untuk sistem kritikal keselamatan (Safety-Critical System) seperti sistem brek kereta api laju, 'Inspection' adalah teknik semakan paling formal, teliti, dan berdisiplin tinggi (Fagan Inspection).",
-    "whyWrong": "• A (Walkthrough) & B (Informal review) & C (Desk checking) tidak mempunyai ketelitian dan protokol formal yang mencukupi untuk standard keselamatan nyawa.",
-    "extra": "Handbook Bab 4.5 / Syllabus EO 4.5.2: Spektrum Ketelitian Validasi: Desk Checking ➔ Walkthrough ➔ Inspection (Paling Formal & Ketat).",
-    "mnemonic": "Safety-Critical (Kereta Api / Perubatan) = Wajib Inspection (Formal Maksimum)."
+    "whyCorrect": "• Pilihan D adalah jawapan yang betul. Untuk komponen kritikal keselamatan tinggi (Safety-Critical seperti sistem brek kereta api berkelajuan tinggi), Inspection adalah teknik semakan yang paling formal, berdisiplin, dan berstruktur dengan peranan khusus (Moderator, Author, Inspector, Scribe) dan senarai semak peraturan yang ketat.",
+    "whyWrong": "• A (A/B testing): Kaedah ujian pasaran perbandingan produk pengguna.\n• B (Prototype): Prototaip bagus untuk reka bentuk awal tetapi tidak mencukupi untuk semakan keselamatan kritikal tanpa formaliti.\n• C (Walkthrough): Sesi semakan tidak formal yang dipimpin oleh pengarang (kurang ketat berbanding Inspection).",
+    "extra": "Handbook Bab 4.4 / Syllabus EO 4.4.2: Teknik Validasi: Inspection (Paling Formal & Ketat) > Walkthrough (Sederhana Formal) > Peer Review (Santai).",
+    "mnemonic": "Safety-Critical (Keselamatan Nyawa) = Wajib Formal Inspection."
   },
   36: {
     "euNo": 5,
-    "title": "Three Facets of the Requirements Engineering Process",
+    "title": "Key Facets for Configuring an RE Process (Time & Purpose Facets)",
     "correctDisplay": "A, C",
-    "whyCorrect": "• A (The time facet: linear vs. iterative): Betul. Dimensi Masa mentakrifkan sama ada proses dijalankan secara Sekali Lalu (Linear) atau Berulang (Iterative/Agile).\n• C (The purpose facet: prescriptive vs. explorative): Betul. Dimensi Tujuan mentakrifkan sama ada keperluan bersifat Kontrak Ketat (Prescriptive) atau Penerokaan Dinamik (Explorative).",
-    "whyWrong": "• B, D, E bukan 3 dimensi konfigurasi proses teras RE mengikut silibus IREB.",
-    "extra": "Handbook Bab 5.1 / Syllabus EO 5.1.1: 3 Dimensi / Facets Konfigurasi Proses RE IREB:\n1. Time facet (Linear vs Iterative)\n2. Purpose facet (Prescriptive vs Explorative)\n3. Target/Change facet (Customer-specific vs Market-driven / Product Line).",
-    "mnemonic": "3 Facets Proses RE = Masa (Linear/Iterative) + Tujuan (Prescriptive/Explorative) + Sasaran (Customer/Market)."
+    "whyCorrect": "• A (The time facet: linear vs. iterative): Betul. Time facet menentukan sama ada proses bergerak secara lurus (Waterfall/V-Model) atau berulang (Agile/Scrum).\n• C (The purpose facet: prescriptive vs. explorative): Betul. Purpose facet menentukan sama ada keperluan berfungsi sebagai kontrak tetap (Prescriptive) atau ruang penerokaan inovasi (Explorative).",
+    "whyWrong": "• B, D, E bukan merupakan 3 Dimensi/Facet proses piawai yang diiktiraf dalam silibus IREB FL.",
+    "extra": "Handbook Bab 5.1 / Syllabus EO 5.1.1: 3 Dimensi Proses RE IREB:\n1. Time Facet (Linear vs Iterative)\n2. Purpose Facet (Prescriptive vs Explorative)\n3. Target/Customer Facet (Customer-specific vs Market-driven).",
+    "mnemonic": "Dua facet paling utama menentukan bentuk proses RE = Time Facet + Purpose Facet."
   },
   37: {
     "euNo": 5,
-    "title": "RE Process Types (Linear vs Iterative)",
-    "correctDisplay": "B (Human-oriented RE process (linear, process-based, individual...))",
-    "whyCorrect": "• Pilihan B adalah jawapan yang betul mengikut taksonomi proses IREB. Situasi dengan keperluan stabil, pematuhan kontrak tender, dan struktur organisasi formal paling sesuai menggunakan proses berorientasikan linear berstruktur.",
-    "whyWrong": "• A, C, D merujuk kepada proses eksploratori lelaran pantas (Agile) yang tidak sesuai untuk keperluan tender tetap.",
-    "extra": "Handbook Bab 5.2 / Syllabus EO 5.2.1: Pemilihan proses RE mengikut pemacu konteks (Context Drivers).",
-    "mnemonic": "Tender Tetap & Stabil = Proses Linear Berstruktur."
+    "title": "Recognized RE Process Configurations in Practice",
+    "correctDisplay": "B (Human-oriented RE process (linear, process-based, individual))",
+    "whyCorrect": "• Pilihan B adalah jawapan yang betul (BUKAN konfigurasi proses yang diiktiraf). Istilah 'Human-oriented RE process' tidak wujud dalam taksonomi konfigurasi proses IREB.",
+    "whyWrong": "• A (Product-oriented), C (Participatory), dan D (Contractual) merupakan 3 konfigurasi proses klasik yang diiktiraf secara rasmi dalam silibus IREB.",
+    "extra": "Handbook Bab 5.2 / Syllabus EO 5.2.1: 3 Contoh Proses Tipikal IREB:\n1. Contractual RE Process (Linear, Prescriptive, Customer-specific)\n2. Product-oriented RE Process (Iterative, Explorative, Market-driven)\n3. Participatory RE Process (Iterative, Explorative, Customer-specific).",
+    "mnemonic": "3 Proses Tipikal IREB: Contractual, Product-oriented, Participatory."
   },
   38: {
     "euNo": 6,
-    "title": "Views on Requirements (Complexity Reduction & Access)",
+    "title": "Views on Requirements: Cognitive Load Reduction & Access Control",
     "correctDisplay": "A=True, B=True, C=True, D=False",
-    "whyCorrect": "• A: True. Pandangan (Views) mengurangkan kompleksiti dengan memaparkan hanya keperluan relevan bagi kumpulan stakeholder tertentu.\n• B: True. Views boleh dicipta melalui gabungan kriteria penapisan atribut (filtering).\n• C: True. Keperluan sensitif boleh disembunyikan daripada capaian stakeholder yang tidak diberi kebenaran (access control).",
-    "whyWrong": "• D: False. Mencipta Views tidak memerlukan bahasa spesifikasi formal; teks biasa berstruktur dan jadual atribut sudah memadai.",
-    "extra": "Handbook Bab 6.4 / Syllabus EO 6.4.1: Views on Requirements: Selective Views & Aggregate Views.",
-    "mnemonic": "Views = Tapis ikut Atribut + Kawal Capaian Stakeholder."
+    "whyCorrect": "• A: True. Setiap stakeholder hanya perlu melihat pandangan yang relevan dengan tugas mereka.\n• B: True. Keperluan yang saling berkaitan boleh dihimpunkan dalam satu view untuk memudahkan semakan review.\n• C: True. Keperluan sensitif/rahsia boleh disembunyikan daripada capaian stakeholder yang tidak diberi kebenaran.",
+    "whyWrong": "• D: False. Mencipta 'view' hanyalah penapisan data paparan; ia tidak menjamin sokongan konkurensi (penyuntingan serentak memerlukan mekanisme penguncian/version control sistem).",
+    "extra": "Handbook Bab 6.1 / Syllabus EO 6.1.3: Views on Requirements: Mengurangkan beban kognitif pembaca dan mengawal hak capaian maklumat.",
+    "mnemonic": "Views = Tapis maklumat mengikut peranan, kumpul untuk review, dan lindungi maklumat sulit."
   },
   39: {
     "euNo": 6,
-    "title": "Requirements Traceability Benefits (NOT a Benefit)",
+    "title": "Goals and Benefits of Requirements Traceability (NOT a Goal)",
     "correctDisplay": "C (Traceability facilitates exports from a requirements management tool)",
-    "whyCorrect": "• Pilihan C adalah kenyataan yang TIDAK BENAR mengenai faedah utama Traceability (maka jawapan yang betul). Fungsi eksport data adalah keupayaan alat perisian am, bukannya tujuan teras mewujudkan pautan kebolehkesanan kejuruteraan.",
-    "whyWrong": "• A (Impact analysis), B (Verification coverage), D (Change assessment) adalah faedah teras Traceability.",
-    "extra": "Handbook Bab 6.5 / Syllabus EO 6.5.1: Faedah Traceability: Impact Analysis, Coverage Analysis, Change Tracking, Accountability.",
-    "mnemonic": "Traceability = Jejak Impak Perubahan & Pematuhan Ujian (Bukan eksport fail alat)."
+    "whyCorrect": "• Pilihan C adalah jawapan yang betul (BUKAN matlamat utama kebolehkesanan). Mengeksport fail adalah ciri teknikal alatan perisian semata-mata, bukannya tujuan konseptual mengapa kebolehkesanan (traceability) diwujudkan.",
+    "whyWrong": "• A (Impact analysis), B (Verification of implementation), dan D (Finding requirement source) kesemuanya merupakan matlamat teras kebolehkesanan (Pre-RS, Post-RS, Inter-RS Traceability).",
+    "extra": "Handbook Bab 6.2 / Syllabus EO 6.2.1: Matlamat Traceability:\n1. Bukti pematuhan (Verification)\n2. Analisis impak perubahan (Impact Analysis)\n3. Mengetahui sumber asal (Pre-RS)\n4. Mengesan komponen hiliran (Post-RS).",
+    "mnemonic": "Traceability = Bukti Pematuhan, Analisis Impak, dan Sumber Asal (Bukan untuk fungsi eksport fail)."
   },
   40: {
     "euNo": 6,
-    "title": "Requirements Attributes: Purpose of Unique ID",
+    "title": "Requirements Attributes: Purpose of Unique Identifiers (ID)",
     "correctDisplay": "A=False, B=True, C=True, D=True",
-    "whyCorrect": "• B: True. Unique ID menyediakan asas rujukan komunikasi yang tepat dan tidak meragukan.\n• C: True. Unique ID membolehkan pautan rujukan antara keperluan diwujudkan.\n• D: True. Unique ID adalah prasyarat mutlak untuk membina matriks kebolehkesanan (Traceability).",
-    "whyWrong": "• A: False. Unique ID semata-mata tidak digunakan untuk menganggar saiz keseluruhan spesifikasi (saiz dianggar melalui Function Points atau Story Points).",
-    "extra": "Handbook Bab 6.1 / Syllabus EO 6.1.1: Atribut Keperluan Standard: Identifier (Kekal & Unik), Status, Author, Priority, Source.",
-    "mnemonic": "Unique ID = Rujukan Tepat + Asas Traceability (Bukan kira saiz saiz projek)."
+    "whyCorrect": "• B: True. Unique ID membolehkan asas komunikasi yang jelas tanpa kekeliruan.\n• C: True. Unique ID membolehkan rujukan silang antara keperluan yang berbeza.\n• D: True. Unique ID membolehkan pautan kebolehkesanan (traceability links) ke kod sumber, kes ujian, dan reka bentuk.",
+    "whyWrong": "• A: False. Unique ID tidak digunakan untuk menganggar saiz keseluruhan spesifikasi (saiz diukur melalui metrik fungsi / function points / bilangan perkataan).",
+    "extra": "Handbook Bab 6.1 / Syllabus EO 6.1.2: Atribut Keperluan Penting: Unique ID (Kekal seumur hidup projek), Status, Priority, Author, Verifier.",
+    "mnemonic": "Unique ID = Asas Komunikasi, Rujukan Silang, dan Kebolehkesanan (Traceability)."
   },
   41: {
     "euNo": 6,
-    "title": "Recognized Traceability Types (IREB Taxonomy)",
+    "title": "Change Management for Requirements Baselines",
     "correctDisplay": "B, C",
-    "whyCorrect": "• B (Traceability to stakeholders / Pre-RS): Betul. Menjejaki keperluan ke belakang kepada sumber asalnya (Stakeholders, Dokumen).\n• C (Traceability to system architecture / Post-RS): Betul. Menjejaki keperluan ke hadapan kepada seni bina sistem, modul kod, dan kes ujian.",
-    "whyWrong": "• A, D, E bukan jenis kebolehkesanan piawai dalam taksonomi IREB (3 jenis utama: Pre-RS, Post-RS, Inter-RS).",
-    "extra": "Handbook Bab 6.5 / Syllabus EO 6.5.1: 3 Jenis Traceability IREB:\n1. Pre-RS (Keperluan ➔ Sumber/Stakeholder)\n2. Post-RS (Keperluan ➔ Seni Bina/Kod/Ujian)\n3. Inter-RS (Keperluan ➔ Keperluan Lain).",
-    "mnemonic": "Traceability = Pre-RS (Ke Sumber Stakeholder) + Post-RS (Ke Seni Bina & Kod)."
+    "whyCorrect": "• B (Prior to adjusting requirements, the impact of changes has to be determined): Betul. Sebelum sebarang perubahan diluluskan, analisis impak (Impact Analysis) terhadap kos, jadual, dan seni bina sistem WAJIB dinilai terlebih dahulu.\n• C (Change requests can be submitted at any time and considered when creating a future baseline): Betul. Permohonan perubahan boleh dikemukakan bila-bila masa dan akan diserap ke dalam **Future Baseline** yang seterusnya.",
+    "whyWrong": "• A: Baseline yang telah diluluskan tidak boleh diubah secara terus dalam baseline sedia ada.\n• D: Permohonan kecemasan tetap memerlukan penilaian impak pantas.\n• E: Semua perubahan rasmi memerlukan kawalan baseline.",
+    "extra": "Handbook Bab 6.3 / Syllabus EO 6.3.2: Baselines & Change Control: Analisis impak ➔ Keputusan CCB ➔ Masukkan ke Future Baseline.",
+    "mnemonic": "Perubahan Baseline: Buat analisis impak dahulu, kemudian masukkan ke Future Baseline."
   },
   42: {
     "euNo": 6,
-    "title": "Requirements Attributes (Priority Purpose)",
+    "title": "Requirements Prioritization: Key Reasons and Purposes",
     "correctDisplay": "A=True, B=True, C=False, D=False",
-    "whyCorrect": "• A: True. Keutamaan (Priority) digunakan untuk menentukan susunan pelepasan keluaran (Release Planning).\n• B: True. Keutamaan digunakan untuk memutuskan fokus keperluan mana yang perlu diuji dahulu dalam aktiviti ujian (Test Prioritization).",
-    "whyWrong": "• C: False. Kos pelaksanaan didokumenkan dalam atribut 'Estimated Cost / Effort', bukan atribut Priority.\n• D: False. Potensi guna semula didokumenkan dalam atribut 'Reusability'.",
-    "extra": "Handbook Bab 6.1 & 6.3 / Syllabus EO 6.1.2: Kegunaan Priority: Perancangan Keluaran (Release Planning) & Keutamaan Ujian (Test Focus).",
-    "mnemonic": "Atribut Priority = Rancang Keluaran (Release) + Fokus Pengujian (Testing)."
+    "whyCorrect": "• A: True. Menetapkan keutamaan menentukan keperluan mana yang perlu direalisasikan dalam keluaran (Release) yang terdekat.\n• B: True. Keutamaan membantu pasukan ujian memberi fokus kepada fungsi yang paling kritikal terlebih dahulu.",
+    "whyWrong": "• C: False. Keutamaan BUKAN untuk mendokumentasikan kos (kos didokumentasikan dalam atribut 'Estimated Cost').\n• D: False. Keutamaan tidak menentukan kebolehgunaan semula (reusability).",
+    "extra": "Handbook Bab 6.1 / Syllabus EO 6.1.4: Tujuan Prioritization: 1. Release Planning, 2. Focus of Implementation, 3. Focus of Testing.",
+    "mnemonic": "Prioritization = Release Planning + Test Focus (Bukan untuk catat kos projek)."
   },
   43: {
     "euNo": 6,
-    "title": "Requirements Baseline Definition",
+    "title": "Requirements Baseline Definition and Concept",
     "correctDisplay": "C (A released configuration of requirements)",
-    "whyCorrect": "• Pilihan C adalah definisi tepat mengikut IREB Glossary & Handbook. Baseline ialah konfigurasi stabil bagi satu set artifak keperluan yang telah disemak, diluluskan, dan dilepaskan (released configuration of requirements) pada satu ketika masa tertentu.",
-    "whyWrong": "• A (Initial draft): Draf belum diluluskan.\n• B (Database backup): Salinan teknikal pangkalan data.\n• D (Change request): Permohonan perubahan.",
-    "extra": "Handbook Bab 6.2 / Syllabus EO 6.2.1: Baseline membolehkan perbandingan versi (diffing), pengurusan keluaran, dan kawalan perubahan (Change Control).",
-    "mnemonic": "Baseline = Konfigurasi Keperluan yang Dilepaskan & Diluluskan (Released Configuration)."
+    "whyCorrect": "• Pilihan C adalah takrifan tepat mengikut standard IREB. Baseline ialah satu konfigurasi keperluan yang stabil, telah disemak, diluluskan secara rasmi (released), dan ditandatangani untuk menjadi asas pembangunan seterusnya.",
+    "whyWrong": "• A (A version of a requirement): Ini adalah versi individu, bukan baseline.\n• B (A released configuration of an individual requirement): Baseline merangkumi himpunan konfigurasi keseluruhan set keperluan yang konsisten.\n• D (A not yet released version): Baseline hanya wujud selepas dikeluarkan dan diluluskan secara rasmi.",
+    "extra": "Handbook Bab 6.3 / Syllabus EO 6.3.1: Definisi Baseline: 'A released configuration of work products that is committed to by the stakeholders.'",
+    "mnemonic": "Baseline = Himpunan Keperluan yang Diluluskan & Ditandatangani (Released Configuration)."
   },
   44: {
     "euNo": 7,
-    "title": "Tool Support Principles in Requirements Engineering",
+    "title": "Principles for RE Tool Selection and Toolchain Integration",
     "correctDisplay": "A=True, B=False, C=False, D=True",
-    "whyCorrect": "• A: True. Alat mesti menyokong proses RE yang telah matang dalam organisasi (bukan proses dipaksa mengikut kehendak alat).\n• D: True. Kos TCO (Total Cost of Ownership) merangkumi kos lesen, perkakasan, penyelenggaraan, dan latihan pengguna.",
-    "whyWrong": "• B: False. Pemilihan alat tidak sepatutnya diserahkan sepenuhnya kepada citarasa peribadi pengguna individu tanpa piawaian organisasi.\n• C: False. Tiada satu alat tunggal yang sempurna untuk semua aktiviti RE tanpa integrasi.",
-    "extra": "Handbook Bab 7.1 / Syllabus EO 7.1.1: Prinsip Alatan RE: Sokong proses organisasi, kira kos penuh TCO, buat projek perintis.",
-    "mnemonic": "Alat sokong proses. Kira kos penuh TCO (bukan lesen semata-mata)."
+    "whyCorrect": "• A: True. Alatan perisian mesti menyokong jenis Work Products dan proses RE yang diamalkan oleh organisasi.\n• D: True. Pemilihan alat sangat dipengaruhi oleh kesesuaian integrasi dengan rantai alatan sedia ada (Tool Chain seperti alatan pengurusan konfigurasi dan pengujian).",
+    "whyWrong": "• B: False. Pemilihan alatan RE organisasi tidak boleh diserahkan semata-mata kepada citarasa individu tanpa strategi integrasi piawai.\n• C: False. Pembinaan kes ujian adalah peranan alat ujian (Testing Tools), bukan kriteria wajib alatan RE.",
+    "extra": "Handbook Bab 7.1 / Syllabus EO 7.1.1: Prinsip Alatan RE: 1. Sokong proses organisasi, 2. Integrasi Toolchain, 3. Kira kos pemilikan penuh (TCO), 4. Jalankan projek perintis (Pilot Project).",
+    "mnemonic": "Alat mesti sokong proses organisasi dan serasi dengan rantai alatan (Tool Chain)."
   },
   45: {
     "euNo": 7,
-    "title": "Core Application of RE Tools",
+    "title": "Core Application and Capabilities of RE Tools (NOT a Management Capability)",
     "correctDisplay": "B (Modelling of requirements)",
-    "whyCorrect": "• Pilihan B adalah jawapan yang betul. Pemodelan keperluan (Modelling of requirements seperti Use Cases, Activity Diagrams, Class Diagrams, State Machines) adalah fungsi teras alatan RE untuk mengurangkan kekaburan dan meningkatkan kefahaman.",
-    "whyWrong": "• A, C, D merujuk kepada aktiviti pembangunan hiliran seperti penjanaan kod automatik penuh atau pengurusan belanjawan kewangan.",
-    "extra": "Handbook Bab 7.1 / Syllabus EO 7.2.1: Fungsi Utama Alatan RE: Management, Modeling, Collaboration, Validation.",
-    "mnemonic": "Alatan RE = Pengurusan & Pemodelan Keperluan (Modeling of Requirements)."
+    "whyCorrect": "• Pilihan B adalah jawapan yang betul. 'Modelling of requirements' (seperti melukis Use Case atau State Machine) adalah keupayaan alat pemodelan konseptual (Modeling Tools), bukannya tugas teras alatan Pengurusan Keperluan (Requirements Management Tools).",
+    "whyWrong": "• A (Tracking logical relationships / Traceability), C (Measuring and reporting), dan D (Providing support for prioritization) kesemuanya merupakan keupayaan teras alatan Requirements Management.",
+    "extra": "Handbook Bab 7.2 / Syllabus EO 7.2.1: Perbezaan Kategori Alatan:\n1. Requirements Management Tools (Attributes, Traceability, Views, Prioritization, Reporting)\n2. Requirements Modeling Tools (UML, SysML, BPMN diagrams).",
+    "mnemonic": "Management Tools = Atribut, Traceability, Status. Modeling Tools = Lukis Rajah Model."
   }
 }
+
+with open(os.path.join(ROOT_DIR, 'scripts', 'scratch', 'questions_authentic_base.json'), 'r', encoding='utf-8') as f:
+    raw_questions = json.load(f)
 
 questions_final = []
 for q in raw_questions:
@@ -456,6 +511,18 @@ for q in raw_questions:
     elif qid == 21: diag_html = f"<img src='{img_q21}' alt='Diagram Q21' />"
     elif qid == 23: diag_html = f"<img src='{img_q23}' alt='Diagram Q23' />"
     
+    # Clean options
+    clean_opts = []
+    for opt in q['options']:
+        clean_opts.append({
+            "id": opt['id'],
+            "text": clean_pdf_artifacts(opt['text']),
+            "truth": opt.get('truth')
+        })
+    
+    # Get beautifully formatted stem
+    stem = formatted_stems.get(qid, clean_pdf_artifacts(q['stem']))
+    
     questions_final.append({
         "id": qid,
         "code": q['code'],
@@ -464,8 +531,8 @@ for q in raw_questions:
         "eo": q['eo'],
         "euNo": meta.get('euNo', 1),
         "title": meta.get('title', f"Question {qid}"),
-        "question": q['stem'],
-        "options": q['options'],
+        "question": stem,
+        "options": clean_opts,
         "diagramHtml": diag_html,
         "correctDisplay": meta.get('correctDisplay', ''),
         "whyCorrect": meta.get('whyCorrect', ''),
