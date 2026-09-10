@@ -32,10 +32,12 @@ eus = [
 def clean_pdf_artifacts(text):
     if not text:
         return ""
-    # Remove running footer text like "Foundation Level | Examination  IREB 22 | 27"
-    text = re.sub(r'Foundation Level\s*\|\s*Examination\s*[\uFFFD\u2013\-\?A-Za-z0-9\s]+\|\s*27', '', text)
+    # Remove running footer text like "Foundation Level | Examination © IREB 6 | 27" or "Foundation Level | Examination  IREB 22 | 27"
+    text = re.sub(r'\s*Foundation Level\s*\|.*$', '', text, flags=re.IGNORECASE)
     # Remove trailing K-type table headers
     text = re.sub(r'\s+(True\s+False|Needs to be considered\s+Does not need to be considered|Matches\s+Does not match|Correctly modeled\s+Incorrect or not modeled|Applies\s+Does not apply)$', '', text.strip())
+    # Remove any trailing page artifacts
+    text = re.sub(r'\s*\|\s*\d+\s*\|\s*27.*$', '', text)
     text = re.sub(r'[ \t]+', ' ', text)
     return text.strip()
 

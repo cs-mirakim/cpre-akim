@@ -116,7 +116,7 @@
         },
         {
           "id": "D",
-          "text": "Validating requirements Foundation Level | Examination © IREB 4 | 27",
+          "text": "Validating requirements",
           "truth": false
         }
       ],
@@ -235,7 +235,7 @@
         },
         {
           "id": "D",
-          "text": "Requirements Engineering in agile development does not work without relying on implicit shared understanding. Foundation Level | Examination © IREB 6 | 27",
+          "text": "Requirements Engineering in agile development does not work without relying on implicit shared understanding.",
           "truth": true
         }
       ],
@@ -311,7 +311,7 @@
         },
         {
           "id": "D",
-          "text": "Application boundary Foundation Level | Examination © IREB 7 | 27",
+          "text": "Application boundary",
           "truth": false
         }
       ],
@@ -387,7 +387,7 @@
         },
         {
           "id": "D",
-          "text": "Attributes Foundation Level | Examination © IREB 8 | 27",
+          "text": "Attributes",
           "truth": false
         }
       ],
@@ -473,7 +473,7 @@
         },
         {
           "id": "E",
-          "text": "Creating and testing prototypes Foundation Level | Examination © IREB 9 | 27",
+          "text": "Creating and testing prototypes",
           "truth": false
         }
       ],
@@ -549,7 +549,7 @@
         },
         {
           "id": "D",
-          "text": "A use case specification is conformant if it contains all relevant requirements for the final product. Foundation Level | Examination © IREB 10 | 27",
+          "text": "A use case specification is conformant if it contains all relevant requirements for the final product.",
           "truth": false
         }
       ],
@@ -630,7 +630,7 @@
         },
         {
           "id": "D",
-          "text": "Nominalizations have been used. Foundation Level | Examination © IREB 11 | 27",
+          "text": "Nominalizations have been used.",
           "truth": false
         }
       ],
@@ -706,7 +706,7 @@
         },
         {
           "id": "D",
-          "text": "Use case diagram Foundation Level | Examination © IREB 12 | 27",
+          "text": "Use case diagram",
           "truth": false
         }
       ],
@@ -787,7 +787,7 @@
         },
         {
           "id": "D",
-          "text": "An application's functionality Foundation Level | Examination © IREB 13 | 27",
+          "text": "An application's functionality",
           "truth": false
         }
       ],
@@ -825,7 +825,7 @@
         },
         {
           "id": "D",
-          "text": "If an application request is approved, the user gets an approval mail. Foundation Level | Examination © IREB 14 | 27",
+          "text": "If an application request is approved, the user gets an approval mail.",
           "truth": false
         }
       ],
@@ -906,7 +906,7 @@
         },
         {
           "id": "E",
-          "text": "With proper tools, source code can be generated from models, thus saving the effort for testing. Foundation Level | Examination © IREB 16 | 27",
+          "text": "With proper tools, source code can be generated from models, thus saving the effort for testing.",
           "truth": false
         }
       ],
@@ -1025,7 +1025,7 @@
         },
         {
           "id": "D",
-          "text": "Transformation of input data into output data Foundation Level | Examination © IREB 18 | 27",
+          "text": "Transformation of input data into output data",
           "truth": true
         }
       ],
@@ -1106,7 +1106,7 @@
         },
         {
           "id": "E",
-          "text": "There is no relationship between the Requirements Engineer's work and the stakeholder role. Foundation Level | Examination © IREB 19 | 27",
+          "text": "There is no relationship between the Requirements Engineer's work and the stakeholder role.",
           "truth": false
         }
       ],
@@ -1225,7 +1225,7 @@
         },
         {
           "id": "D",
-          "text": "Sampling Foundation Level | Examination © IREB 20 | 27",
+          "text": "Sampling",
           "truth": true
         }
       ],
@@ -1311,7 +1311,7 @@
         },
         {
           "id": "E",
-          "text": "Questionnaires allow to address the needs of individual stakeholders easily. Foundation Level | Examination © IREB 21 | 27",
+          "text": "Questionnaires allow to address the needs of individual stakeholders easily.",
           "truth": false
         }
       ],
@@ -1387,7 +1387,7 @@
         },
         {
           "id": "D",
-          "text": "Value conflict Foundation Level | Examination © IREB 22 | 27",
+          "text": "Value conflict",
           "truth": true
         }
       ],
@@ -1425,7 +1425,7 @@
         },
         {
           "id": "D",
-          "text": "Inspection Foundation Level | Examination © IREB 23 | 27",
+          "text": "Inspection",
           "truth": true
         }
       ],
@@ -1506,7 +1506,7 @@
         },
         {
           "id": "D",
-          "text": "Contractual RE process (linear, prescriptive, customer specific) Foundation Level | Examination © IREB 24 | 27",
+          "text": "Contractual RE process (linear, prescriptive, customer specific)",
           "truth": false
         }
       ],
@@ -1582,7 +1582,7 @@
         },
         {
           "id": "D",
-          "text": "Traceability facilitates finding a requirement's source. Foundation Level | Examination © IREB 25 | 27",
+          "text": "Traceability facilitates finding a requirement's source.",
           "truth": false
         }
       ],
@@ -1663,7 +1663,7 @@
         },
         {
           "id": "E",
-          "text": "If the development for changed requirements has not started yet, the change can easily be processed without creating a new baseline. Foundation Level | Examination © IREB 26 | 27",
+          "text": "If the development for changed requirements has not started yet, the change can easily be processed without creating a new baseline.",
           "truth": false
         }
       ],
@@ -1739,7 +1739,7 @@
         },
         {
           "id": "D",
-          "text": "A not yet released version of a requirements specification Foundation Level | Examination © IREB 27 | 27",
+          "text": "A not yet released version of a requirements specification",
           "truth": false
         }
       ],
