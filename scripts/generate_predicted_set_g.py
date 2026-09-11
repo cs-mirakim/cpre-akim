@@ -232,20 +232,26 @@ predicted_questions.append({
   "pts": 2.0,
   "eo": "3.4.7",
   "euNo": 3,
-  "title": "UML Activity Diagram: Order Checkout Concurrent Execution",
-  "question": "The following UML activity diagram specifies the checkout and fulfillment workflow in an enterprise e-commerce platform:\n\nWhich of the following statements are true and which are false based on this diagram?",
+  "title": "UML Activity Diagram: Concurrent Execution with Fork & Join",
+  "question": "The following UML activity diagram specifies the order fulfillment and payment workflow in an enterprise system:\n\nWhich of the following statements are true and which are false based on this diagram?",
   "diagramHtml": f'<div class="diagram-wrapper"><img src="{img_predicted_q21}" alt="Predicted UML Activity Checkout Q21" class="diagram-img" /></div>',
   "options": [
-    { "id": "A", "text": "'Deduct Inventory' and 'Process Payment' are executed concurrently after the fork node.", "truth": True },
-    { "id": "B", "text": "'Generate Invoice' can be executed as soon as 'Deduct Inventory' finishes, regardless of 'Process Payment'.", "truth": False },
-    { "id": "C", "text": "If 'Validate Customer' fails, the process terminates at the activity final node without initiating concurrent paths.", "truth": True },
-    { "id": "D", "text": "The fork node splits a single control flow into multiple concurrent flows.", "truth": True }
+    { "id": "A", "text": "'Process Payment' and 'Reserve Inventory' are initiated concurrently after the fork node.", "truth": True },
+    { "id": "B", "text": "'Send Confirmation Email' can be executed as soon as 'Verify Payment Token' completes, even if 'Generate Packing Slip' is still in progress.", "truth": False },
+    { "id": "C", "text": "'Generate Packing Slip' belongs to the inventory branch and executes following 'Reserve Inventory' without waiting for the payment branch.", "truth": True },
+    { "id": "D", "text": "The thick horizontal bars represent a Fork Node (splitting one flow into parallel flows) and a Join Node (synchronizing parallel flows into one outgoing flow).", "truth": True }
   ],
   "correctDisplay": "A=True, B=False, C=True, D=True",
-  "whyCorrect": "• A: True. Palang mendatar hitam tebal (fork node) memulakan laluan serentak (concurrent) bagi Deduct Inventory dan Process Payment.\n• C: True. Cabang [invalid] terus membawa aliran kawalan ke bulatan hitam berlingkar (activity final node).\n• D: True. Definisi piawai fork node adalah membahagikan satu token aliran kepada pelbagai token serentak.",
-  "whyWrong": "• B: False. Palang join node memerlukan SEMUA aliran masuk (kedua-dua Deduct Inventory dan Process Payment) selesai sebelum Generate Invoice boleh bermula.",
-  "extra": "Handbook Bab 3.4.7: Fork = 1 aliran masuk, banyak keluar serentak. Join = Banyak aliran masuk serentak disegerakkan (synchronize) menjadi 1 keluar.",
-  "mnemonic": "Fork = Pecah Serentak. Join = Tunggu Semua Selesai."
+  "whyCorrect": (
+    "• A ('Process Payment' and 'Reserve Inventory' are initiated concurrently after the fork node): True. Palang tebal mendatar pertama («fork») memecahkan satu token aliran kawalan masuk daripada 'Receive Order' kepada dua aliran serentak (concurrent) bagi 'Process Payment' dan 'Reserve Inventory'.\n"
+    "• C ('Generate Packing Slip' belongs to the inventory branch and executes following 'Reserve Inventory' without waiting for the payment branch): True. Kedua-dua cabang berjalan secara bebas dan selari (in parallel); tindakan dalam cabang inventori tidak perlu menunggu status cabang pembayaran sebelum palang join.\n"
+    "• D (The thick horizontal bars represent a Fork Node and a Join Node): True. Ini merupakan takrifan piawai notasi UML Activity Diagram mengikut IREB: Fork Node memecahkan 1 aliran kepada banyak aliran selari, manakala Join Node menyegerakkan (synchronize) banyak aliran selari menjadi 1 aliran keluar."
+  ),
+  "whyWrong": (
+    "• B ('Send Confirmation Email' can be executed as soon as 'Verify Payment Token' completes, even if 'Generate Packing Slip' is still in progress): False. Palang tebal kedua («join») bertindak sebagai titik penyegerakan (synchronization barrier) yang mewajibkan KEDUA-DUA cabang selari ('Verify Payment Token' dan 'Generate Packing Slip') selesai sepenuhnya sebelum membenarkan aliran keluar ke 'Send Confirmation Email'."
+  ),
+  "extra": "Handbook Bab 3.4.7: Notasi Aktiviti UML: Fork = 1 In -> N Out (Selari). Join = N In -> 1 Out (Segerak). Action = Kotak bulat.",
+  "mnemonic": "Fork = Pecah Selari. Join = Titik Tunggu (Semua cabang wajib siap sebelum teruskan)."
 })
 
 # Q22: Official Q22 (2.0 P) - Identical
@@ -259,20 +265,26 @@ predicted_questions.append({
   "pts": 2.0,
   "eo": "3.4.7",
   "euNo": 3,
-  "title": "UML Activity Diagram: Logistics Routing Decision & Merge",
-  "question": "The following UML activity diagram models the parcel shipping dispatch logic at a logistics hub:\n\nWhich of the following statements are true and which are false based on this diagram?",
+  "title": "UML Activity Diagram: Routing Decision & Merge Nodes",
+  "question": "The following UML activity diagram models the parcel shipping dispatch workflow at a logistics center:\n\nWhich of the following statements are true and which are false based on this diagram?",
   "diagramHtml": f'<div class="diagram-wrapper"><img src="{img_predicted_q23}" alt="Predicted UML Activity Logistics Q23" class="diagram-img" /></div>',
   "options": [
-    { "id": "A", "text": "Parcels with weight > 30 kg are routed to 'Assign Heavy Freight Carrier'.", "truth": True },
-    { "id": "B", "text": "A parcel can be routed to both 'Standard Courier' and 'Assign Heavy Freight Carrier' simultaneously.", "truth": False },
-    { "id": "C", "text": "The merge diamond brings together alternative flows before 'Print Dispatch Label' is executed.", "truth": True },
-    { "id": "D", "text": "If documentation is missing during parcel inspection, the workflow is aborted.", "truth": True }
+    { "id": "A", "text": "Parcels with weight greater than 30 kg are routed to 'Assign Heavy Freight Carrier'.", "truth": True },
+    { "id": "B", "text": "A single parcel can follow both the 'Assign Heavy Freight Carrier' and 'Assign Standard Courier' paths simultaneously.", "truth": False },
+    { "id": "C", "text": "The merge diamond brings together the alternative routing paths before 'Generate Shipping Label' is executed.", "truth": True },
+    { "id": "D", "text": "The diamond symbol immediately following 'Inspect Parcel Weight' represents a Decision Node that evaluates guard conditions to select exactly one outgoing path.", "truth": True }
   ],
   "correctDisplay": "A=True, B=False, C=True, D=True",
-  "whyCorrect": "• A: True. Guard condition [weight > 30kg] menghala tepat ke aktiviti 'Assign Heavy Freight Carrier'.\n• C: True. Simbol berlian (merge diamond) menggabungkan laluan alternatif tanpa menunggu kedua-duanya selesai.\n• D: True. Guard [documentation missing] terus menamatkan aliran kerja di activity final node.",
-  "whyWrong": "• B: False. Simbol berlian membuat keputusan (decision diamond) adalah mutually exclusive (saling eksklusif); hanya SATU laluan sahaja dipilih berdasarkan guard condition.",
-  "extra": "Handbook Bab 3.4.7: Decision/Merge diamond menggunakan syarat [guard] untuk memilih 1 daripada laluan alternatif.",
-  "mnemonic": "Diamond = Keputusan saling eksklusif (pilih SATU sahaja)."
+  "whyCorrect": (
+    "• A (Parcels with weight > 30 kg are routed to 'Assign Heavy Freight Carrier'): True. Guard condition [Weight > 30 kg] pada cabang kiri mengarahkan pakej berat terus ke tindakan 'Assign Heavy Freight Carrier'.\n"
+    "• C (The merge diamond brings together the alternative routing paths before 'Generate Shipping Label' is executed): True. Simbol berlian bawah (Merge Node) menyatukan laluan-laluan alternatif tanpa memerlukan penyegerakan serentak, membolehkan aliran diteruskan ke 'Generate Shipping Label' sebaik sahaja salah satu laluan sampai.\n"
+    "• D (The diamond symbol immediately following 'Inspect Parcel Weight' represents a Decision Node): True. Mengikut notasi UML Activity Diagram IREB, Decision Node menggunakan satu atau lebih syarat penjaga [guards] yang saling eksklusif untuk memilih tepat SATU laluan keluar."
+  ),
+  "whyWrong": (
+    "• B (A single parcel can follow both paths simultaneously): False. Simbol berlian atas ialah Decision Node (cabang keputusan bersyarat yang saling eksklusif), bukannya Fork Node; oleh itu satu bungkusan hanya boleh melalui salah satu daripada dua laluan tersebut, bukan kedua-duanya sekali gus."
+  ),
+  "extra": "Handbook Bab 3.4.7: Decision Node = Memilih 1 daripada beberapa laluan bersyarat [guard]. Merge Node = Menyatukan laluan alternatif tanpa menunggu.",
+  "mnemonic": "Diamond Atas = Decision (Pilih SATU sahaja). Diamond Bawah = Merge (Cantum semula laluan alternatif)."
 })
 
 # =========================================================================

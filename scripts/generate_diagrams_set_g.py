@@ -152,74 +152,82 @@ def create_state_machine():
     print(f"Saved {out_path}")
 
 # -------------------------------------------------------------
+# -------------------------------------------------------------
 # 3. Q21: Activity Diagram 1 (Checkout Payment & Inventory - Fork/Join)
 # -------------------------------------------------------------
 def create_activity_fork_join():
-    w, h = 1000, 950
+    w, h = 1000, 960
     im = Image.new('RGB', (w, h), (255, 255, 255))
     draw = ImageDraw.Draw(im)
     f_reg, f_bold, f_small = get_fonts(18, 20)
 
+    # Title Banner
+    draw.rectangle([0, 0, w, 40], fill=(245, 247, 250))
+    draw.line([(0, 40), (w, 40)], fill=(210, 215, 225), width=1)
+    draw.text((w//2, 20), "UML Activity Diagram: Order Processing & Fulfillment Workflow", fill=(60, 70, 85), font=f_small, anchor="mm")
+
     # Initial node
-    draw.ellipse([485, 40, 515, 70], fill=(0, 0, 0))
-    draw.line([(500, 70), (500, 110)], fill=(0, 0, 0), width=2)
-    draw.polygon([(500, 110), (495, 100), (505, 100)], fill=(0, 0, 0))
+    draw.ellipse([485, 65, 515, 95], fill=(0, 0, 0))
+    draw.line([(500, 95), (500, 135)], fill=(0, 0, 0), width=2)
+    draw.polygon([(500, 135), (495, 125), (505, 125)], fill=(0, 0, 0))
 
     # Action 1: Receive Order
-    draw.rounded_rectangle([380, 110, 620, 170], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
-    draw.text((500, 140), "Receive Order", fill=(0, 0, 0), font=f_bold, anchor="mm")
+    draw.rounded_rectangle([370, 135, 630, 195], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
+    draw.text((500, 165), "Receive Order", fill=(0, 0, 0), font=f_bold, anchor="mm")
 
     # Down to Fork Bar
-    draw.line([(500, 170), (500, 220)], fill=(0, 0, 0), width=2)
-    draw.polygon([(500, 220), (495, 210), (505, 210)], fill=(0, 0, 0))
+    draw.line([(500, 195), (500, 245)], fill=(0, 0, 0), width=2)
+    draw.polygon([(500, 245), (495, 235), (505, 235)], fill=(0, 0, 0))
 
     # Fork Bar (thick horizontal)
-    draw.rectangle([200, 220, 800, 230], fill=(0, 0, 0))
+    draw.rectangle([180, 245, 820, 257], fill=(0, 0, 0))
+    draw.text((835, 251), "«fork»", fill=(80, 80, 80), font=f_small, anchor="lm")
 
-    # Branch A: Charge Payment (left)
-    draw.line([(320, 230), (320, 290)], fill=(0, 0, 0), width=2)
-    draw.polygon([(320, 290), (315, 280), (325, 280)], fill=(0, 0, 0))
-    draw.rounded_rectangle([200, 290, 440, 350], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
-    draw.text((320, 320), "Process Payment", fill=(0, 0, 0), font=f_bold, anchor="mm")
+    # Branch A: Process Payment (left)
+    draw.line([(310, 257), (310, 315)], fill=(0, 0, 0), width=2)
+    draw.polygon([(310, 315), (305, 305), (315, 305)], fill=(0, 0, 0))
+    draw.rounded_rectangle([180, 315, 440, 375], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
+    draw.text((310, 345), "Process Payment", fill=(0, 0, 0), font=f_bold, anchor="mm")
 
-    # Branch B: Reserve Warehouse Stock (right)
-    draw.line([(680, 230), (680, 290)], fill=(0, 0, 0), width=2)
-    draw.polygon([(680, 290), (675, 280), (685, 280)], fill=(0, 0, 0))
-    draw.rounded_rectangle([560, 290, 800, 350], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
-    draw.text((680, 320), "Reserve Stock", fill=(0, 0, 0), font=f_bold, anchor="mm")
+    # Branch B: Reserve Inventory (right)
+    draw.line([(690, 257), (690, 315)], fill=(0, 0, 0), width=2)
+    draw.polygon([(690, 315), (685, 305), (695, 305)], fill=(0, 0, 0))
+    draw.rounded_rectangle([560, 315, 820, 375], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
+    draw.text((690, 345), "Reserve Inventory", fill=(0, 0, 0), font=f_bold, anchor="mm")
 
-    # Sub-action under Payment: Validate Fraud Check
-    draw.line([(320, 350), (320, 400)], fill=(0, 0, 0), width=2)
-    draw.polygon([(320, 400), (315, 390), (325, 390)], fill=(0, 0, 0))
-    draw.rounded_rectangle([200, 400, 440, 460], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
-    draw.text((320, 430), "Verify Security Token", fill=(0, 0, 0), font=f_bold, anchor="mm")
+    # Sub-action under Payment: Verify Payment Token
+    draw.line([(310, 375), (310, 435)], fill=(0, 0, 0), width=2)
+    draw.polygon([(310, 435), (305, 425), (315, 425)], fill=(0, 0, 0))
+    draw.rounded_rectangle([180, 435, 440, 495], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
+    draw.text((310, 465), "Verify Payment Token", fill=(0, 0, 0), font=f_bold, anchor="mm")
 
     # Sub-action under Stock: Generate Packing Slip
-    draw.line([(680, 350), (680, 400)], fill=(0, 0, 0), width=2)
-    draw.polygon([(680, 400), (675, 390), (685, 390)], fill=(0, 0, 0))
-    draw.rounded_rectangle([560, 400, 800, 460], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
-    draw.text((680, 430), "Print Packing Slip", fill=(0, 0, 0), font=f_bold, anchor="mm")
+    draw.line([(690, 375), (690, 435)], fill=(0, 0, 0), width=2)
+    draw.polygon([(690, 435), (685, 425), (695, 425)], fill=(0, 0, 0))
+    draw.rounded_rectangle([560, 435, 820, 495], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
+    draw.text((690, 465), "Generate Packing Slip", fill=(0, 0, 0), font=f_bold, anchor="mm")
 
     # Both down to Join Bar
-    draw.line([(320, 460), (320, 520)], fill=(0, 0, 0), width=2)
-    draw.polygon([(320, 520), (315, 510), (325, 510)], fill=(0, 0, 0))
-    draw.line([(680, 460), (680, 520)], fill=(0, 0, 0), width=2)
-    draw.polygon([(680, 520), (675, 510), (685, 510)], fill=(0, 0, 0))
+    draw.line([(310, 495), (310, 560)], fill=(0, 0, 0), width=2)
+    draw.polygon([(310, 560), (305, 550), (315, 550)], fill=(0, 0, 0))
+    draw.line([(690, 495), (690, 560)], fill=(0, 0, 0), width=2)
+    draw.polygon([(690, 560), (685, 550), (695, 550)], fill=(0, 0, 0))
 
     # Join Bar (thick horizontal)
-    draw.rectangle([200, 520, 800, 530], fill=(0, 0, 0))
+    draw.rectangle([180, 560, 820, 572], fill=(0, 0, 0))
+    draw.text((835, 566), "«join»", fill=(80, 80, 80), font=f_small, anchor="lm")
 
-    # After Join: Send Order Confirmation
-    draw.line([(500, 530), (500, 590)], fill=(0, 0, 0), width=2)
-    draw.polygon([(500, 590), (495, 580), (505, 580)], fill=(0, 0, 0))
-    draw.rounded_rectangle([350, 590, 650, 650], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
-    draw.text((500, 620), "Send Confirmation Email", fill=(0, 0, 0), font=f_bold, anchor="mm")
+    # After Join: Send Confirmation Email
+    draw.line([(500, 572), (500, 635)], fill=(0, 0, 0), width=2)
+    draw.polygon([(500, 635), (495, 625), (505, 625)], fill=(0, 0, 0))
+    draw.rounded_rectangle([340, 635, 660, 695], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
+    draw.text((500, 665), "Send Confirmation Email", fill=(0, 0, 0), font=f_bold, anchor="mm")
 
     # Down to Final Node
-    draw.line([(500, 650), (500, 710)], fill=(0, 0, 0), width=2)
-    draw.polygon([(500, 710), (495, 700), (505, 700)], fill=(0, 0, 0))
-    draw.ellipse([480, 710, 520, 750], outline=(0, 0, 0), width=2)
-    draw.ellipse([487, 717, 513, 743], fill=(0, 0, 0))
+    draw.line([(500, 695), (500, 755)], fill=(0, 0, 0), width=2)
+    draw.polygon([(500, 755), (495, 745), (505, 745)], fill=(0, 0, 0))
+    draw.ellipse([480, 755, 520, 795], outline=(0, 0, 0), width=2)
+    draw.ellipse([487, 762, 513, 788], fill=(0, 0, 0))
 
     out_path = os.path.join(ASSETS_DIR, 'predicted_q21_activity.png')
     im.save(out_path)
@@ -229,65 +237,70 @@ def create_activity_fork_join():
 # 4. Q23: Activity Diagram 2 (Decision Diamond & Guard Conditions)
 # -------------------------------------------------------------
 def create_activity_decision():
-    w, h = 1000, 950
+    w, h = 1000, 960
     im = Image.new('RGB', (w, h), (255, 255, 255))
     draw = ImageDraw.Draw(im)
     f_reg, f_bold, f_small = get_fonts(18, 20)
 
-    # Initial node
-    draw.ellipse([485, 40, 515, 70], fill=(0, 0, 0))
-    draw.line([(500, 70), (500, 110)], fill=(0, 0, 0), width=2)
-    draw.polygon([(500, 110), (495, 100), (505, 100)], fill=(0, 0, 0))
+    # Title Banner
+    draw.rectangle([0, 0, w, 40], fill=(245, 247, 250))
+    draw.line([(0, 40), (w, 40)], fill=(210, 215, 225), width=1)
+    draw.text((w//2, 20), "UML Activity Diagram: Logistics Parcel Dispatch Decision & Merge", fill=(60, 70, 85), font=f_small, anchor="mm")
 
-    # Action 1: Weigh Package
-    draw.rounded_rectangle([380, 110, 620, 170], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
-    draw.text((500, 140), "Weigh Package", fill=(0, 0, 0), font=f_bold, anchor="mm")
+    # Initial node
+    draw.ellipse([485, 65, 515, 95], fill=(0, 0, 0))
+    draw.line([(500, 95), (500, 135)], fill=(0, 0, 0), width=2)
+    draw.polygon([(500, 135), (495, 125), (505, 125)], fill=(0, 0, 0))
+
+    # Action 1: Inspect Parcel Weight
+    draw.rounded_rectangle([360, 135, 640, 195], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
+    draw.text((500, 165), "Inspect Parcel Weight", fill=(0, 0, 0), font=f_bold, anchor="mm")
 
     # Down to Decision Diamond
-    draw.line([(500, 170), (500, 230)], fill=(0, 0, 0), width=2)
-    draw.polygon([(500, 230), (495, 220), (505, 220)], fill=(0, 0, 0))
+    draw.line([(500, 195), (500, 255)], fill=(0, 0, 0), width=2)
+    draw.polygon([(500, 255), (495, 245), (505, 245)], fill=(0, 0, 0))
 
-    # Diamond center at (500, 260)
-    draw.polygon([(500, 230), (540, 260), (500, 290), (460, 260)], fill=(254, 243, 226), outline=(0, 0, 0), width=2)
+    # Decision Diamond center at (500, 285)
+    draw.polygon([(500, 255), (545, 285), (500, 315), (455, 285)], fill=(254, 243, 226), outline=(0, 0, 0), width=2)
 
-    # Branch 1 (Left): [Weight > 30kg] -> Freight Transport
-    draw.line([(460, 260), (300, 260), (300, 340)], fill=(0, 0, 0), width=2)
-    draw.polygon([(300, 340), (295, 330), (305, 330)], fill=(0, 0, 0))
-    draw.text((360, 240), "[Weight > 30kg]", fill=(0, 0, 0), font=f_small, anchor="ms")
+    # Branch 1 (Left): [Weight > 30 kg] -> Assign Heavy Freight Carrier
+    draw.line([(455, 285), (280, 285), (280, 375)], fill=(0, 0, 0), width=2)
+    draw.polygon([(280, 375), (275, 365), (285, 365)], fill=(0, 0, 0))
+    draw.text((350, 260), "[Weight > 30 kg]", fill=(160, 20, 20), font=f_bold, anchor="ms")
 
-    draw.rounded_rectangle([180, 340, 420, 400], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
-    draw.text((300, 370), "Assign Freight Carrier", fill=(0, 0, 0), font=f_bold, anchor="mm")
+    draw.rounded_rectangle([130, 375, 430, 435], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
+    draw.text((280, 405), "Assign Heavy Freight Carrier", fill=(0, 0, 0), font=f_bold, anchor="mm")
 
-    # Branch 2 (Right): [Weight <= 30kg] -> Standard Courier
-    draw.line([(540, 260), (700, 260), (700, 340)], fill=(0, 0, 0), width=2)
-    draw.polygon([(700, 340), (695, 330), (705, 330)], fill=(0, 0, 0))
-    draw.text((640, 240), "[Weight <= 30kg]", fill=(0, 0, 0), font=f_small, anchor="ms")
+    # Branch 2 (Right): [Weight <= 30 kg] -> Assign Standard Courier
+    draw.line([(545, 285), (720, 285), (720, 375)], fill=(0, 0, 0), width=2)
+    draw.polygon([(720, 375), (715, 365), (725, 365)], fill=(0, 0, 0))
+    draw.text((650, 260), "[Weight <= 30 kg]", fill=(20, 120, 20), font=f_bold, anchor="ms")
 
-    draw.rounded_rectangle([580, 340, 820, 400], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
-    draw.text((700, 370), "Assign Standard Courier", fill=(0, 0, 0), font=f_bold, anchor="mm")
+    draw.rounded_rectangle([570, 375, 870, 435], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
+    draw.text((720, 405), "Assign Standard Courier", fill=(0, 0, 0), font=f_bold, anchor="mm")
 
-    # Both down to Merge Diamond at (500, 480)
-    draw.line([(300, 400), (300, 480), (460, 480)], fill=(0, 0, 0), width=2)
-    draw.polygon([(460, 480), (450, 475), (450, 485)], fill=(0, 0, 0))
+    # Both down to Merge Diamond at (500, 525)
+    draw.line([(280, 435), (280, 525), (455, 525)], fill=(0, 0, 0), width=2)
+    draw.polygon([(455, 525), (445, 520), (445, 530)], fill=(0, 0, 0))
 
-    draw.line([(700, 400), (700, 480), (540, 480)], fill=(0, 0, 0), width=2)
-    draw.polygon([(540, 480), (550, 475), (550, 485)], fill=(0, 0, 0))
+    draw.line([(720, 435), (720, 525), (545, 525)], fill=(0, 0, 0), width=2)
+    draw.polygon([(545, 525), (555, 520), (555, 530)], fill=(0, 0, 0))
 
     # Merge diamond
-    draw.polygon([(500, 450), (540, 480), (500, 510), (460, 480)], fill=(254, 243, 226), outline=(0, 0, 0), width=2)
+    draw.polygon([(500, 495), (545, 525), (500, 555), (455, 525)], fill=(254, 243, 226), outline=(0, 0, 0), width=2)
 
     # Down from Merge to "Generate Shipping Label"
-    draw.line([(500, 510), (500, 570)], fill=(0, 0, 0), width=2)
-    draw.polygon([(500, 570), (495, 560), (505, 560)], fill=(0, 0, 0))
+    draw.line([(500, 555), (500, 625)], fill=(0, 0, 0), width=2)
+    draw.polygon([(500, 625), (495, 615), (505, 615)], fill=(0, 0, 0))
 
-    draw.rounded_rectangle([360, 570, 640, 630], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
-    draw.text((500, 600), "Generate Shipping Label", fill=(0, 0, 0), font=f_bold, anchor="mm")
+    draw.rounded_rectangle([340, 625, 660, 685], radius=16, fill=(254, 243, 226), outline=(0, 0, 0), width=2)
+    draw.text((500, 655), "Generate Shipping Label", fill=(0, 0, 0), font=f_bold, anchor="mm")
 
     # Down to Final Node
-    draw.line([(500, 630), (500, 690)], fill=(0, 0, 0), width=2)
-    draw.polygon([(500, 690), (495, 680), (505, 680)], fill=(0, 0, 0))
-    draw.ellipse([480, 690, 520, 730], outline=(0, 0, 0), width=2)
-    draw.ellipse([487, 697, 513, 723], fill=(0, 0, 0))
+    draw.line([(500, 685), (500, 755)], fill=(0, 0, 0), width=2)
+    draw.polygon([(500, 755), (495, 745), (505, 745)], fill=(0, 0, 0))
+    draw.ellipse([480, 755, 520, 795], outline=(0, 0, 0), width=2)
+    draw.ellipse([487, 762, 513, 788], fill=(0, 0, 0))
 
     out_path = os.path.join(ASSETS_DIR, 'predicted_q23_activity.png')
     im.save(out_path)
