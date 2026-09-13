@@ -94,41 +94,56 @@
 <body class="bg-slate-50 dark:bg-zinc-950 text-slate-800 dark:text-zinc-100 font-sans antialiased min-h-screen pb-24 md:pb-12 selection:bg-indigo-500/20">
 
   <!-- TOP STICKY NAVIGATION BAR (shadcn header style) -->
-  <header class="sticky top-0 z-40 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-slate-200 dark:border-zinc-800/90">
-    <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between gap-2">
+    <!-- TOP UNIFIED NAVIGATION BAR (Single, Clean, Minimalist) -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border-b border-slate-200 dark:border-zinc-800 shadow-2xs">
+    <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between gap-3">
       
-      <!-- Brand & Version Info -->
-      <div class="flex items-center space-x-3">
-        <div class="w-8 h-8 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 flex items-center justify-center font-bold text-xs tracking-tight shadow-sm">
-          RE
-        </div>
-        <div class="flex flex-col">
-          <div class="flex items-center space-x-2">
-            <span class="font-extrabold text-sm tracking-tight text-slate-900 dark:text-white">CPRE FL 3.3.2</span>
-            <span id="headerBadgeText" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 font-medium">
-              45 Soalan • 72 Pts
-            </span>
+      <!-- Brand + Primary Mode Switcher (Tab 1: Ulangkaji Bab | Tab 2: Simulasi Exam) -->
+      <div class="flex items-center space-x-3 sm:space-x-5">
+        <a href="javascript:void(0)" onclick="switchMainView('drill')" class="flex items-center space-x-2 shrink-0">
+          <div class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-black text-xs shadow-xs">
+            RE
           </div>
-          <span class="text-[10.5px] text-slate-500 dark:text-zinc-400 hidden sm:inline">IREB Ground Truth Practice Hub</span>
+          <span class="font-extrabold text-sm sm:text-base tracking-tight text-slate-900 dark:text-white hidden sm:inline">CPRE Master</span>
+        </a>
+
+        <!-- Clean 2-Way Segmented Mode Switcher -->
+        <div class="flex items-center p-0.5 bg-slate-100 dark:bg-zinc-900 rounded-xl border border-slate-200 dark:border-zinc-800 text-xs">
+          <button 
+            id="mainNavDrillBtn" 
+            onclick="switchMainView('drill')" 
+            class="px-2.5 sm:px-3.5 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs"
+          >
+            <svg class="w-4 h-4 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+            <span>Ulangkaji Bab (EU 1–7)</span>
+            <span class="hidden md:inline font-mono text-[10px] px-1.5 py-0.2 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 font-bold">132Q</span>
+          </button>
+
+          <button 
+            id="mainNavExamBtn" 
+            onclick="switchMainView('exam')" 
+            class="px-2.5 sm:px-3.5 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white"
+          >
+            <svg class="w-4 h-4 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>Simulasi Exam (45Q)</span>
+          </button>
         </div>
       </div>
 
-      <!-- Right Controls: Bookmarks, Mode Toggle & Theme -->
-      <div class="flex items-center space-x-2 sm:space-x-3">
+      <!-- Right Controls: Clean, Context-Aware, Zero Overload -->
+      <div class="flex items-center space-x-2">
         
-        <!-- Set Switcher Dropdown (Official vs Predicted G - Clean SVGs, No Emojis) -->
+        <!-- Exam Set Switcher (Auto-hidden in Ulangkaji Bab mode to prevent confusion!) -->
         <div class="relative inline-block text-left" id="setSelectorWrapper">
           <button 
             id="setSelectorBtn" 
             onclick="toggleSetDropdown(event)" 
-            class="h-8 px-2 sm:px-2.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 flex items-center space-x-2 transition-all text-xs font-semibold shadow-xs cursor-pointer"
-            title="Tukar Mod Set Peperiksaan"
+            class="h-8 px-2.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 flex items-center space-x-1.5 transition-all text-xs font-semibold shadow-xs cursor-pointer"
+            title="Tukar Set Peperiksaan"
           >
             <span id="activeSetBadgeIcon" class="flex items-center">
               <svg class="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10" />
-                <circle cx="12" cy="12" r="6" />
-                <circle cx="12" cy="12" r="2" />
+                <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" />
               </svg>
             </span>
             <span id="activeSetNameText" class="hidden sm:inline">Set Ramalan G (72 Pts)</span>
@@ -138,7 +153,7 @@
             </svg>
           </button>
           
-          <div id="setDropdownMenu" class="hidden absolute right-0 mt-1.5 w-72 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-xl z-50 py-1.5 animate-in fade-in zoom-in-95 duration-100">
+          <div id="setDropdownMenu" class="hidden absolute right-0 mt-1.5 w-64 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-xl z-50 py-1.5 animate-in fade-in zoom-in-95 duration-100">
             <div class="px-3 py-1.5 border-b border-slate-100 dark:border-zinc-800 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
               PILIH SET PEPERIKSAAN
             </div>
@@ -146,13 +161,11 @@
             <button onclick="switchExamSet('official')" class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-slate-50 dark:hover:bg-zinc-800/60 transition-colors">
               <div class="flex items-start gap-2.5">
                 <div class="w-6 h-6 rounded-md bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
-                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
-                  </svg>
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
                 </div>
                 <div>
                   <div class="font-bold text-slate-800 dark:text-zinc-200">Set Latihan Rasmi</div>
-                  <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 70.0 Pts (Lulus 49.0 Pts)</div>
+                  <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 70.0 Pts</div>
                 </div>
               </div>
               <span id="check-official" class="text-indigo-600 dark:text-indigo-400 font-bold hidden">✓</span>
@@ -162,14 +175,12 @@
               <div class="flex items-start gap-2.5">
                 <div class="w-6 h-6 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 mt-0.5">
                   <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10" />
-                    <circle cx="12" cy="12" r="6" />
-                    <circle cx="12" cy="12" r="2" />
+                    <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" />
                   </svg>
                 </div>
                 <div>
                   <div class="font-bold text-slate-800 dark:text-zinc-200">Set Ramalan G (Exam Pool)</div>
-                  <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 72.0 Pts (Lulus 50.40 Pts)</div>
+                  <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 72.0 Pts</div>
                 </div>
               </div>
               <span id="check-predicted" class="text-indigo-600 dark:text-indigo-400 font-bold hidden">✓</span>
@@ -177,40 +188,40 @@
           </div>
         </div>
 
-        <!-- Bookmarks Filter Trigger -->
-        <button 
-          id="bookmarkFilterBtn" 
-          onclick="toggleBookmarkFilter()" 
-          class="h-8 px-2.5 rounded-lg bg-white dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-zinc-300 flex items-center space-x-1.5 transition-all text-xs font-semibold shadow-xs"
-          title="Tapis soalan bertanda bintang"
-        >
-          <svg class="w-3.5 h-3.5 text-amber-500 fill-amber-500" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          <span id="bookmarkCountText" class="font-mono text-xs">0</span>
-        </button>
-
-        <!-- Segmented Mode Control (Study vs Quiz) -->
-        <div class="p-0.5 bg-slate-100 dark:bg-zinc-900 rounded-lg border border-slate-200 dark:border-zinc-800 flex items-center">
+        <!-- Mode Toggle: Study vs Quiz -->
+        <div class="p-0.5 bg-slate-100 dark:bg-zinc-900 rounded-lg border border-slate-200 dark:border-zinc-800 flex items-center text-xs">
           <button 
             id="modeStudyBtn" 
             onclick="setMode('study')" 
-            class="px-3 py-1 rounded-md text-xs font-semibold bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs transition-all"
+            class="px-2.5 py-1 rounded-md font-semibold bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs transition-all"
           >
             Study
           </button>
           <button 
             id="modeQuizBtn" 
             onclick="setMode('quiz')" 
-            class="px-3 py-1 rounded-md text-xs font-medium text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all"
+            class="px-2.5 py-1 rounded-md font-medium text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all"
           >
             Quiz
           </button>
         </div>
 
-        <!-- Tactile Theme Toggle Button -->
+        <!-- Bookmarks Filter Trigger -->
+        <button 
+          id="bookmarkFilterBtn" 
+          onclick="toggleBookmarkFilter()" 
+          class="h-8 px-2.5 rounded-lg bg-white dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-zinc-300 flex items-center space-x-1 transition-all text-xs font-semibold shadow-xs"
+          title="Tapis soalan bertanda bintang"
+        >
+          <svg class="w-3.5 h-3.5 text-amber-500 fill-amber-500" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <span id="bookmarkCountText" class="font-mono text-xs">0</span>
+        </button>
+
+        <!-- Theme Toggle -->
         <button 
           id="themeToggleBtn"
           onclick="toggleTheme(event)"
-          class="w-8 h-8 rounded-lg flex items-center justify-center bg-white dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-zinc-300 shadow-xs cursor-pointer overflow-hidden"
+          class="w-8 h-8 rounded-lg flex items-center justify-center bg-white dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-zinc-300 shadow-xs cursor-pointer"
           title="Tukar Mod Tema"
         >
           <svg id="moonIcon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -225,46 +236,8 @@
     </div>
   </header>
 
-  <!-- PRIMARY MODULE SWITCHER (SIMULASI PEPERIKSAAN VS ULANGKAJI BAB DEMI BAB) -->
-  <nav class="sticky top-14 z-30 bg-white/95 dark:bg-zinc-950/95 border-b border-slate-200 dark:border-zinc-800/80 backdrop-blur-md shadow-2xs">
-    <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3">
-      
-      <!-- Module Switcher Tabs -->
-      <div class="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-zinc-900 rounded-xl border border-slate-200 dark:border-zinc-800">
-        <button 
-          id="mainNavExamBtn" 
-          onclick="switchMainView('exam')" 
-          class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs"
-        >
-          <svg class="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span>Simulasi Peperiksaan (Set Rasmi & Set G)</span>
-        </button>
 
-        <button 
-          id="mainNavDrillBtn" 
-          onclick="switchMainView('drill')" 
-          class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"
-        >
-          <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-          </svg>
-          <span>Ulangkaji Bab demi Bab (EU 1–7 Drill & Deep Notes)</span>
-          <span class="px-1.5 py-0.5 rounded-full text-[10.5px] font-mono font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300">132Q</span>
-        </button>
-      </div>
-
-      <!-- Quick Context Info -->
-      <div id="moduleQuickBadge" class="hidden sm:flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400 font-medium">
-        <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-900 font-mono text-[11px] text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-800">
-          IREB CPRE FL 3.4
-        </span>
-        <span id="moduleQuickText">Mod Simulasi Peperiksaan</span>
-      </div>
-
-    </div>
-  </nav>
+  
 
 
     <!-- MODULE 1: SIMULASI PEPERIKSAAN -->
@@ -916,19 +889,25 @@
 
   </section>
 
-  <!-- FULLSCREEN IMAGE MODAL -->
-  <div id="imageModal" onclick="closeImageModal()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 transition-opacity duration-200">
-    <div class="relative max-w-4xl max-h-[90vh] bg-white dark:bg-zinc-900 rounded-2xl p-4 shadow-2xl overflow-auto border border-zinc-700" onclick="event.stopPropagation()">
-      <div class="flex items-center justify-between pb-2 mb-2 border-b border-zinc-200 dark:border-zinc-800">
-        <span id="modalImgTitle" class="text-xs font-bold text-zinc-900 dark:text-white">Paparan Penuh Gambar Rajah</span>
-        <button onclick="closeImageModal()" class="text-xs font-mono font-bold px-2 py-1 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700">
-          Tutup ✕
+  <!-- FULLSCREEN IMAGE MODAL (FOOLPROOF ZOOM) -->
+  <div id="imageModal" onclick="closeImageModal()" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[99999] hidden flex items-center justify-center p-3 sm:p-6 transition-opacity duration-200">
+    <div class="relative max-w-5xl w-full max-h-[92vh] bg-white dark:bg-zinc-900 rounded-3xl p-4 sm:p-5 shadow-2xl overflow-hidden border border-slate-300 dark:border-zinc-700 flex flex-col" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between pb-3 mb-2 border-b border-slate-200 dark:border-zinc-800">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+          <span class="font-extrabold text-sm text-slate-900 dark:text-white">Paparan Rajah Terperinci (Zum Penuh)</span>
+          <span class="text-xs text-slate-500 dark:text-zinc-400 font-mono hidden sm:inline">• Klik luar atau tekan ESC untuk tutup</span>
+        </div>
+        <button onclick="closeImageModal()" class="h-8 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 flex items-center gap-1.5 text-xs font-bold transition-all">
+          <span>Tutup</span>
+          <span class="font-mono text-xs">✕</span>
         </button>
       </div>
-      <div class="flex items-center justify-center p-2 bg-white rounded-lg">
-        <img id="modalImgTag" src="" alt="Diagram Fullscreen" class="max-w-full max-h-[75vh] object-contain" />
+      <div class="overflow-auto max-h-[80vh] flex items-center justify-center p-3 bg-slate-50 dark:bg-zinc-950 rounded-2xl border border-slate-100 dark:border-zinc-800/80">
+        <img id="modalImgTag" src="" alt="Rajah Soalan" class="max-w-full h-auto max-h-[75vh] object-contain rounded-lg shadow-sm select-none" />
       </div>
     </div>
+  </div>
   </div>
 
   <!-- CUSTOM CONFIRMATION DIALOG (shadcn AlertDialog style) -->
@@ -1172,49 +1151,34 @@
 
     <!-- Question Bank Toolbar for Active EU -->
     <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-2xl p-4 shadow-sm space-y-3">
-      
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div class="flex items-center gap-2">
           <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
-          <span class="font-extrabold text-sm text-slate-900 dark:text-white">Bank Soalan Latihan & Peperiksaan Bagi Bab Ini</span>
-          <span id="drillFilteredCountBadge" class="font-mono text-xs font-bold px-2.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+          <span class="font-extrabold text-sm text-slate-900 dark:text-white">Soalan Latihan & Peperiksaan Bab Ini</span>
+          <span id="drillFilteredCountBadge" class="font-mono text-xs font-bold px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
             0 Soalan
           </span>
         </div>
 
-        <!-- Global Action: Toggle all explanations in drill -->
-        <div class="flex items-center space-x-2 text-[11px] text-slate-500 dark:text-zinc-400">
-          <button onclick="expandAllDrillExplanations()" class="hover:text-slate-900 dark:hover:text-white font-medium transition-colors">Buka Semua Huraian</button>
-          <span>•</span>
-          <button onclick="collapseAllDrillExplanations()" class="hover:text-slate-900 dark:hover:text-white font-medium transition-colors">Tutup Semua Huraian</button>
+        <div class="flex items-center space-x-3 text-xs">
+          <!-- Simple Type Filter -->
+          <div class="flex items-center gap-1 bg-slate-100 dark:bg-zinc-800 p-0.5 rounded-lg border border-slate-200 dark:border-zinc-700/60">
+            <button onclick="filterDrillType('all')" class="drill-type-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-xs" data-type="all">Semua</button>
+            <button onclick="filterDrillType('K')" class="drill-type-btn px-2.5 py-1 rounded-md text-xs font-medium text-slate-700 dark:text-zinc-300" data-type="K">K-Type</button>
+            <button onclick="filterDrillType('A')" class="drill-type-btn px-2.5 py-1 rounded-md text-xs font-medium text-slate-700 dark:text-zinc-300" data-type="A">A-Type</button>
+            <button onclick="filterDrillType('P')" class="drill-type-btn px-2.5 py-1 rounded-md text-xs font-medium text-slate-700 dark:text-zinc-300" data-type="P">P-Type</button>
+          </div>
+
+          <div class="h-4 w-px bg-slate-200 dark:border-zinc-700"></div>
+
+          <!-- Toggle All Explanations -->
+          <div class="flex items-center space-x-1.5 text-[11px] text-slate-500 dark:text-zinc-400">
+            <button onclick="expandAllDrillExplanations()" class="hover:text-slate-900 dark:hover:text-white font-medium transition-colors">Buka Semua</button>
+            <span>•</span>
+            <button onclick="collapseAllDrillExplanations()" class="hover:text-slate-900 dark:hover:text-white font-medium transition-colors">Tutup Semua</button>
+          </div>
         </div>
       </div>
-
-      <!-- Filters: Source and Type -->
-      <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-zinc-800/80">
-        
-        <!-- Source Filter Chips -->
-        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
-          <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 mr-1 shrink-0">Sumber:</span>
-          <button onclick="filterDrillSource('all')" class="drill-src-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-xs" data-src="all">Semua</button>
-          <button onclick="filterDrillSource('Set Rasmi')" class="drill-src-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-src="Set Rasmi">Set Rasmi</button>
-          <button onclick="filterDrillSource('Set Ramalan G')" class="drill-src-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-src="Set Ramalan G">Set Ramalan G</button>
-          <button onclick="filterDrillSource('Sample 10 Free')" class="drill-src-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-src="Sample 10 Free">Sample 10 Free</button>
-          <button onclick="filterDrillSource('Kompilasi Slaid')" class="drill-src-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-src="Kompilasi Slaid">Slaid Kompilasi</button>
-          <button onclick="filterDrillSource('Latihan Web')" class="drill-src-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-src="Latihan Web">Latihan Web</button>
-        </div>
-
-        <!-- Question Type Filter Chips -->
-        <div class="flex items-center gap-1 overflow-x-auto text-xs">
-          <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 mr-1 shrink-0">Jenis:</span>
-          <button onclick="filterDrillType('all')" class="drill-type-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-xs" data-type="all">Semua</button>
-          <button onclick="filterDrillType('K')" class="drill-type-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-type="K">K-Type</button>
-          <button onclick="filterDrillType('A')" class="drill-type-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-type="A">A-Type</button>
-          <button onclick="filterDrillType('P')" class="drill-type-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-type="P">P-Type</button>
-        </div>
-
-      </div>
-
     </div>
 
     <!-- Drill Questions Stream Container (Side-by-side in Study Mode, Centered in Quiz Mode) -->
@@ -1279,7 +1243,7 @@
     let eus = activeSet.eus;
 
     // Top Module Navigation View: 'exam' | 'drill'
-    let currentMainView = localStorage.getItem('cpre_main_view') || 'exam';
+    let currentMainView = localStorage.getItem('cpre_main_view') || 'drill';
     let currentDrillEU = localStorage.getItem('cpre_drill_eu') || 'EU1';
     let currentDrillSource = 'all';
     let currentDrillType = 'all';
@@ -2225,23 +2189,37 @@
     // =============================================================
     // 6. HELPER FUNCTIONS (MODALS, BOOKMARKS, SCORING, ETC.)
     // =============================================================
+        // Robust Fullscreen Image Modal Logic
     function openImageModal(target) {
       const modal = document.getElementById('imageModal');
       const modalImg = document.getElementById('modalImgTag');
       if (!modal || !modalImg) return;
 
-      if (target && (target.startsWith('assets/') || target.startsWith('http') || target.startsWith('data:'))) {
-        modalImg.src = target;
-      } else {
+      let src = '';
+      if (typeof target === 'string') {
         const el = document.getElementById(target);
-        if (el) modalImg.src = el.src;
+        if (el && el.src) {
+          src = el.src;
+        } else {
+          src = target;
+        }
+      } else if (target && target.src) {
+        src = target.src;
+      } else if (target && target.getAttribute) {
+        src = target.getAttribute('src');
       }
+
+      if (!src) return;
+
+      modalImg.src = src;
       modal.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
     }
 
     function closeImageModal() {
       const modal = document.getElementById('imageModal');
       if (modal) modal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
     }
 
     function setMode(mode) {
