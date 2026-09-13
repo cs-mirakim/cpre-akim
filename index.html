@@ -889,170 +889,9 @@
 
   </section>
 
-  <!-- FULLSCREEN IMAGE MODAL (FOOLPROOF ZOOM) -->
-  <div id="imageModal" onclick="closeImageModal()" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[99999] hidden flex items-center justify-center p-3 sm:p-6 transition-opacity duration-200">
-    <div class="relative max-w-5xl w-full max-h-[92vh] bg-white dark:bg-zinc-900 rounded-3xl p-4 sm:p-5 shadow-2xl overflow-hidden border border-slate-300 dark:border-zinc-700 flex flex-col" onclick="event.stopPropagation()">
-      <div class="flex items-center justify-between pb-3 mb-2 border-b border-slate-200 dark:border-zinc-800">
-        <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
-          <span class="font-extrabold text-sm text-slate-900 dark:text-white">Paparan Rajah Terperinci (Zum Penuh)</span>
-          <span class="text-xs text-slate-500 dark:text-zinc-400 font-mono hidden sm:inline">• Klik luar atau tekan ESC untuk tutup</span>
-        </div>
-        <button onclick="closeImageModal()" class="h-8 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 flex items-center gap-1.5 text-xs font-bold transition-all">
-          <span>Tutup</span>
-          <span class="font-mono text-xs">✕</span>
-        </button>
-      </div>
-      <div class="overflow-auto max-h-[80vh] flex items-center justify-center p-3 bg-slate-50 dark:bg-zinc-950 rounded-2xl border border-slate-100 dark:border-zinc-800/80">
-        <img id="modalImgTag" src="" alt="Rajah Soalan" class="max-w-full h-auto max-h-[75vh] object-contain rounded-lg shadow-sm select-none" />
-      </div>
-    </div>
-  </div>
   </div>
 
-  <!-- CUSTOM CONFIRMATION DIALOG (shadcn AlertDialog style) -->
-  <div id="confirmModal" onclick="closeConfirmModal()" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-[70] hidden flex items-center justify-center p-4 transition-opacity duration-200">
-    <div class="relative w-full max-w-md bg-white dark:bg-zinc-900 rounded-2xl p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-zinc-800" onclick="event.stopPropagation()">
-      <div class="flex items-start space-x-3.5 mb-4">
-        <div id="confirmIconContainer" class="w-10 h-10 rounded-full bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/60 flex items-center justify-center text-rose-600 dark:text-rose-400 shrink-0">
-          <svg id="confirmIcon" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-          </svg>
-        </div>
-        <div>
-          <h3 id="confirmTitle" class="text-sm sm:text-base font-bold text-slate-900 dark:text-white">Set Semula Jawapan Kuiz?</h3>
-          <p id="confirmDesc" class="text-xs text-slate-500 dark:text-zinc-400 mt-1 leading-relaxed">
-            Semua jawapan yang telah anda tanda dan semakan markah dalam Quiz Mode akan dipadamkan. Tindakan ini tidak boleh diundur.
-          </p>
-        </div>
-      </div>
-      
-      <div class="flex items-center justify-end space-x-2 pt-3 border-t border-slate-100 dark:border-zinc-800">
-        <button onclick="closeConfirmModal()" class="h-8 px-3.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 text-xs font-semibold transition-colors">
-          Batal
-        </button>
-        <button id="confirmActionBtn" onclick="executeConfirmAction()" class="h-8 px-3.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow-xs transition-colors">
-          Ya, Set Semula
-        </button>
-      </div>
-    </div>
-  </div>
 
-  <!-- EXAM RESULTS & SCORE SUMMARY MODAL (IREB Correction Aid Standards) -->
-  <div id="examResultsModal" onclick="closeExamResultsModal()" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 transition-opacity duration-200">
-    <div class="relative w-full max-w-2xl bg-white dark:bg-zinc-900 rounded-3xl p-5 sm:p-7 shadow-2xl border border-slate-200 dark:border-zinc-800 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
-      
-      <!-- Modal Header -->
-      <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-zinc-800">
-        <div>
-          <div class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider font-mono">Keputusan Rasmi Peperiksaan</div>
-          <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">IREB CPRE FL 3.3.2 Practice Exam</h2>
-        </div>
-        <button onclick="closeExamResultsModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center font-bold text-sm">
-          ✕
-        </button>
-      </div>
-
-      <!-- Hero Pass/Fail Banner -->
-      <div id="resHeroBanner" class="rounded-2xl p-5 sm:p-6 mb-5 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md">
-        <!-- Injected via JS -->
-      </div>
-
-      <!-- Quick Metrics Grid -->
-      <div class="grid grid-cols-3 gap-3 mb-5">
-        <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-center">
-          <div class="text-[11px] font-medium text-slate-500 dark:text-zinc-400 mb-0.5">Jumlah Markah</div>
-          <div id="resTotalScore" class="text-lg sm:text-2xl font-extrabold font-mono text-slate-900 dark:text-white">0.00 / 70</div>
-        </div>
-        <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-center">
-          <div class="text-[11px] font-medium text-slate-500 dark:text-zinc-400 mb-0.5">Peratusan</div>
-          <div id="resPercentage" class="text-lg sm:text-2xl font-extrabold font-mono text-slate-900 dark:text-white">0.0%</div>
-        </div>
-        <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-center">
-          <div class="text-[11px] font-medium text-slate-500 dark:text-zinc-400 mb-0.5">Syarat Lulus (70%)</div>
-          <div class="text-lg sm:text-2xl font-extrabold font-mono text-emerald-600 dark:text-emerald-400">49.0 Pts</div>
-        </div>
-      </div>
-
-      <!-- Breakdown by Question Type -->
-      <div class="mb-5">
-        <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2.5">Prestasi Mengikut Jenis Soalan (IREB Standard)</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          
-          <div class="p-3.5 rounded-xl bg-purple-50/50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-900/60">
-            <div class="flex items-center justify-between text-xs font-bold text-purple-900 dark:text-purple-300 mb-1">
-              <span>K-Type (True/False)</span>
-              <span id="resKScore" class="font-mono">0 / 30 Pts</span>
-            </div>
-            <div class="text-[11px] text-slate-500 dark:text-zinc-400">15 soalan • 0.50 pt/baris</div>
-          </div>
-
-          <div class="p-3.5 rounded-xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900/60">
-            <div class="flex items-center justify-between text-xs font-bold text-blue-900 dark:text-blue-300 mb-1">
-              <span>A-Type (Single)</span>
-              <span id="resAScore" class="font-mono">0 / 19 Pts</span>
-            </div>
-            <div class="text-[11px] text-slate-500 dark:text-zinc-400">18 soalan • 1–2 pts</div>
-          </div>
-
-          <div class="p-3.5 rounded-xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/60">
-            <div class="flex items-center justify-between text-xs font-bold text-amber-900 dark:text-amber-300 mb-1">
-              <span>P-Type (Multiple)</span>
-              <span id="resPScore" class="font-mono">0 / 21 Pts</span>
-            </div>
-            <div class="text-[11px] text-slate-500 dark:text-zinc-400">12 soalan • 1–2 pts</div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Breakdown by EU Section -->
-      <div class="mb-5">
-        <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2.5">Analisis Penguasaan Unit Silibus (EU1 – EU7)</h3>
-        <div id="resEuBarsContainer" class="space-y-2">
-          <!-- Injected via JS -->
-        </div>
-      </div>
-
-      <!-- Actions -->
-      <div class="flex flex-col sm:flex-row items-center justify-end gap-2 pt-4 border-t border-slate-100 dark:border-zinc-800">
-        <button onclick="resetQuizAnswers()" class="w-full sm:w-auto h-9 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 text-xs font-semibold transition-colors">
-          Ulang Semula Kuiz (Reset)
-        </button>
-        <button onclick="closeExamResultsModal()" class="w-full sm:w-auto h-9 px-5 rounded-xl bg-zinc-900 dark:bg-white hover:opacity-90 text-white dark:text-zinc-950 text-xs font-bold shadow-xs transition-all flex items-center justify-center gap-1.5">
-          Semak Kad Jawapan Soalan ➔
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Mobile Quick Jump Drawer (Q1–45 Grid - iOS Sheet Style) -->
-  <div id="drawerOverlay" onclick="toggleDrawer()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden transition-opacity duration-200"></div>
-  
-  <div id="jumpDrawer" class="fixed bottom-0 inset-x-0 bg-white dark:bg-zinc-900 border-t border-slate-200 dark:border-zinc-800 rounded-t-3xl p-4 sm:p-5 z-50 max-h-[85vh] overflow-y-auto transform translate-y-full transition-transform duration-200 ease-out hidden shadow-2xl">
-    
-    <!-- iOS Drag Handle Bar -->
-    <div class="w-10 h-1 bg-slate-300 dark:bg-zinc-700 rounded-full mx-auto mb-3.5 shrink-0"></div>
-
-    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100 dark:border-zinc-800">
-      <div>
-        <div class="font-bold text-sm text-slate-900 dark:text-white">Lompat Ke Soalan (Q1–45)</div>
-        <div class="text-[11px] text-slate-500 dark:text-zinc-400">Pilih nombor soalan mengikut Unit Silibus (EU)</div>
-      </div>
-      <button onclick="toggleDrawer()" class="w-7 h-7 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center font-bold text-xs">
-        ✕
-      </button>
-    </div>
-
-    <div id="tocDrawerContainer" class="space-y-3.5 pb-8">
-      <!-- Dynamically rendered by JS based on active set -->
-    </div>
-  </div>
-
-  <!-- Mobile Native Bottom Navigation Bar (iOS / Android App Style) -->
-  
-  </div>
 
 
   <!-- MODULE 2: ULANGKAJI BAB DEMI BAB (EU 1 - EU 7 DRILL & DEEP NOTES) -->
@@ -1218,6 +1057,168 @@
     </button>
 
   </nav>
+
+  <!-- FULLSCREEN IMAGE MODAL (FOOLPROOF ZOOM) -->
+  <div id="imageModal" onclick="closeImageModal()" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[99999] hidden flex items-center justify-center p-3 sm:p-6 transition-opacity duration-200">
+    <div class="relative max-w-5xl w-full max-h-[92vh] bg-white dark:bg-zinc-900 rounded-3xl p-4 sm:p-5 shadow-2xl overflow-hidden border border-slate-300 dark:border-zinc-700 flex flex-col" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between pb-3 mb-2 border-b border-slate-200 dark:border-zinc-800">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+          <span class="font-extrabold text-sm text-slate-900 dark:text-white">Paparan Rajah Terperinci (Zum Penuh)</span>
+          <span class="text-xs text-slate-500 dark:text-zinc-400 font-mono hidden sm:inline">• Klik luar atau tekan ESC untuk tutup</span>
+        </div>
+        <button onclick="closeImageModal()" class="h-8 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-200 flex items-center gap-1.5 text-xs font-bold transition-all">
+          <span>Tutup</span>
+          <span class="font-mono text-xs">✕</span>
+        </button>
+      </div>
+      <div class="overflow-auto max-h-[80vh] flex items-center justify-center p-3 bg-slate-50 dark:bg-zinc-950 rounded-2xl border border-slate-100 dark:border-zinc-800/80">
+        <img id="modalImgTag" src="" alt="Rajah Soalan" class="max-w-full h-auto max-h-[75vh] object-contain rounded-lg shadow-sm select-none" />
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM CONFIRMATION DIALOG (shadcn AlertDialog style) -->
+  <div id="confirmModal" onclick="closeConfirmModal()" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-[70] hidden flex items-center justify-center p-4 transition-opacity duration-200">
+    <div class="relative w-full max-w-md bg-white dark:bg-zinc-900 rounded-2xl p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-zinc-800" onclick="event.stopPropagation()">
+      <div class="flex items-start space-x-3.5 mb-4">
+        <div id="confirmIconContainer" class="w-10 h-10 rounded-full bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/60 flex items-center justify-center text-rose-600 dark:text-rose-400 shrink-0">
+          <svg id="confirmIcon" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+          </svg>
+        </div>
+        <div>
+          <h3 id="confirmTitle" class="text-sm sm:text-base font-bold text-slate-900 dark:text-white">Set Semula Jawapan Kuiz?</h3>
+          <p id="confirmDesc" class="text-xs text-slate-500 dark:text-zinc-400 mt-1 leading-relaxed">
+            Semua jawapan yang telah anda tanda dan semakan markah dalam Quiz Mode akan dipadamkan. Tindakan ini tidak boleh diundur.
+          </p>
+        </div>
+      </div>
+      
+      <div class="flex items-center justify-end space-x-2 pt-3 border-t border-slate-100 dark:border-zinc-800">
+        <button onclick="closeConfirmModal()" class="h-8 px-3.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 text-xs font-semibold transition-colors">
+          Batal
+        </button>
+        <button id="confirmActionBtn" onclick="executeConfirmAction()" class="h-8 px-3.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow-xs transition-colors">
+          Ya, Set Semula
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAM RESULTS & SCORE SUMMARY MODAL (IREB Correction Aid Standards) -->
+  <div id="examResultsModal" onclick="closeExamResultsModal()" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 transition-opacity duration-200">
+    <div class="relative w-full max-w-2xl bg-white dark:bg-zinc-900 rounded-3xl p-5 sm:p-7 shadow-2xl border border-slate-200 dark:border-zinc-800 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-zinc-800">
+        <div>
+          <div class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider font-mono">Keputusan Rasmi Peperiksaan</div>
+          <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">IREB CPRE FL 3.3.2 Practice Exam</h2>
+        </div>
+        <button onclick="closeExamResultsModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center font-bold text-sm">
+          ✕
+        </button>
+      </div>
+
+      <!-- Hero Pass/Fail Banner -->
+      <div id="resHeroBanner" class="rounded-2xl p-5 sm:p-6 mb-5 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="grid grid-cols-3 gap-3 mb-5">
+        <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-center">
+          <div class="text-[11px] font-medium text-slate-500 dark:text-zinc-400 mb-0.5">Jumlah Markah</div>
+          <div id="resTotalScore" class="text-lg sm:text-2xl font-extrabold font-mono text-slate-900 dark:text-white">0.00 / 70</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-center">
+          <div class="text-[11px] font-medium text-slate-500 dark:text-zinc-400 mb-0.5">Peratusan</div>
+          <div id="resPercentage" class="text-lg sm:text-2xl font-extrabold font-mono text-slate-900 dark:text-white">0.0%</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-center">
+          <div class="text-[11px] font-medium text-slate-500 dark:text-zinc-400 mb-0.5">Syarat Lulus (70%)</div>
+          <div class="text-lg sm:text-2xl font-extrabold font-mono text-emerald-600 dark:text-emerald-400">49.0 Pts</div>
+        </div>
+      </div>
+
+      <!-- Breakdown by Question Type -->
+      <div class="mb-5">
+        <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2.5">Prestasi Mengikut Jenis Soalan (IREB Standard)</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          
+          <div class="p-3.5 rounded-xl bg-purple-50/50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-900/60">
+            <div class="flex items-center justify-between text-xs font-bold text-purple-900 dark:text-purple-300 mb-1">
+              <span>K-Type (True/False)</span>
+              <span id="resKScore" class="font-mono">0 / 30 Pts</span>
+            </div>
+            <div class="text-[11px] text-slate-500 dark:text-zinc-400">15 soalan • 0.50 pt/baris</div>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900/60">
+            <div class="flex items-center justify-between text-xs font-bold text-blue-900 dark:text-blue-300 mb-1">
+              <span>A-Type (Single)</span>
+              <span id="resAScore" class="font-mono">0 / 19 Pts</span>
+            </div>
+            <div class="text-[11px] text-slate-500 dark:text-zinc-400">18 soalan • 1–2 pts</div>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/60">
+            <div class="flex items-center justify-between text-xs font-bold text-amber-900 dark:text-amber-300 mb-1">
+              <span>P-Type (Multiple)</span>
+              <span id="resPScore" class="font-mono">0 / 21 Pts</span>
+            </div>
+            <div class="text-[11px] text-slate-500 dark:text-zinc-400">12 soalan • 1–2 pts</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Breakdown by EU Section -->
+      <div class="mb-5">
+        <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2.5">Analisis Penguasaan Unit Silibus (EU1 – EU7)</h3>
+        <div id="resEuBarsContainer" class="space-y-2">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-col sm:flex-row items-center justify-end gap-2 pt-4 border-t border-slate-100 dark:border-zinc-800">
+        <button onclick="resetQuizAnswers()" class="w-full sm:w-auto h-9 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 text-xs font-semibold transition-colors">
+          Ulang Semula Kuiz (Reset)
+        </button>
+        <button onclick="closeExamResultsModal()" class="w-full sm:w-auto h-9 px-5 rounded-xl bg-zinc-900 dark:bg-white hover:opacity-90 text-white dark:text-zinc-950 text-xs font-bold shadow-xs transition-all flex items-center justify-center gap-1.5">
+          Semak Kad Jawapan Soalan ➔
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Quick Jump Drawer (Q1–45 Grid - iOS Sheet Style) -->
+  <div id="drawerOverlay" onclick="toggleDrawer()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden transition-opacity duration-200"></div>
+  
+  <div id="jumpDrawer" class="fixed bottom-0 inset-x-0 bg-white dark:bg-zinc-900 border-t border-slate-200 dark:border-zinc-800 rounded-t-3xl p-4 sm:p-5 z-50 max-h-[85vh] overflow-y-auto transform translate-y-full transition-transform duration-200 ease-out hidden shadow-2xl">
+    
+    <!-- iOS Drag Handle Bar -->
+    <div class="w-10 h-1 bg-slate-300 dark:bg-zinc-700 rounded-full mx-auto mb-3.5 shrink-0"></div>
+
+    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100 dark:border-zinc-800">
+      <div>
+        <div class="font-bold text-sm text-slate-900 dark:text-white">Lompat Ke Soalan (Q1–45)</div>
+        <div class="text-[11px] text-slate-500 dark:text-zinc-400">Pilih nombor soalan mengikut Unit Silibus (EU)</div>
+      </div>
+      <button onclick="toggleDrawer()" class="w-7 h-7 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center font-bold text-xs">
+        ✕
+      </button>
+    </div>
+
+    <div id="tocDrawerContainer" class="space-y-3.5 pb-8">
+      <!-- Dynamically rendered by JS based on active set -->
+    </div>
+  </div>
+
+
 
   <!-- JAVASCRIPT APPLICATION CORE -->
   <script>
