@@ -848,7 +848,7 @@
     </div>
 
     <!-- Sticky Navigation & Search Filter Toolbar -->
-    <div class="sticky top-14 z-20 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-zinc-800 p-3.5 shadow-md space-y-2.5">
+    <div id="notesStickyToolbar" class="sticky top-14 z-20 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-zinc-800 p-3.5 shadow-md space-y-2.5">
       <!-- Search Input -->
       <div class="relative">
         <input 
@@ -1533,7 +1533,7 @@
         }
 
         html += `
-          <section id="notes-sec-${euKey}" class="rounded-3xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/90 shadow-sm p-5 sm:p-7 space-y-6 scroll-mt-28">
+          <section id="notes-sec-${euKey}" class="notes-section-card rounded-3xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/90 shadow-sm p-5 sm:p-7 space-y-6 scroll-mt-48 sm:scroll-mt-52">
             
             <!-- Section Header -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-zinc-800/90">
@@ -1658,6 +1658,23 @@
       }
     }
 
+    function scrollToNotesSection(sec) {
+      if (!sec) return;
+      const stickyBar = document.getElementById('notesStickyToolbar');
+      const stickyHeight = stickyBar ? stickyBar.offsetHeight : 110;
+      const navbarHeight = 56; // top-14 header navbar height
+      const extraBuffer = 24; // comfortable breathing room above the component
+      const totalOffset = navbarHeight + stickyHeight + extraBuffer;
+
+      const rect = sec.getBoundingClientRect();
+      const targetY = window.pageYOffset + rect.top - totalOffset;
+
+      window.scrollTo({
+        top: Math.max(0, targetY),
+        behavior: 'smooth'
+      });
+    }
+
     function filterNotesEU(euId) {
       currentNotesEUFilter = euId;
       document.querySelectorAll('.notes-eu-pill').forEach(btn => {
@@ -1669,10 +1686,16 @@
       });
       renderMasterNotes();
 
-      if (euId !== 'all') {
-        const sec = document.getElementById('notes-sec-' + euId);
-        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      // Ensure that when filtering or switching to an EU, the section top is NEVER covered by the floating box
+      setTimeout(() => {
+        if (euId !== 'all') {
+          const sec = document.getElementById('notes-sec-' + euId);
+          scrollToNotesSection(sec);
+        } else {
+          const firstSec = document.querySelector('.notes-section-card');
+          scrollToNotesSection(firstSec);
+        }
+      }, 60);
     }
 
     function filterNotesContent(val) {
