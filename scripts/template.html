@@ -47,13 +47,13 @@
   </script>
   
   <style>
-    /* Custom Scrollbars */
-    ::-webkit-scrollbar { width: 6px; height: 5px; }
-    .dark ::-webkit-scrollbar-track { background: transparent; }
-    .dark ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
-    .dark ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    /* Custom Scrollbars - 12px, High Contrast & Tactile Drag */
+    ::-webkit-scrollbar { width: 12px; height: 12px; }
+    .dark ::-webkit-scrollbar-track { background: #0c0c0f; }
+    .dark ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 9999px; border: 3px solid #0c0c0f; }
+    .dark ::-webkit-scrollbar-thumb:hover { background: #71717a; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; border: 3px solid #f1f5f9; }
     ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
     /* Native View Transitions (Titisan Air yang Tenang) */
@@ -138,7 +138,7 @@
             </svg>
           </button>
           
-          <div id="setDropdownMenu" class="hidden absolute right-0 mt-1.5 w-64 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-xl z-50 py-1.5 animate-in fade-in zoom-in-95 duration-100">
+          <div id="setDropdownMenu" class="hidden absolute right-0 mt-1.5 w-72 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-xl z-50 py-1.5 animate-in fade-in zoom-in-95 duration-100">
             <div class="px-3 py-1.5 border-b border-slate-100 dark:border-zinc-800 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
               PILIH SET PEPERIKSAAN
             </div>
@@ -168,28 +168,11 @@
                   </svg>
                 </div>
                 <div>
-                  <div class="font-bold text-slate-800 dark:text-zinc-200">Set Ramalan G (Asas Slip 72 Pts)</div>
+                  <div class="font-bold text-slate-800 dark:text-zinc-200">Set Ramalan G (Exam Pool)</div>
                   <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 72.0 Pts (Lulus 50.40 Pts)</div>
                 </div>
               </div>
               <span id="check-predicted" class="text-indigo-600 dark:text-indigo-400 font-bold hidden">✓</span>
-            </button>
-
-            <button onclick="switchExamSet('predicted_maritime')" class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-slate-50 dark:hover:bg-zinc-800/60 transition-colors">
-              <div class="flex items-start gap-2.5">
-                <div class="w-6 h-6 rounded-md bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0 mt-0.5">
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                    <path d="M2 12h20" />
-                  </svg>
-                </div>
-                <div>
-                  <div class="font-bold text-slate-800 dark:text-zinc-200">Set Ramalan G+ (Varian Maritim)</div>
-                  <div class="text-[10px] text-slate-500 dark:text-zinc-400">45 Soalan • 72.0 Pts (Lulus 50.40 Pts)</div>
-                </div>
-              </div>
-              <span id="check-predicted-maritime" class="text-teal-600 dark:text-teal-400 font-bold hidden">✓</span>
             </button>
           </div>
         </div>
@@ -242,7 +225,51 @@
     </div>
   </header>
 
-  <!-- QUIZ MODE HUD (No live score leaking while answering!) -->
+  <!-- PRIMARY MODULE SWITCHER (SIMULASI PEPERIKSAAN VS ULANGKAJI BAB DEMI BAB) -->
+  <nav class="sticky top-14 z-30 bg-white/95 dark:bg-zinc-950/95 border-b border-slate-200 dark:border-zinc-800/80 backdrop-blur-md shadow-2xs">
+    <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Module Switcher Tabs -->
+      <div class="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-zinc-900 rounded-xl border border-slate-200 dark:border-zinc-800">
+        <button 
+          id="mainNavExamBtn" 
+          onclick="switchMainView('exam')" 
+          class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs"
+        >
+          <svg class="w-4 h-4 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Simulasi Peperiksaan (Set Rasmi & Set G)</span>
+        </button>
+
+        <button 
+          id="mainNavDrillBtn" 
+          onclick="switchMainView('drill')" 
+          class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2"
+        >
+          <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+          </svg>
+          <span>Ulangkaji Bab demi Bab (EU 1–7 Drill & Deep Notes)</span>
+          <span class="px-1.5 py-0.5 rounded-full text-[10.5px] font-mono font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300">132Q</span>
+        </button>
+      </div>
+
+      <!-- Quick Context Info -->
+      <div id="moduleQuickBadge" class="hidden sm:flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400 font-medium">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-900 font-mono text-[11px] text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-800">
+          IREB CPRE FL 3.4
+        </span>
+        <span id="moduleQuickText">Mod Simulasi Peperiksaan</span>
+      </div>
+
+    </div>
+  </nav>
+
+
+    <!-- MODULE 1: SIMULASI PEPERIKSAAN -->
+  <div id="examModuleView">
+<!-- QUIZ MODE HUD (No live score leaking while answering!) -->
   <div id="quizScoreHud" class="hidden sticky top-14 z-30 bg-slate-900/95 dark:bg-zinc-900/95 text-white backdrop-blur-md border-b border-indigo-500/30 shadow-md">
     <div class="max-w-5xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs">
       <div class="flex items-center space-x-3">
@@ -1045,7 +1072,159 @@
   </div>
 
   <!-- Mobile Native Bottom Navigation Bar (iOS / Android App Style) -->
-  <nav aria-label="Mobile Navigation" class="fixed bottom-0 inset-x-0 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl border-t border-slate-200/90 dark:border-zinc-800/90 h-16 z-30 md:hidden flex items-center justify-around px-2 shadow-lg">
+  
+  </div>
+
+
+  <!-- MODULE 2: ULANGKAJI BAB DEMI BAB (EU 1 - EU 7 DRILL & DEEP NOTES) -->
+  <div id="euDrillModuleView" class="hidden max-w-7xl mx-auto px-4 py-5 space-y-6">
+    
+    <!-- EU Navigation Tabs Row (Horizontal Scrollable Pills) -->
+    <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-2xl p-4 shadow-xs">
+      <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-100 dark:border-zinc-800/80 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+          <span class="font-extrabold text-slate-800 dark:text-zinc-200 uppercase tracking-wider text-[11px]">PILIH BAB PEMBELAJARAN (EDUCATIONAL UNIT):</span>
+        </div>
+        <div class="text-[11px] text-slate-500 dark:text-zinc-400 font-mono">
+          7 Bab • 132 Soalan Lengkap
+        </div>
+      </div>
+      
+      <div id="euDrillTabsContainer" class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+        <!-- Dynamically rendered EU tabs by JS -->
+      </div>
+    </div>
+
+    <!-- Active EU Header Card -->
+    <div id="euDrillHeaderCard" class="bg-gradient-to-br from-slate-900 via-zinc-900 to-indigo-950 text-white rounded-3xl p-6 sm:p-8 shadow-lg border border-zinc-800 relative overflow-hidden">
+      <!-- Dynamically populated by renderDrillEUHeader() -->
+    </div>
+
+    <!-- Collapsible Master Notes Accordions for Active EU -->
+    <div class="space-y-4">
+      
+      <!-- Accordion 1: Apa KENA Ingat & Risiko Kalau Lupa -->
+      <div class="rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm overflow-hidden transition-all">
+        <button 
+          onclick="toggleAccordion('euMemoryAnchorsBody', 'euMemoryAnchorsChevron')" 
+          class="w-full px-5 py-4 flex items-center justify-between gap-3 text-left hover:bg-slate-50/80 dark:hover:bg-zinc-800/50 transition-colors"
+        >
+          <div class="flex items-center gap-3.5">
+            <div class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/70 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-900/60 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                <span>Apa KENA Ingat & Risiko Kalau Lupa Dalam Peperiksaan</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-bold uppercase tracking-wider">Wajib Kuasai</span>
+              </div>
+              <div class="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
+                Konsep teras, formula matematik, dan amaran perangkap soalan untuk mengelak kehilangan markah.
+              </div>
+            </div>
+          </div>
+          <svg id="euMemoryAnchorsChevron" class="w-5 h-5 text-slate-400 dark:text-zinc-500 transition-transform duration-200 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </button>
+        
+        <div id="euMemoryAnchorsBody" class="px-5 pb-5 pt-2 border-t border-slate-100 dark:border-zinc-800/80 space-y-3">
+          <!-- Dynamically populated by JS -->
+        </div>
+      </div>
+
+      <!-- Accordion 2: Zon Pengetahuan Mendalam (Rujukan Rasmi IREB Handbook & Glosari) -->
+      <div class="rounded-2xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm overflow-hidden transition-all">
+        <button 
+          onclick="toggleAccordion('euDeepDiveBody', 'euDeepDiveChevron')" 
+          class="w-full px-5 py-4 flex items-center justify-between gap-3 text-left hover:bg-slate-50/80 dark:hover:bg-zinc-800/50 transition-colors"
+        >
+          <div class="flex items-center gap-3.5">
+            <div class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/70 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-900/60 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                <span>Zon Pengetahuan Mendalam (Rujukan Rasmi IREB Handbook & Glosari)</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 font-bold uppercase tracking-wider">100% Silibus Rasmi</span>
+              </div>
+              <div class="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
+                Penerangan terperinci terus dari Handbook V1.2.0 & Glosari V2.2.0 bagi konsep yang diuji dalam soalan latihan & peperiksaan sebenar.
+              </div>
+            </div>
+          </div>
+          <svg id="euDeepDiveChevron" class="w-5 h-5 text-slate-400 dark:text-zinc-500 transition-transform duration-200 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </button>
+        
+        <div id="euDeepDiveBody" class="px-5 pb-5 pt-2 border-t border-slate-100 dark:border-zinc-800/80 space-y-4">
+          <!-- Dynamically populated by JS -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Question Bank Toolbar for Active EU -->
+    <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-2xl p-4 shadow-sm space-y-3">
+      
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+          <span class="font-extrabold text-sm text-slate-900 dark:text-white">Bank Soalan Latihan & Peperiksaan Bagi Bab Ini</span>
+          <span id="drillFilteredCountBadge" class="font-mono text-xs font-bold px-2.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+            0 Soalan
+          </span>
+        </div>
+
+        <!-- Global Action: Toggle all explanations in drill -->
+        <div class="flex items-center space-x-2 text-[11px] text-slate-500 dark:text-zinc-400">
+          <button onclick="expandAllDrillExplanations()" class="hover:text-slate-900 dark:hover:text-white font-medium transition-colors">Buka Semua Huraian</button>
+          <span>•</span>
+          <button onclick="collapseAllDrillExplanations()" class="hover:text-slate-900 dark:hover:text-white font-medium transition-colors">Tutup Semua Huraian</button>
+        </div>
+      </div>
+
+      <!-- Filters: Source and Type -->
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-zinc-800/80">
+        
+        <!-- Source Filter Chips -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
+          <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 mr-1 shrink-0">Sumber:</span>
+          <button onclick="filterDrillSource('all')" class="drill-src-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-xs" data-src="all">Semua</button>
+          <button onclick="filterDrillSource('Set Rasmi')" class="drill-src-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-src="Set Rasmi">Set Rasmi</button>
+          <button onclick="filterDrillSource('Set Ramalan G')" class="drill-src-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-src="Set Ramalan G">Set Ramalan G</button>
+          <button onclick="filterDrillSource('Sample 10 Free')" class="drill-src-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-src="Sample 10 Free">Sample 10 Free</button>
+          <button onclick="filterDrillSource('Kompilasi Slaid')" class="drill-src-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-src="Kompilasi Slaid">Slaid Kompilasi</button>
+          <button onclick="filterDrillSource('Latihan Web')" class="drill-src-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-src="Latihan Web">Latihan Web</button>
+        </div>
+
+        <!-- Question Type Filter Chips -->
+        <div class="flex items-center gap-1 overflow-x-auto text-xs">
+          <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 mr-1 shrink-0">Jenis:</span>
+          <button onclick="filterDrillType('all')" class="drill-type-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-xs" data-type="all">Semua</button>
+          <button onclick="filterDrillType('K')" class="drill-type-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-type="K">K-Type</button>
+          <button onclick="filterDrillType('A')" class="drill-type-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-type="A">A-Type</button>
+          <button onclick="filterDrillType('P')" class="drill-type-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60" data-type="P">P-Type</button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Drill Questions Stream Container (Side-by-side in Study Mode, Centered in Quiz Mode) -->
+    <div id="euDrillQuestionsContainer" class="space-y-4">
+      <!-- Dynamically rendered by renderDrillQuestions() -->
+    </div>
+
+  </div>
+
+<nav aria-label="Mobile Navigation" class="fixed bottom-0 inset-x-0 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl border-t border-slate-200/90 dark:border-zinc-800/90 h-16 z-30 md:hidden flex items-center justify-around px-2 shadow-lg">
     
     <!-- Tab 1: Soalan -->
     <button onclick="switchTab('questions')" id="mobTabQ" class="flex flex-1 flex-col items-center justify-center py-1 text-slate-900 dark:text-white font-bold transition-all active:scale-95">
@@ -1080,7 +1259,7 @@
   <script>
     const appData = /* APP_DATA_PLACEHOLDER */ null;
 
-    // Support dual exam sets: 'official' and 'predicted'
+    // Dual Simulation Sets
     let currentExamSet = localStorage.getItem('cpre_active_set') || 'predicted';
     if (!appData.sets || !appData.sets[currentExamSet]) {
       currentExamSet = 'official';
@@ -1091,18 +1270,29 @@
     }
 
     let activeSet = (appData.sets && appData.sets[currentExamSet]) ? appData.sets[currentExamSet] : {
-      questions: appData.questions,
-      eus: appData.eus,
+      questions: appData.questions || [],
+      eus: appData.eus || [],
       maxPoints: 70.0,
       passPoints: 49.0
     };
     let questions = activeSet.questions;
     let eus = activeSet.eus;
 
-    // State Variables (isolated per active set)
+    // Top Module Navigation View: 'exam' | 'drill'
+    let currentMainView = localStorage.getItem('cpre_main_view') || 'exam';
+    let currentDrillEU = localStorage.getItem('cpre_drill_eu') || 'EU1';
+    let currentDrillSource = 'all';
+    let currentDrillType = 'all';
+    let drillSearchQuery = '';
+
+    // Isolated Drill State
+    let drillUserAnswers = JSON.parse(localStorage.getItem('cpre_drill_answers') || '{}');
+    let drillRevealed = new Set(JSON.parse(localStorage.getItem('cpre_drill_revealed') || '[]'));
+
+    // Global App States
     let currentTheme = localStorage.getItem('cpre_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
     let currentMode = 'study'; // 'study' | 'quiz'
-    let currentEU = 0; // 0 = all
+    let currentEU = 0; // 0 = all (for simulation view)
     let currentType = 'all'; // 'all' | 'K' | 'A' | 'P'
     let searchQuery = '';
     let filterBookmarkedOnly = false;
@@ -1111,6 +1301,7 @@
     let quizSubmitted = localStorage.getItem(getStorageKey('cpre_quiz_submitted')) === 'true';
     let revealedAnswers = new Set(JSON.parse(localStorage.getItem(getStorageKey('cpre_revealed_qids')) || '[]'));
     let collapsedExplanations = new Set();
+    let drillCollapsedExplanations = new Set();
 
     // DOM Elements
     const questionsContainer = document.getElementById('questionsContainer');
@@ -1130,18 +1321,19 @@
       renderEUPills();
       renderTOCDrawer();
       updateBookmarkUI();
+      
+      // Initialize Views
+      switchMainView(currentMainView, false);
       renderQuestions();
       updateQuizHud();
 
-      // Keyboard Shortcut: '/' to focus search, 'Escape' to close modals/search
+      // Keyboard Shortcut: '/' to focus search, 'Escape' to close modals
       document.addEventListener('keydown', (e) => {
         if (e.key === '/' && document.activeElement !== searchInput) {
           e.preventDefault();
-          searchInput.focus();
+          if (currentMainView === 'exam' && searchInput) searchInput.focus();
         } else if (e.key === 'Escape') {
-          if (document.activeElement === searchInput) {
-            searchInput.blur();
-          }
+          if (document.activeElement === searchInput) searchInput.blur();
           closeImageModal();
           closeConfirmModal();
           closeExamResultsModal();
@@ -1149,335 +1341,588 @@
       });
     });
 
-    // Theme Switcher with Native View Transitions (Titisan Air yang Tenang)
-    function toggleTheme(e) {
-      const isDark = document.documentElement.classList.contains('dark');
-      const nextTheme = isDark ? 'light' : 'dark';
+    // =============================================================
+    // 1. PRIMARY MODULE SWITCHER (SIMULASI VS ULANGKAJI BAB)
+    // =============================================================
+    function switchMainView(view, save = true) {
+      currentMainView = view;
+      if (save) localStorage.setItem('cpre_main_view', view);
 
-      // Fallback for browsers without View Transitions
-      if (!document.startViewTransition) {
-        currentTheme = nextTheme;
-        localStorage.setItem('cpre_theme', currentTheme);
-        applyTheme(currentTheme);
+      const examView = document.getElementById('examModuleView');
+      const drillView = document.getElementById('euDrillModuleView');
+      const examBtn = document.getElementById('mainNavExamBtn');
+      const drillBtn = document.getElementById('mainNavDrillBtn');
+      const setWrapper = document.getElementById('setSelectorWrapper');
+      const quickText = document.getElementById('moduleQuickText');
+
+      if (view === 'drill') {
+        if (examView) examView.classList.add('hidden');
+        if (drillView) drillView.classList.remove('hidden');
+
+        if (examBtn) {
+          examBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2';
+        }
+        if (drillBtn) {
+          drillBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs';
+        }
+        if (setWrapper) setWrapper.classList.add('hidden');
+        if (quickText) quickText.textContent = 'Mod Ulangkaji Bab demi Bab (EU 1–7)';
+
+        renderDrillEUTabs();
+        renderDrillEUHeader();
+        renderDrillQuestions();
+      } else {
+        if (examView) examView.classList.remove('hidden');
+        if (drillView) drillView.classList.add('hidden');
+
+        if (examBtn) {
+          examBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs';
+        }
+        if (drillBtn) {
+          drillBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2';
+        }
+        if (setWrapper) setWrapper.classList.remove('hidden');
+        if (quickText) quickText.textContent = currentExamSet === 'official' ? 'Set Latihan Rasmi (70 Pts)' : 'Set Ramalan G (72 Pts)';
+
+        renderQuestions();
+      }
+    }
+
+    // =============================================================
+    // 2. EU DRILL MODULE LOGIC & RENDERING
+    // =============================================================
+    function switchDrillEU(euId) {
+      currentDrillEU = euId;
+      localStorage.setItem('cpre_drill_eu', euId);
+      currentDrillSource = 'all';
+      currentDrillType = 'all';
+      drillSearchQuery = '';
+
+      renderDrillEUTabs();
+      renderDrillEUHeader();
+      renderDrillQuestions();
+    }
+
+    function filterDrillSource(src) {
+      currentDrillSource = src;
+      document.querySelectorAll('.drill-src-btn').forEach(btn => {
+        if (btn.getAttribute('data-src') === src) {
+          btn.className = 'drill-src-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-xs';
+        } else {
+          btn.className = 'drill-src-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60';
+        }
+      });
+      renderDrillQuestions();
+    }
+
+    function filterDrillType(type) {
+      currentDrillType = type;
+      document.querySelectorAll('.drill-type-btn').forEach(btn => {
+        if (btn.getAttribute('data-type') === type) {
+          btn.className = 'drill-type-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-xs';
+        } else {
+          btn.className = 'drill-type-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60';
+        }
+      });
+      renderDrillQuestions();
+    }
+
+    function toggleAccordion(bodyId, chevronId) {
+      const body = document.getElementById(bodyId);
+      const chevron = document.getElementById(chevronId);
+      if (!body) return;
+
+      if (body.classList.contains('hidden')) {
+        body.classList.remove('hidden');
+        if (chevron) chevron.classList.add('rotate-180');
+      } else {
+        body.classList.add('hidden');
+        if (chevron) chevron.classList.remove('rotate-180');
+      }
+    }
+
+    function renderDrillEUTabs() {
+      const container = document.getElementById('euDrillTabsContainer');
+      if (!container || !appData.eu_drill) return;
+
+      const euKeys = ['EU1', 'EU2', 'EU3', 'EU4', 'EU5', 'EU6', 'EU7'];
+      let html = '';
+
+      euKeys.forEach(k => {
+        const eu = appData.eu_drill[k];
+        if (!eu) return;
+        const isActive = currentDrillEU === k;
+        const count = (eu.questions || []).length;
+        const isCritical = (k === 'EU5' || k === 'EU6' || k === 'EU3');
+
+        const activeCls = 'px-3 py-1.5 rounded-xl text-xs font-extrabold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-sm shrink-0 flex items-center gap-2';
+        const inactiveCls = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60 shrink-0 flex items-center gap-2 transition-all';
+
+        html += `
+          <button onclick="switchDrillEU('${k}')" class="${isActive ? activeCls : inactiveCls}">
+            <span class="w-2 h-2 rounded-full ${isCritical ? 'bg-rose-500' : 'bg-indigo-500'}"></span>
+            <span>${eu.code || k}</span>
+            <span class="font-mono text-[10.5px] px-1.5 py-0.2 rounded-md ${isActive ? 'bg-white/20 dark:bg-black/20' : 'bg-slate-200 dark:bg-zinc-700'}">
+              ${count}
+            </span>
+          </button>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function renderDrillEUHeader() {
+      const headerCard = document.getElementById('euDrillHeaderCard');
+      const anchorsBody = document.getElementById('euMemoryAnchorsBody');
+      const deepDiveBody = document.getElementById('euDeepDiveBody');
+      if (!appData.eu_drill) return;
+
+      const eu = appData.eu_drill[currentDrillEU];
+      if (!eu) return;
+
+      const totalQs = (eu.questions || []).length;
+      const kCount = (eu.questions || []).filter(q => q.type === 'K').length;
+      const aCount = (eu.questions || []).filter(q => q.type === 'A').length;
+      const pCount = (eu.questions || []).filter(q => q.type === 'P').length;
+
+      // Header Hero Card
+      if (headerCard) {
+        headerCard.innerHTML = `
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="space-y-1.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-lg bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 font-mono font-extrabold text-xs">
+                  ${eu.code}
+                </span>
+                <span class="px-2.5 py-0.5 rounded-lg bg-white/10 text-slate-200 border border-white/20 text-xs font-bold">
+                  Pemberat: ${eu.examWeight || 'Tinggi'}
+                </span>
+              </div>
+              <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white">
+                ${eu.title}
+              </h1>
+              <p class="text-xs sm:text-sm text-indigo-200 font-medium">
+                ${eu.titleBm || ''}
+              </p>
+            </div>
+
+            <!-- Stats Badge -->
+            <div class="shrink-0 bg-white/10 backdrop-blur-md rounded-2xl p-3.5 border border-white/15 flex items-center gap-4 text-center">
+              <div>
+                <div class="font-mono text-2xl font-black text-white">${totalQs}</div>
+                <div class="text-[10px] uppercase font-bold text-slate-300 tracking-wider">Soalan Bab</div>
+              </div>
+              <div class="h-8 w-px bg-white/20"></div>
+              <div class="text-left font-mono text-[11px] text-slate-200 space-y-0.5">
+                <div>K-Type: <strong class="text-purple-300 font-bold">${kCount}</strong></div>
+                <div>A-Type: <strong class="text-blue-300 font-bold">${aCount}</strong></div>
+                <div>P-Type: <strong class="text-amber-300 font-bold">${pCount}</strong></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Populate Accordion 1: Memory Anchors ("Apa KENA Ingat & Risiko Kalau Lupa")
+      if (anchorsBody) {
+        const anchors = eu.memoryAnchors || [];
+        if (anchors.length === 0) {
+          anchorsBody.innerHTML = `<div class="text-xs text-slate-500 italic p-3">Tiada nota ringkasan khusus bagi bab ini.</div>`;
+        } else {
+          anchorsBody.innerHTML = anchors.map((a, idx) => `
+            <div class="p-4 rounded-xl bg-slate-50/70 dark:bg-zinc-950/60 border border-slate-200 dark:border-zinc-800 space-y-2.5">
+              <div class="flex items-center gap-2">
+                <span class="w-5 h-5 rounded-md bg-amber-500 text-white flex items-center justify-center font-mono font-bold text-xs shrink-0">
+                  ${idx + 1}
+                </span>
+                <span class="font-extrabold text-xs sm:text-[13px] text-slate-900 dark:text-white">
+                  ${a.topic}
+                </span>
+              </div>
+              
+              <!-- Must Remember -->
+              <div class="text-xs text-slate-700 dark:text-zinc-300 leading-relaxed pl-7">
+                <strong class="text-slate-900 dark:text-white font-bold block mb-1">Paling Penting Kena Ingat:</strong>
+                ${formatText(a.mustRemember)}
+              </div>
+
+              <!-- Risk Alert Box -->
+              <div class="ml-7 p-3 rounded-xl bg-rose-50/90 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900/80 text-rose-950 dark:text-rose-200 text-xs flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+                <div class="leading-relaxed">
+                  <strong class="font-bold text-rose-800 dark:text-rose-300">Risiko Kalau Lupa Dalam Peperiksaan:</strong>
+                  <div>${formatText(a.riskIfForgotten)}</div>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+
+      // Populate Accordion 2: Deep Dive Notes (Strictly from Official Handbook/Glossary)
+      if (deepDiveBody) {
+        const deepNotes = eu.deepDiveNotes || [];
+        if (deepNotes.length === 0) {
+          deepDiveBody.innerHTML = `<div class="text-xs text-slate-500 italic p-3">Tiada nota lanjutan. Rujuk silibus piawai.</div>`;
+        } else {
+          deepDiveBody.innerHTML = deepNotes.map((d, idx) => `
+            <div class="p-4 rounded-xl bg-slate-50/70 dark:bg-zinc-950/60 border border-slate-200 dark:border-zinc-800 space-y-2">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 pb-2 border-b border-slate-200/60 dark:border-zinc-800">
+                <span class="font-extrabold text-xs sm:text-[13px] text-slate-900 dark:text-white">
+                  ${d.section}
+                </span>
+                <span class="inline-flex items-center gap-1 font-mono text-[10.5px] px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900/60 shrink-0">
+                  <svg class="w-3 h-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+                  ${d.source}
+                </span>
+              </div>
+              <div class="text-xs text-slate-700 dark:text-zinc-300 leading-relaxed font-normal pt-1">
+                ${formatText(d.content)}
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    function renderDrillQuestions() {
+      const container = document.getElementById('euDrillQuestionsContainer');
+      const badge = document.getElementById('drillFilteredCountBadge');
+      if (!container || !appData.eu_drill) return;
+
+      const eu = appData.eu_drill[currentDrillEU];
+      if (!eu) return;
+
+      const allDrillQs = eu.questions || [];
+      const filtered = allDrillQs.filter(q => {
+        if (currentDrillSource !== 'all') {
+          if (!q.sourceSet || !q.sourceSet.toLowerCase().includes(currentDrillSource.toLowerCase())) return false;
+        }
+        if (currentDrillType !== 'all' && q.type !== currentDrillType) return false;
+        return true;
+      });
+
+      if (badge) badge.textContent = `${filtered.length} Soalan`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl p-8 text-center shadow-sm">
+            <div class="text-sm font-bold text-slate-900 dark:text-white mb-1">Tiada soalan sepadan</div>
+            <div class="text-xs text-slate-500 dark:text-zinc-400 mb-3">Cuba pilih sumber atau jenis soalan yang berlainan.</div>
+            <button onclick="filterDrillSource('all'); filterDrillType('all');" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 text-xs font-bold shadow-xs">
+              Reset Penapis Bab Ini
+            </button>
+          </div>
+        `;
         return;
       }
 
-      const btn = document.getElementById('themeToggleBtn');
-      const rect = btn ? btn.getBoundingClientRect() : { left: window.innerWidth - 48, top: 24, width: 32, height: 32 };
-      const x = e && e.clientX ? e.clientX : (rect.left + rect.width / 2);
-      const y = e && e.clientY ? e.clientY : (rect.top + rect.height / 2);
+      container.innerHTML = filtered.map(q => {
+        const isRevealed = (currentMode === 'study') || drillRevealed.has(q.id);
+        const userSelections = drillUserAnswers[q.id];
+        const isExpCollapsed = drillCollapsedExplanations.has(q.id);
+        return renderQuestionCardHtml(q, isRevealed, userSelections, isExpCollapsed, true);
+      }).join('');
+    }
 
-      const endRadius = Math.hypot(
-        Math.max(x, window.innerWidth - x),
-        Math.max(y, window.innerHeight - y)
-      );
+    function expandAllDrillExplanations() {
+      const eu = appData.eu_drill ? appData.eu_drill[currentDrillEU] : null;
+      if (eu) {
+        (eu.questions || []).forEach(q => {
+          drillRevealed.add(q.id);
+          drillCollapsedExplanations.delete(q.id);
+        });
+        localStorage.setItem('cpre_drill_revealed', JSON.stringify(Array.from(drillRevealed)));
+      }
+      renderDrillQuestions();
+    }
 
-      const transition = document.startViewTransition(() => {
-        currentTheme = nextTheme;
-        localStorage.setItem('cpre_theme', currentTheme);
-        applyTheme(currentTheme);
-      });
+    function collapseAllDrillExplanations() {
+      const eu = appData.eu_drill ? appData.eu_drill[currentDrillEU] : null;
+      if (eu) {
+        (eu.questions || []).forEach(q => {
+          drillCollapsedExplanations.add(q.id);
+        });
+      }
+      renderDrillQuestions();
+    }
 
-      transition.ready.then(() => {
-        document.documentElement.animate(
-          {
-            clipPath: [
-              `circle(0px at ${x}px ${y}px)`,
-              `circle(${endRadius}px at ${x}px ${y}px)`
-            ]
-          },
-          {
-            duration: 480,
-            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-            pseudoElement: '::view-transition-new(root)'
+    // =============================================================
+    // 3. MASTER QUESTION CARD GENERATOR (SIDE-BY-SIDE IN STUDY MODE)
+    // =============================================================
+    function renderQuestionCardHtml(q, isRevealed, userSelections, isExpCollapsed, isDrill = false) {
+      const isBookmarked = bookmarkedIds.has(q.id);
+
+      // Badges
+      let typeBadgeColor = 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-900/60';
+      if (q.type === 'K') typeBadgeColor = 'bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-900/60';
+      if (q.type === 'P') typeBadgeColor = 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-900/60';
+
+      // Earned Score Calculation for Card (If Quiz Mode Revealed)
+      let cardScoreBanner = '';
+      if (isRevealed && currentMode === 'quiz') {
+        let cardEarned = 0;
+        const qPts = q.pts || 1;
+
+        if (q.type === 'K') {
+          const totalOpts = (q.options || []).length;
+          const ptsPerStmt = qPts / totalOpts;
+          let corrCount = 0;
+          if (userSelections && typeof userSelections === 'object' && !Array.isArray(userSelections)) {
+            (q.options || []).forEach(opt => {
+              if (userSelections[opt.id] !== undefined && userSelections[opt.id] === isOptionCorrect(opt, q)) {
+                cardEarned += ptsPerStmt;
+                corrCount++;
+              }
+            });
           }
-        );
-      });
-    }
+          cardEarned = Math.round(cardEarned * 100) / 100;
+          const isFull = cardEarned === qPts;
+          cardScoreBanner = `
+            <div class="mb-3 px-3.5 py-2.5 rounded-xl ${isFull ? 'bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200' : 'bg-slate-100 dark:bg-zinc-850 border border-slate-200 dark:border-zinc-700 text-slate-800 dark:text-zinc-200'} flex items-center justify-between text-xs shadow-2xs">
+              <span class="font-semibold">Skor Anda: <strong class="font-mono text-sm ${isFull ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'}">+${cardEarned.toFixed(2)} / ${qPts.toFixed(2)} Pts</strong></span>
+              <span class="text-[11px] font-mono">${corrCount}/${totalOpts} Kenyataan Betul (${ptsPerStmt.toFixed(2)} pt/baris)</span>
+            </div>
+          `;
+        } else if (q.type === 'P') {
+          const numAns = 2;
+          const ptsPerCorr = qPts / numAns;
+          const correctOpts = (q.options || []).filter(o => isOptionCorrect(o, q)).map(o => o.id);
+          let corrCount = 0;
+          let isOver = false;
 
-    function applyTheme(theme) {
-      const html = document.documentElement;
-      const moon = document.getElementById('moonIcon');
-      const sun = document.getElementById('sunIcon');
-      
-      if (theme === 'dark') {
-        html.classList.add('dark');
-        if (moon) moon.classList.remove('hidden');
-        if (sun) sun.classList.add('hidden');
-      } else {
-        html.classList.remove('dark');
-        if (sun) sun.classList.remove('hidden');
-        if (moon) moon.classList.add('hidden');
-      }
-    }
-
-    // Toggle Strategy Dashboard (on Mobile)
-    function toggleStrategyDashboard() {
-      const grid = document.getElementById('strategyCardsGrid');
-      const arrow = document.getElementById('stratToggleArrow');
-      if (grid.classList.contains('hidden')) {
-        grid.classList.remove('hidden');
-        arrow.textContent = 'Tutup ▴';
-      } else {
-        grid.classList.add('hidden');
-        arrow.textContent = 'Buka ▾';
-      }
-    }
-
-    // Toggle Format Guide
-    function toggleTypeGuide() {
-      const body = document.getElementById('typeGuideBody');
-      const arrow = document.getElementById('typeGuideArrow');
-      if (body.classList.contains('hidden')) {
-        body.classList.remove('hidden');
-        arrow.textContent = 'Tutup ▴';
-      } else {
-        body.classList.add('hidden');
-        arrow.textContent = 'Buka ▾';
-      }
-    }
-
-    // Toggle Syllabus Structure Guide
-    function toggleSyllabusGuide() {
-      const body = document.getElementById('syllabusGuideBody');
-      const arrow = document.getElementById('syllabusGuideArrow');
-      if (body && arrow) {
-        if (body.classList.contains('hidden')) {
-          body.classList.remove('hidden');
-          arrow.textContent = 'Tutup ▴';
+          if (Array.isArray(userSelections) && userSelections.length > 0) {
+            if (userSelections.length > numAns) {
+              isOver = true;
+              cardEarned = 0;
+            } else {
+              userSelections.forEach(id => {
+                if (correctOpts.includes(id)) corrCount++;
+              });
+              cardEarned = corrCount * ptsPerCorr;
+            }
+          }
+          cardScoreBanner = `
+            <div class="mb-3 px-3.5 py-2.5 rounded-xl ${cardEarned === qPts ? 'bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200' : 'bg-slate-100 dark:bg-zinc-850 border border-slate-200 dark:border-zinc-700 text-slate-800 dark:text-zinc-200'} flex items-center justify-between text-xs shadow-2xs">
+              <span class="font-semibold">Skor Anda: <strong class="font-mono text-sm ${cardEarned === qPts ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'}">+${cardEarned.toFixed(2)} / ${qPts.toFixed(2)} Pts</strong></span>
+              <span class="text-[11px] font-mono">${isOver ? '<span class="text-rose-600 dark:text-rose-400 font-bold">0 Pts (Tanda lebih 2 pilihan)</span>' : corrCount + '/2 Pilihan Betul'}</span>
+            </div>
+          `;
         } else {
-          body.classList.add('hidden');
-          arrow.textContent = 'Buka ▾';
+          // A-type
+          let isCorr = false;
+          if (Array.isArray(userSelections) && userSelections.length === 1) {
+            const correctOpt = (q.options || []).find(o => isOptionCorrect(o, q));
+            if (correctOpt && userSelections[0] === correctOpt.id) {
+              cardEarned = qPts;
+              isCorr = true;
+            }
+          }
+          cardScoreBanner = `
+            <div class="mb-3 px-3.5 py-2.5 rounded-xl ${isCorr ? 'bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200' : 'bg-slate-100 dark:bg-zinc-850 border border-slate-200 dark:border-zinc-700 text-slate-800 dark:text-zinc-200'} flex items-center justify-between text-xs shadow-2xs">
+              <span class="font-semibold">Skor Anda: <strong class="font-mono text-sm ${isCorr ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'}">+${cardEarned.toFixed(2)} / ${qPts.toFixed(2)} Pt</strong></span>
+              <span class="text-[11px] font-mono font-bold">${isCorr ? '✓ Jawapan Tepat' : '✕ Tidak Tepat'}</span>
+            </div>
+          `;
         }
       }
-    }
 
-    // Mode Switcher (Seamlessly switches to questions tab if on cheatsheet)
-    function setMode(mode) {
-      currentMode = mode;
-      const sBtn = document.getElementById('modeStudyBtn');
-      const qBtn = document.getElementById('modeQuizBtn');
+      // Check if Side-by-Side layout applies
+      const isSideBySide = (currentMode === 'study') || (currentMode === 'quiz' && isRevealed);
 
-      if (mode === 'study') {
-        sBtn.className = 'px-3 py-1 rounded-md text-xs font-semibold bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs transition-all';
-        qBtn.className = 'px-3 py-1 rounded-md text-xs font-medium text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all';
-        quizScoreHud.classList.add('hidden');
+      // Options Rendering
+      const optionsHtml = q.type === 'K' 
+        ? renderKTypeMatrix(q, isRevealed, userSelections, isDrill) 
+        : renderStandardOptions(q, isRevealed, userSelections, isDrill);
+
+      // Right Explanation Column Breakdown
+      const rightExplanationHtml = `
+        ${cardScoreBanner}
+
+        <!-- Official Answer Strip -->
+        <div class="rounded-xl bg-slate-100/90 dark:bg-zinc-850 border border-slate-200 dark:border-zinc-700/80 p-3.5 shadow-2xs">
+          <div class="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-slate-200/80 dark:border-zinc-700/60">
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-extrabold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 uppercase tracking-wider">
+              Jawapan Tepat Rasmi
+            </span>
+            <span class="text-[11px] font-mono font-bold text-indigo-600 dark:text-indigo-400">
+              ${q.pts || 1} ${(q.pts || 1) > 1 ? 'Pts' : 'Pt'}
+            </span>
+          </div>
+          <div class="font-mono text-xs sm:text-[13px] font-bold text-slate-900 dark:text-zinc-100 leading-relaxed bg-white/90 dark:bg-zinc-900/90 p-2.5 rounded-lg border border-slate-200/60 dark:border-zinc-800">
+            ${q.correctDisplay || 'Rujuk Pilihan di Sebelah'}
+          </div>
+        </div>
+
+        <!-- Mengapa Betul (Bilingual Technical Analysis) -->
+        ${q.whyCorrect ? `
+          <div class="p-3.5 rounded-xl border border-emerald-300 dark:border-emerald-800/80 bg-emerald-50/80 dark:bg-emerald-950/40 text-emerald-950 dark:text-emerald-100 shadow-xs">
+            <div class="font-bold text-emerald-800 dark:text-emerald-300 text-xs uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+              Mengapa Betul (Prinsip IREB)
+            </div>
+            <div class="text-xs font-normal leading-relaxed">
+              ${formatText(q.whyCorrect)}
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Perangkap Peperiksaan (Trap Alert) & Mengapa Salah -->
+        ${q.whyWrong ? `
+          <div class="p-3.5 rounded-xl border border-rose-300 dark:border-rose-800/80 bg-rose-50/80 dark:bg-rose-950/40 text-rose-950 dark:text-rose-100 shadow-xs">
+            <div class="font-bold text-rose-800 dark:text-rose-300 text-xs uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+              Perangkap Peperiksaan & Pilihan Salah
+            </div>
+            <div class="text-xs font-normal leading-relaxed">
+              ${formatText(q.whyWrong)}
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Extra Trap Alert Box if present -->
+        ${q.trapAlert && q.trapAlert !== q.whyWrong ? `
+          <div class="p-3 rounded-xl border border-amber-300 dark:border-amber-800/80 bg-amber-50/80 dark:bg-amber-950/40 text-amber-950 dark:text-amber-100 text-xs">
+            <div class="font-bold text-amber-800 dark:text-amber-300 text-[11px] uppercase tracking-wider mb-1 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+              Awas Perangkap Kata Kunci!
+            </div>
+            <div class="leading-relaxed">${formatText(q.trapAlert)}</div>
+          </div>
+        ` : ''}
+
+        <!-- Handbook Reference -->
+        ${q.handbookRef ? `
+          <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-800/60 border border-slate-200 dark:border-zinc-700/60 flex items-start gap-2 text-[11px] text-slate-600 dark:text-zinc-400">
+            <svg class="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+            <span><strong>Rujukan Rasmi:</strong> ${q.handbookRef}</span>
+          </div>
+        ` : ''}
+      `;
+
+      if (isSideBySide) {
+        // 2-Column Side-by-Side Layout
+        return `
+          <article id="q-card-${q.id}" class="q-card bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-2xl p-5 sm:p-6 shadow-sm transition-all hover:border-slate-300 dark:hover:border-zinc-700">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              
+              <!-- LEFT COLUMN: Soalan, Rajah & Pilihan Jawapan -->
+              <div class="lg:col-span-7 space-y-4">
+                
+                <!-- Meta Header -->
+                <div class="flex items-center justify-between gap-2">
+                  <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                    <span class="inline-flex items-center justify-center h-6 px-2.5 rounded-md bg-zinc-900 dark:bg-white font-mono font-extrabold text-xs text-white dark:text-zinc-950 shadow-xs">
+                      ${q.code || ('Q' + q.id)}
+                    </span>
+                    <span class="text-[11px] font-bold px-2 py-0.5 rounded-md border ${typeBadgeColor}">
+                      ${q.type}-Type • ${q.pts || 1} ${(q.pts || 1) > 1 ? 'Pts' : 'Pt'}
+                    </span>
+                    <span class="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60">
+                      EU${q.euNo}
+                    </span>
+                    ${q.sourceSet ? `
+                      <span class="text-[10.5px] font-medium px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                        ${q.sourceSet}
+                      </span>
+                    ` : ''}
+                  </div>
+
+                  <!-- Bookmark Button -->
+                  <button onclick="toggleBookmark('${q.id}', event)" class="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400 hover:text-amber-500 bg-slate-50 dark:bg-zinc-800/60 hover:bg-slate-100 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/60 transition-all" title="Tanda soalan">
+                    <svg class="w-3.5 h-3.5 ${isBookmarked ? 'fill-amber-400 text-amber-400' : 'text-slate-400 dark:text-zinc-500'}" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Question Text (English) -->
+                <div>
+                  <div class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1">${q.title || q.topic}</div>
+                  <div class="text-xs sm:text-[14px] font-semibold text-slate-900 dark:text-zinc-100 leading-relaxed">
+                    ${formatText(q.question)}
+                  </div>
+                </div>
+
+                <!-- Diagram (if any) -->
+                ${q.diagramHtml || ''}
+
+                <!-- Options -->
+                ${optionsHtml}
+
+              </div>
+
+              <!-- RIGHT COLUMN: Kad Analisis Jawapan Lengkap -->
+              <div class="lg:col-span-5 space-y-3.5 lg:border-l lg:border-slate-200 dark:lg:border-zinc-800 lg:pl-6">
+                ${rightExplanationHtml}
+              </div>
+
+            </div>
+          </article>
+        `;
       } else {
-        qBtn.className = 'px-3 py-1 rounded-md text-xs font-semibold bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs transition-all';
-        sBtn.className = 'px-3 py-1 rounded-md text-xs font-medium text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all';
-        quizScoreHud.classList.remove('hidden');
-        updateQuizHud();
-      }
-      
-      switchTab('questions');
-      renderQuestions();
-    }
+        // Centered Single-Column Layout for Unrevealed Quiz Mode
+        return `
+          <article id="q-card-${q.id}" class="q-card max-w-3xl mx-auto bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-2xl p-5 sm:p-6 shadow-sm transition-all hover:border-slate-300 dark:hover:border-zinc-700 space-y-4">
+            
+            <!-- Meta Header -->
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                <span class="inline-flex items-center justify-center h-6 px-2.5 rounded-md bg-zinc-900 dark:bg-white font-mono font-extrabold text-xs text-white dark:text-zinc-950 shadow-xs">
+                  ${q.code || ('Q' + q.id)}
+                </span>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-md border ${typeBadgeColor}">
+                  ${q.type}-Type • ${q.pts || 1} ${(q.pts || 1) > 1 ? 'Pts' : 'Pt'}
+                </span>
+                <span class="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60">
+                  EU${q.euNo}
+                </span>
+                ${q.sourceSet ? `
+                  <span class="text-[10.5px] font-medium px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                    ${q.sourceSet}
+                  </span>
+                ` : ''}
+              </div>
 
-    // Tab Switcher (Syncs desktop & mobile navigation bars)
-    function switchTab(tab) {
-      const qTab = document.getElementById('questionsTab');
-      const csTab = document.getElementById('cheatsheetTab');
-      const qBtn = document.getElementById('tabQuestionsBtn');
-      const csBtn = document.getElementById('tabCheatsheetBtn');
-      const mobQ = document.getElementById('mobTabQ');
-      const mobCs = document.getElementById('mobTabCs');
-      const mobDotQ = document.getElementById('mobDotQ');
-      const mobDotCs = document.getElementById('mobDotCs');
+              <button onclick="toggleBookmark('${q.id}', event)" class="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400 hover:text-amber-500 bg-slate-50 dark:bg-zinc-800/60 hover:bg-slate-100 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/60 transition-all">
+                <svg class="w-3.5 h-3.5 ${isBookmarked ? 'fill-amber-400 text-amber-400' : 'text-slate-400 dark:text-zinc-500'}" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                </svg>
+              </button>
+            </div>
 
-      if (tab === 'questions') {
-        qTab.classList.remove('hidden');
-        csTab.classList.add('hidden');
-        qBtn.className = 'h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold text-xs shadow-xs transition-all flex items-center justify-center';
-        csBtn.className = 'h-8 px-3 rounded-lg bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs border border-slate-200 dark:border-zinc-700 transition-all flex items-center justify-center';
-        
-        if (mobQ) mobQ.className = 'flex flex-1 flex-col items-center justify-center py-1 text-slate-900 dark:text-white font-bold transition-all active:scale-95';
-        if (mobCs) mobCs.className = 'flex flex-1 flex-col items-center justify-center py-1 text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 font-medium transition-all active:scale-95';
-        if (mobDotQ) mobDotQ.classList.remove('opacity-0');
-        if (mobDotCs) mobDotCs.classList.add('opacity-0');
-      } else {
-        qTab.classList.add('hidden');
-        csTab.classList.remove('hidden');
-        csBtn.className = 'h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold text-xs shadow-xs transition-all flex items-center justify-center';
-        qBtn.className = 'h-8 px-3 rounded-lg bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs border border-slate-200 dark:border-zinc-700 transition-all flex items-center justify-center';
-        
-        if (mobCs) mobCs.className = 'flex flex-1 flex-col items-center justify-center py-1 text-slate-900 dark:text-white font-bold transition-all active:scale-95';
-        if (mobQ) mobQ.className = 'flex flex-1 flex-col items-center justify-center py-1 text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 font-medium transition-all active:scale-95';
-        if (mobDotCs) mobDotCs.classList.remove('opacity-0');
-        if (mobDotQ) mobDotQ.classList.add('opacity-0');
-      }
-    }
+            <!-- Question Text -->
+            <div>
+              <div class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1">${q.title || q.topic}</div>
+              <div class="text-xs sm:text-[14px] font-semibold text-slate-900 dark:text-zinc-100 leading-relaxed">
+                ${formatText(q.question)}
+              </div>
+            </div>
 
-    // Bookmarking Logic
-    function toggleBookmark(qId, e) {
-      if (e) e.stopPropagation();
-      if (bookmarkedIds.has(qId)) {
-        bookmarkedIds.delete(qId);
-      } else {
-        bookmarkedIds.add(qId);
-      }
-      localStorage.setItem(getStorageKey('cpre_bookmarks'), JSON.stringify(Array.from(bookmarkedIds)));
-      updateBookmarkUI();
-      renderQuestions();
-    }
+            <!-- Diagram -->
+            ${q.diagramHtml || ''}
 
-    function updateBookmarkUI() {
-      const count = bookmarkedIds.size;
-      if (bookmarkCountText) bookmarkCountText.textContent = count;
-    }
+            <!-- Options -->
+            ${optionsHtml}
 
-    // Filter by bookmarks
-    function toggleBookmarkFilter() {
-      switchTab('questions');
-      filterBookmarkedOnly = !filterBookmarkedOnly;
-      
-      const btn = document.getElementById('bookmarkFilterBtn');
-      if (filterBookmarkedOnly) {
-        btn.className = 'h-8 px-2.5 rounded-lg bg-amber-50 dark:bg-amber-950/70 border border-amber-400 dark:border-amber-600 text-amber-800 dark:text-amber-200 flex items-center space-x-1.5 shadow-xs transition-all text-xs font-bold';
-        bookmarkFilterBanner.classList.remove('hidden');
-      } else {
-        btn.className = 'h-8 px-2.5 rounded-lg bg-white dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-zinc-300 flex items-center space-x-1.5 transition-all text-xs font-semibold shadow-xs';
-        bookmarkFilterBanner.classList.add('hidden');
-      }
-      renderQuestions();
-    }
+            <!-- Semak Jawapan Soalan Ini Button -->
+            <div class="pt-2 flex justify-end">
+              <button onclick="${isDrill ? `revealDrillAnswer('${q.id}')` : `revealAnswer('${q.id}')`}" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 text-xs font-bold shadow-xs hover:opacity-90 transition-all">
+                Semak Jawapan Soalan Ini
+              </button>
+            </div>
 
-    // Filter by Type & EU
-    function filterByType(type) {
-      currentType = type;
-      document.querySelectorAll('.type-btn').forEach(b => {
-        if (b.getAttribute('data-type') === type) {
-          b.className = 'type-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-xs';
-        } else {
-          b.className = 'type-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/60';
-        }
-      });
-      renderQuestions();
-    }
-
-    function filterByEU(euNo) {
-      currentEU = euNo;
-      document.querySelectorAll('.eu-btn').forEach(b => {
-        if (parseInt(b.getAttribute('data-eu')) === euNo) {
-          b.className = 'eu-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shrink-0 shadow-xs';
-        } else {
-          b.className = 'eu-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 shrink-0 flex items-center gap-1.5 border border-slate-200 dark:border-zinc-700/60';
-        }
-      });
-      renderQuestions();
-    }
-
-    // Search Handlers
-    function handleSearch(val) {
-      searchQuery = val.trim().toLowerCase();
-      if (searchQuery.length > 0) {
-        clearSearchBtn.classList.remove('hidden');
-      } else {
-        clearSearchBtn.classList.add('hidden');
-      }
-      renderQuestions();
-    }
-
-    function clearSearch() {
-      searchInput.value = '';
-      searchQuery = '';
-      clearSearchBtn.classList.add('hidden');
-      renderQuestions();
-    }
-
-    // Image Modal Logic
-    function openImageModal(imgId) {
-      const img = document.getElementById(imgId);
-      if (!img) return;
-      const modal = document.getElementById('imageModal');
-      const modalImg = document.getElementById('modalImgTag');
-      modalImg.src = img.src;
-      modal.classList.remove('hidden');
-    }
-
-    function closeImageModal() {
-      const modal = document.getElementById('imageModal');
-      modal.classList.add('hidden');
-    }
-
-    // Mobile Jump Drawer
-    function toggleDrawer() {
-      const drawer = document.getElementById('jumpDrawer');
-      const overlay = document.getElementById('drawerOverlay');
-      if (drawer.classList.contains('hidden')) {
-        drawer.classList.remove('hidden');
-        overlay.classList.remove('hidden');
-        setTimeout(() => drawer.classList.remove('translate-y-full'), 10);
-      } else {
-        drawer.classList.add('translate-y-full');
-        setTimeout(() => {
-          drawer.classList.add('hidden');
-          overlay.classList.add('hidden');
-        }, 200);
+          </article>
+        `;
       }
     }
 
-    function jumpToQuestion(qId) {
-      toggleDrawer();
-      switchTab('questions');
-      
-      if (currentEU !== 0 || currentType !== 'all' || filterBookmarkedOnly || searchQuery !== '') {
-        currentEU = 0;
-        currentType = 'all';
-        filterBookmarkedOnly = false;
-        searchQuery = '';
-        searchInput.value = '';
-        clearSearchBtn.classList.add('hidden');
-        bookmarkFilterBanner.classList.add('hidden');
-        filterByEU(0);
-        filterByType('all');
-        renderQuestions();
-      }
-
-      setTimeout(() => {
-        const el = document.getElementById('q-card-' + qId);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          el.classList.add('ring-2', 'ring-indigo-500', 'dark:ring-white');
-          setTimeout(() => el.classList.remove('ring-2', 'ring-indigo-500', 'dark:ring-white'), 1500);
-        }
-      }, 50);
-    }
-
-    // Explanation Visibility Controls
-    function expandAllExplanations() {
-      if (currentMode === 'quiz') {
-        questions.forEach(q => revealedAnswers.add(q.id));
-      }
-      collapsedExplanations.clear();
-      renderQuestions();
-    }
-
-    function collapseAllExplanations() {
-      questions.forEach(q => collapsedExplanations.add(q.id));
-      renderQuestions();
-    }
-
-    function toggleExplanation(qId) {
-      if (collapsedExplanations.has(qId)) {
-        collapsedExplanations.delete(qId);
-      } else {
-        collapsedExplanations.add(qId);
-      }
-      const el = document.getElementById('exp-body-' + qId);
-      const btn = document.getElementById('exp-toggle-btn-' + qId);
-      if (el) {
-        const isCollapsed = collapsedExplanations.has(qId);
-        if (isCollapsed) {
-          el.classList.add('hidden');
-          if (btn) btn.textContent = 'Huraian Penuh ▾';
-        } else {
-          el.classList.remove('hidden');
-          if (btn) btn.textContent = 'Tutup Huraian ▴';
-        }
-      }
-    }
-
-    // K-Type Question Label Helper
+    // =============================================================
+    // 4. K-TYPE MATRIX & STANDARD OPTIONS
+    // =============================================================
     function getKLabels(q) {
       const truthStrings = (q.options || []).map(o => String(o.truth || '').trim().toLowerCase());
       if (truthStrings.some(s => s.includes('match'))) {
@@ -1490,820 +1935,6 @@
         return { pos: 'Needs to be considered', neg: 'Does not need to be considered', posShort: 'Perlu', negShort: 'Tak Perlu' };
       }
       return { pos: 'True', neg: 'False', posShort: 'True', negShort: 'False' };
-    }
-
-    // Quiz Mode Selection Handlers
-    // 1. K-Type Selection (explicit True or False per statement)
-    function handleKOptionSelect(qId, optId, boolVal) {
-      if (currentMode !== 'quiz') return;
-      if (!userQuizAnswers[qId] || typeof userQuizAnswers[qId] !== 'object' || Array.isArray(userQuizAnswers[qId])) {
-        userQuizAnswers[qId] = {};
-      }
-      // If clicking the same already-chosen boolean, toggle off/deselect
-      if (userQuizAnswers[qId][optId] === boolVal) {
-        delete userQuizAnswers[qId][optId];
-      } else {
-        userQuizAnswers[qId][optId] = boolVal;
-      }
-      localStorage.setItem(getStorageKey('cpre_quiz_answers'), JSON.stringify(userQuizAnswers));
-      updateQuizHud();
-      renderQuestions();
-    }
-
-    // 2. A-Type and P-Type Selection
-    function handleOptionSelect(qId, optId, type) {
-      if (currentMode !== 'quiz') return;
-      if (type === 'K') return; // Handled by handleKOptionSelect
-      
-      if (!Array.isArray(userQuizAnswers[qId])) {
-        userQuizAnswers[qId] = [];
-      }
-      
-      if (type === 'A') {
-        if (userQuizAnswers[qId].includes(optId)) {
-          userQuizAnswers[qId] = []; // Deselect
-        } else {
-          userQuizAnswers[qId] = [optId];
-        }
-      } else if (type === 'P') {
-        const idx = userQuizAnswers[qId].indexOf(optId);
-        if (idx > -1) {
-          userQuizAnswers[qId].splice(idx, 1);
-        } else {
-          userQuizAnswers[qId].push(optId);
-        }
-      }
-      localStorage.setItem(getStorageKey('cpre_quiz_answers'), JSON.stringify(userQuizAnswers));
-      updateQuizHud();
-      renderQuestions();
-    }
-
-    function revealAnswer(qId) {
-      revealedAnswers.add(qId);
-      localStorage.setItem(getStorageKey('cpre_revealed_qids'), JSON.stringify(Array.from(revealedAnswers)));
-      renderQuestions();
-      updateQuizHud();
-    }
-
-
-    // Set Switcher and UI Helpers
-    function toggleSetDropdown(e) {
-      if (e) e.stopPropagation();
-      const menu = document.getElementById('setDropdownMenu');
-      if (menu) menu.classList.toggle('hidden');
-    }
-
-    function closeSetDropdown() {
-      const menu = document.getElementById('setDropdownMenu');
-      if (menu) menu.classList.add('hidden');
-    }
-
-    document.addEventListener('click', (e) => {
-      const wrapper = document.getElementById('setSelectorWrapper');
-      if (wrapper && !wrapper.contains(e.target)) {
-        closeSetDropdown();
-      }
-    });
-
-    function switchExamSet(setKey) {
-      if (!appData.sets || !appData.sets[setKey]) return;
-      currentExamSet = setKey;
-      localStorage.setItem('cpre_active_set', setKey);
-      
-      activeSet = appData.sets[currentExamSet];
-      questions = activeSet.questions;
-      eus = activeSet.eus;
-      
-      // Reload state for active set
-      bookmarkedIds = new Set(JSON.parse(localStorage.getItem(getStorageKey('cpre_bookmarks')) || '[]'));
-      userQuizAnswers = JSON.parse(localStorage.getItem(getStorageKey('cpre_quiz_answers')) || '{}');
-      quizSubmitted = localStorage.getItem(getStorageKey('cpre_quiz_submitted')) === 'true';
-      revealedAnswers = new Set(JSON.parse(localStorage.getItem(getStorageKey('cpre_revealed_qids')) || '[]'));
-      collapsedExplanations.clear();
-      
-      // Reset active filters
-      currentEU = 0;
-      currentType = 'all';
-      searchQuery = '';
-      filterBookmarkedOnly = false;
-      if (searchInput) searchInput.value = '';
-      if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
-      if (bookmarkFilterBanner) bookmarkFilterBanner.classList.add('hidden');
-
-      closeSetDropdown();
-      updateSetSwitcherUI();
-      updateHeaderBadge();
-      updateStrategyDashboard();
-      updateTypeCounts();
-      renderEUPills();
-      renderTOCDrawer();
-      updateBookmarkUI();
-      renderQuestions();
-      updateQuizHud();
-    }
-
-    function updateSetSwitcherUI() {
-      const isOfficial = currentExamSet === 'official';
-      const isMaritime = currentExamSet === 'predicted_maritime';
-      const badgeIcon = document.getElementById('activeSetBadgeIcon');
-      const nameText = document.getElementById('activeSetNameText');
-      const nameMobile = document.getElementById('activeSetNameMobile');
-      const setBtn = document.getElementById('setSelectorBtn');
-      const chkOff = document.getElementById('check-official');
-      const chkPred = document.getElementById('check-predicted');
-      const chkMar = document.getElementById('check-predicted-maritime');
-
-      if (badgeIcon) {
-        if (isOfficial) {
-          badgeIcon.innerHTML = `<svg class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>`;
-        } else if (isMaritime) {
-          badgeIcon.innerHTML = `<svg class="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /><path d="M2 12h20" /></svg>`;
-        } else {
-          badgeIcon.innerHTML = `<svg class="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>`;
-        }
-      }
-
-      if (setBtn) {
-        if (isOfficial) {
-          setBtn.className = "h-8 px-2 sm:px-2.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 flex items-center space-x-2 transition-all text-xs font-semibold shadow-xs cursor-pointer";
-        } else if (isMaritime) {
-          setBtn.className = "h-8 px-2 sm:px-2.5 rounded-lg bg-teal-50 dark:bg-teal-950/60 hover:bg-teal-100 dark:hover:bg-teal-900/60 border border-teal-200 dark:border-teal-800 text-teal-700 dark:text-teal-300 flex items-center space-x-2 transition-all text-xs font-semibold shadow-xs cursor-pointer";
-        } else {
-          setBtn.className = "h-8 px-2 sm:px-2.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 flex items-center space-x-2 transition-all text-xs font-semibold shadow-xs cursor-pointer";
-        }
-      }
-
-      if (nameText) {
-        if (isOfficial) nameText.textContent = 'Set Latihan Rasmi (70 Pts)';
-        else if (isMaritime) nameText.textContent = 'Set Ramalan G+ (72 Pts)';
-        else nameText.textContent = 'Set Ramalan G (72 Pts)';
-      }
-      if (nameMobile) {
-        if (isOfficial) nameMobile.textContent = 'Set Rasmi';
-        else if (isMaritime) nameMobile.textContent = 'Set G+';
-        else nameMobile.textContent = 'Set G';
-      }
-
-      if (chkOff) chkOff.classList.toggle('hidden', !isOfficial);
-      if (chkPred) chkPred.classList.toggle('hidden', isOfficial || isMaritime);
-      if (chkMar) chkMar.classList.toggle('hidden', !isMaritime);
-    }
-
-    function updateHeaderBadge() {
-      const badge = document.getElementById('headerBadgeText');
-      if (badge) {
-        if (currentExamSet === 'official') {
-          badge.textContent = '45 Soalan • 70.0 Pts (Lulus 49.0 Pts)';
-        } else {
-          badge.textContent = '45 Soalan • 72.0 Pts (Lulus 50.40 Pts)';
-        }
-      }
-    }
-
-    function renderEUPills() {
-      const container = document.getElementById('euPillsContainer');
-      if (!container) return;
-
-      let html = `
-        <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 mr-1 shrink-0">EU:</span>
-        <button onclick="filterByEU(0)" class="eu-btn ${currentEU === 0 ? 'active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shrink-0 shadow-xs' : 'px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 shrink-0 border border-slate-200 dark:border-zinc-700/60'}" data-eu="0">
-          Semua (EU1–7)
-        </button>
-      `;
-
-      eus.forEach(eu => {
-        const isActive = currentEU === eu.no;
-        const dotColor = (eu.no === 5 || eu.no === 6) ? 'bg-rose-500' : 'bg-slate-400 dark:bg-zinc-500';
-        const btnCls = isActive 
-          ? 'eu-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shrink-0 shadow-xs'
-          : 'eu-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 shrink-0 flex items-center gap-1.5 border border-slate-200 dark:border-zinc-700/60';
-        
-        html += `
-          <button onclick="filterByEU(${eu.no})" class="${btnCls}" data-eu="${eu.no}">
-            <span class="w-1.5 h-1.5 rounded-full ${dotColor}"></span>
-            EU${eu.no} (${eu.range})
-          </button>
-        `;
-      });
-
-      container.innerHTML = html;
-    }
-
-    function renderTOCDrawer() {
-      const container = document.getElementById('tocDrawerContainer');
-      if (!container) return;
-
-      let html = '';
-      eus.forEach(eu => {
-        const euQs = questions.filter(q => q.euNo === eu.no);
-        html += `
-          <div>
-            <div class="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1.5">
-              <span>EU${eu.no}: ${eu.name}</span>
-              <span class="font-mono text-[10.5px] text-slate-500 dark:text-zinc-400">${eu.range} • ${eu.pts} Pts (${eu.qCount}Q)</span>
-            </div>
-            <div class="grid grid-cols-5 sm:grid-cols-9 gap-1.5">
-        `;
-        euQs.forEach(q => {
-          const isBm = bookmarkedIds.has(q.id);
-          const ans = userQuizAnswers[q.id];
-          let btnClass = "bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/60";
-          if (quizSubmitted) {
-            btnClass = ans ? "bg-indigo-600 text-white font-bold" : btnClass;
-          } else if (ans) {
-            btnClass = "bg-indigo-600 text-white font-bold";
-          }
-          
-          html += `
-            <button onclick="jumpToQuestion(${q.id})" class="h-8 rounded-lg text-xs font-mono font-medium flex items-center justify-center transition-transform active:scale-95 relative ${btnClass}">
-              ${q.id}
-              ${isBm ? '<span class="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-amber-400"></span>' : ''}
-            </button>
-          `;
-        });
-        html += `
-            </div>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-    }
-
-    
-    function updateTypeCounts() {
-      const elAll = document.getElementById('typeCountAll');
-      const elK = document.getElementById('typeCountK');
-      const elA = document.getElementById('typeCountA');
-      const elP = document.getElementById('typeCountP');
-      
-      if (elAll) elAll.textContent = questions.length;
-      if (elK) elK.textContent = questions.filter(q => q.type === 'K').length;
-      if (elA) elA.textContent = questions.filter(q => q.type === 'A').length;
-      if (elP) elP.textContent = questions.filter(q => q.type === 'P').length;
-    }
-
-    function updateStrategyDashboard() {
-      const grid = document.getElementById('strategyCardsGrid');
-      if (!grid) return;
-      if (currentExamSet === 'official') {
-        grid.innerHTML = `
-          <!-- Target Score Math Card -->
-          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between gap-1.5 mb-2">
-                <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Formula Kelayakan</span>
-                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-                  Lulus: 70% (49.0 Pts)
-                </span>
-              </div>
-              <div class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white">Latihan Skema Rasmi IREB</div>
-              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
-                45 soalan rasmi ground-truth dengan semakan 0 perbezaan terhadap IREB Correction Aid. Target markah selamat ialah <strong>52.5 Pts (75%+)</strong>.
-              </p>
-            </div>
-            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
-              <div class="flex justify-between text-[11px] font-mono text-slate-500 mb-1">
-                <span>Skor Lulus: 49.0 Pts</span>
-                <span class="text-emerald-600 dark:text-emerald-400 font-bold">Max: 70.0 Pts</span>
-              </div>
-              <div class="w-full bg-slate-100 dark:bg-zinc-800 h-2 rounded-full overflow-hidden flex">
-                <div class="bg-indigo-500 h-full" style="width: 70%"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Strategy Card: Focus Areas -->
-          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between gap-1.5 mb-2">
-                <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Topik Tumpuan</span>
-                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
-                  8 Soalan (13 Pts)
-                </span>
-              </div>
-              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">EU5 (Process) + EU6 (Management)</div>
-              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
-                Kelemahan biasa calon ialah pada proses kerja (EU5) dan pengurusan keperluan (EU6). Kuasai 2 bab ini untuk menjamin kelulusan selesa.
-              </p>
-            </div>
-            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-1.5 overflow-x-auto text-[10px] font-mono text-slate-600 dark:text-zinc-400 scrollbar-none">
-              <span class="px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800 rounded border border-slate-200 dark:border-zinc-700/60">Time Facet</span>
-              <span class="px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800 rounded border border-slate-200 dark:border-zinc-700/60">Traceability</span>
-              <span class="px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800 rounded border border-slate-200 dark:border-zinc-700/60">Baselines</span>
-            </div>
-          </div>
-
-          <!-- Main View Card -->
-          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between gap-1.5 mb-2">
-                <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Paparan Utama</span>
-                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-700/60">
-                  45 Soalan (70 Pts)
-                </span>
-              </div>
-              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">Struktur Silibus Rasmi IREB</div>
-              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
-                Tukar antara bank soalan lengkap (Q1–Q45) atau ringkasan nota padat 1-muka surat.
-              </p>
-            </div>
-            <div class="grid grid-cols-2 gap-2 mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
-              <button onclick="switchTab('questions')" id="tabQuestionsBtn" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold text-xs shadow-xs transition-all flex items-center justify-center">
-                Bank Soalan
-              </button>
-              <button onclick="switchTab('cheatsheet')" id="tabCheatsheetBtn" class="h-8 px-3 rounded-lg bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs border border-slate-200 dark:border-zinc-700 transition-all flex items-center justify-center">
-                Cheat Sheet
-              </button>
-            </div>
-          </div>
-        `;
-      } else if (currentExamSet === 'predicted_maritime') {
-        grid.innerHTML = `
-          <!-- Target Score Math Card -->
-          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between gap-1.5 mb-2">
-                <span class="text-[11px] font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Formula Kelayakan</span>
-                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800">
-                  Lulus: 70% (50.40 Pts)
-                </span>
-              </div>
-              <div class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white">49.70 Pts ➔ 50.40 Pts (Sasaran Lulus +0.70)</div>
-              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
-                Set G+ ini menyepadukan soalan rajah <strong>State Machine Kapal di Laut (Q20)</strong> serta varian berketepatan tinggi daripada arkib bocor sebenar.
-              </p>
-            </div>
-            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
-              <div class="flex justify-between text-[11px] font-mono text-slate-500 mb-1">
-                <span>Terdahulu: 49.70 (69.02%)</span>
-                <span class="text-teal-600 dark:text-teal-400 font-bold">Lulus: 50.40 (70%)</span>
-              </div>
-              <div class="w-full bg-slate-100 dark:bg-zinc-800 h-2 rounded-full overflow-hidden flex">
-                <div class="bg-rose-500 h-full" style="width: 69.02%"></div>
-                <div class="bg-teal-500 h-full animate-pulse" style="width: 5.98%"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Strategy Card: Focus Areas -->
-          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between gap-1.5 mb-2">
-                <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Topik Kelemahan Terdahulu</span>
-                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
-                  EU4, EU5, EU6
-                </span>
-              </div>
-              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">Lonjakan Markah di EU5 (30%) & EU6 (45%)</div>
-              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
-                Soalan proses (EU5) dan pengurusan (EU6) dipertingkatkan dengan senario keselamatan maritim dan formula Karl Wiegers sebenar.
-              </p>
-            </div>
-            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-1.5 overflow-x-auto text-[10px] font-mono text-slate-600 dark:text-zinc-400 scrollbar-none">
-              <span class="px-1.5 py-0.5 bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 rounded border border-rose-200 dark:border-rose-900">EU5 (1.5/5.0)</span>
-              <span class="px-1.5 py-0.5 bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 rounded border border-amber-200 dark:border-amber-900">EU6 (4.5/10.0)</span>
-              <span class="px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800 rounded border border-slate-200 dark:border-zinc-700/60">Rajah Kapal Q20</span>
-            </div>
-          </div>
-
-          <!-- Main View Card -->
-          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between gap-1.5 mb-2">
-                <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Paparan Utama</span>
-                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800">
-                  Set G+ Maritim (72 Pts)
-                </span>
-              </div>
-              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">Varian Maritim & Arkib Bocor Sebenar</div>
-              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
-                Ujian simulasi paling hampir dengan memori peperiksaan sebenar anda.
-              </p>
-            </div>
-            <div class="grid grid-cols-2 gap-2 mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
-              <button onclick="switchTab('questions')" id="tabQuestionsBtn" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold text-xs shadow-xs transition-all flex items-center justify-center">
-                Bank Soalan
-              </button>
-              <button onclick="switchTab('cheatsheet')" id="tabCheatsheetBtn" class="h-8 px-3 rounded-lg bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs border border-slate-200 dark:border-zinc-700 transition-all flex items-center justify-center">
-                Cheat Sheet
-              </button>
-            </div>
-          </div>
-        `;
-      } else {
-        grid.innerHTML = `
-          <!-- Target Score Math Card -->
-          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between gap-1.5 mb-2">
-                <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Formula Kelayakan</span>
-                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-                  Lulus: 70% (50.40 Pts)
-                </span>
-              </div>
-              <div class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white">49.70 Pts ➔ 50.40 Pts (Sasaran Lulus +0.70)</div>
-              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
-                Slip sebenar anda: <strong>49.70 Pts (69.02%)</strong> daripada 72.00 Pts. Jurang lulus hanya <strong>+0.70 Mata</strong> sahaja lagi (hanya 1 jawapan tepat!).
-              </p>
-            </div>
-            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
-              <div class="flex justify-between text-[11px] font-mono text-slate-500 mb-1">
-                <span>Terdahulu: 49.70 (69.02%)</span>
-                <span class="text-emerald-600 dark:text-emerald-400 font-bold">Lulus: 50.40 (70%)</span>
-              </div>
-              <div class="w-full bg-slate-100 dark:bg-zinc-800 h-2 rounded-full overflow-hidden flex">
-                <div class="bg-rose-500 h-full" style="width: 69.02%"></div>
-                <div class="bg-emerald-500 h-full animate-pulse" style="width: 5.98%"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Strategy Card: Focus Areas based on actual exam score -->
-          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between gap-1.5 mb-2">
-                <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Topik Kelemahan Terdahulu</span>
-                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
-                  EU4, EU5, EU6
-                </span>
-              </div>
-              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">Lonjakan Markah di EU5 (30%) & EU6 (45%)</div>
-              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
-                EU5: dapat 1.50/5.00 Pts (30%). EU6: 4.50/10.00 Pts (45%). EU4: 9.30/15.00 Pts (62%). Memperbaiki 2 soalan sahaja di sini sudah mencukupi untuk lulus!
-              </p>
-            </div>
-            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-1.5 overflow-x-auto text-[10px] font-mono text-slate-600 dark:text-zinc-400 scrollbar-none">
-              <span class="px-1.5 py-0.5 bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 rounded border border-rose-200 dark:border-rose-900">EU5 (1.5/5.0)</span>
-              <span class="px-1.5 py-0.5 bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 rounded border border-amber-200 dark:border-amber-900">EU6 (4.5/10.0)</span>
-              <span class="px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800 rounded border border-slate-200 dark:border-zinc-700/60">EU4 (9.3/15.0)</span>
-            </div>
-          </div>
-
-          <!-- Main View Card -->
-          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between gap-1.5 mb-2">
-                <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Paparan Utama</span>
-                <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
-                  45 Soalan (72 Pts)
-                </span>
-              </div>
-              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">34 Soalan Teras + 11 Varian Target</div>
-              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
-                Gabungan soalan sebijik sama yang berulang dalam peperiksaan + soalan ramalan varian khas untuk lonjakan markah.
-              </p>
-            </div>
-            <div class="grid grid-cols-2 gap-2 mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
-              <button onclick="switchTab('questions')" id="tabQuestionsBtn" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold text-xs shadow-xs transition-all flex items-center justify-center">
-                Bank Soalan
-              </button>
-              <button onclick="switchTab('cheatsheet')" id="tabCheatsheetBtn" class="h-8 px-3 rounded-lg bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs border border-slate-200 dark:border-zinc-700 transition-all flex items-center justify-center">
-                Cheat Sheet
-              </button>
-            </div>
-          </div>
-        `;
-      }
-    }
-
-    function submitAndScoreQuiz() {
-      const answeredCount = getAnsweredCount();
-      const unansweredCount = 45 - answeredCount;
-      
-      let desc = 'Adakah anda pasti untuk menghantar jawapan dan melihat keputusan rasmi pemarkahan IREB?';
-      if (unansweredCount > 0) {
-        desc = `Anda telah menjawab ${answeredCount} daripada 45 soalan (${unansweredCount} soalan belum dijawab). Adakah anda pasti mahu menghantar peperiksaan sekarang dan melihat analisis keputusan?`;
-      } else {
-        desc = 'Tahniah! Anda telah menjawab kesemua 45 soalan. Adakah anda bersedia untuk menghantar dan menyemak markah rasmi?';
-      }
-
-      openConfirmModal(
-        'Hantar Peperiksaan & Semak Keputusan?',
-        desc,
-        () => {
-          quizSubmitted = true;
-          localStorage.setItem(getStorageKey('cpre_quiz_submitted'), 'true');
-          questions.forEach(q => revealedAnswers.add(q.id));
-          localStorage.setItem(getStorageKey('cpre_revealed_qids'), JSON.stringify(Array.from(revealedAnswers)));
-          
-          updateQuizHud();
-          renderQuestions();
-          openExamResultsModal();
-        },
-        'Ya, Hantar & Semak',
-        'emerald'
-      );
-    }
-
-    // Confirmation Modal System
-    let pendingConfirmAction = null;
-
-    function openConfirmModal(title, desc, actionFn, confirmBtnText = 'Ya, Teruskan', variant = 'rose') {
-      const titleEl = document.getElementById('confirmTitle');
-      const descEl = document.getElementById('confirmDesc');
-      const actionBtn = document.getElementById('confirmActionBtn');
-      const iconContainer = document.getElementById('confirmIconContainer');
-      const icon = document.getElementById('confirmIcon');
-
-      if (titleEl) titleEl.textContent = title || 'Pengesahan';
-      if (descEl) descEl.textContent = desc || 'Adakah anda pasti untuk meneruskan tindakan ini?';
-      
-      if (actionBtn) {
-        actionBtn.textContent = confirmBtnText;
-        if (variant === 'emerald') {
-          actionBtn.className = 'h-8 px-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-xs transition-colors';
-        } else {
-          actionBtn.className = 'h-8 px-3.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow-xs transition-colors';
-        }
-      }
-
-      if (iconContainer) {
-        if (variant === 'emerald') {
-          iconContainer.className = 'w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-900/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shrink-0';
-          if (icon) {
-            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />';
-          }
-        } else {
-          iconContainer.className = 'w-10 h-10 rounded-full bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/60 flex items-center justify-center text-rose-600 dark:text-rose-400 shrink-0';
-          if (icon) {
-            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />';
-          }
-        }
-      }
-
-      pendingConfirmAction = actionFn;
-      document.getElementById('confirmModal').classList.remove('hidden');
-    }
-
-    function closeConfirmModal() {
-      pendingConfirmAction = null;
-      document.getElementById('confirmModal').classList.add('hidden');
-    }
-
-    function executeConfirmAction() {
-      if (typeof pendingConfirmAction === 'function') {
-        pendingConfirmAction();
-      }
-      closeConfirmModal();
-    }
-
-    function resetQuizAnswers() {
-      openConfirmModal(
-        'Set Semula Semua Jawapan Kuiz?',
-        'Semua pilihan jawapan yang anda telah tanda dan semakan markah dalam Quiz Mode akan dipadamkan. Anda boleh memulakan ujian semula dari awal.',
-        () => {
-          userQuizAnswers = {};
-          quizSubmitted = false;
-          revealedAnswers.clear();
-          localStorage.removeItem(getStorageKey('cpre_quiz_answers'));
-          localStorage.removeItem(getStorageKey('cpre_quiz_submitted'));
-          localStorage.removeItem(getStorageKey('cpre_revealed_qids'));
-          closeExamResultsModal();
-          updateQuizHud();
-          renderQuestions();
-        },
-        'Ya, Set Semula',
-        'rose'
-      );
-    }
-
-    // Official IREB Correction Aid Scoring Engine
-    function calculateScoreSummary() {
-      let totalScore = 0;
-      const maxScore = activeSet ? activeSet.maxPoints : 70.0;
-      const passScore = activeSet ? activeSet.passPoints : 49.0;
-      
-      const typeStats = {
-        K: { earned: 0, max: 0, count: 0 },
-        A: { earned: 0, max: 0, count: 0 },
-        P: { earned: 0, max: 0, count: 0 },
-      };
-      questions.forEach(q => {
-        if (typeStats[q.type]) {
-          typeStats[q.type].max += q.pts;
-          typeStats[q.type].count += 1;
-        }
-      });
-
-      const euStats = {};
-      eus.forEach(eu => {
-        euStats[eu.no] = { no: eu.no, name: eu.name, range: eu.range, earned: 0, max: 0, count: 0 };
-      });
-
-      questions.forEach(q => {
-        const ans = userQuizAnswers[q.id];
-        const qPts = q.pts;
-        euStats[q.euNo].max += qPts;
-        euStats[q.euNo].count += 1;
-
-        let earnedForQ = 0;
-
-        if (q.type === 'K') {
-          const totalOpts = (q.options || []).length;
-          const ptsPerStmt = qPts / totalOpts;
-          let qEarned = 0;
-
-          if (ans && typeof ans === 'object' && !Array.isArray(ans)) {
-            (q.options || []).forEach(opt => {
-              const correctVal = isOptionCorrect(opt, q);
-              if (ans[opt.id] !== undefined && ans[opt.id] === correctVal) {
-                qEarned += ptsPerStmt;
-              }
-            });
-          }
-          earnedForQ = Math.round(qEarned * 100) / 100;
-          typeStats.K.earned += earnedForQ;
-        } else if (q.type === 'P') {
-          const numAns = 2; // In this exam, all P-types require 2 answers
-          const ptsPerCorr = qPts / numAns;
-          const correctOpts = (q.options || []).filter(o => isOptionCorrect(o, q)).map(o => o.id);
-          
-          if (Array.isArray(ans) && ans.length > 0) {
-            // Official IREB Rule: if chosen > numAns, whole question score is 0
-            if (ans.length <= numAns) {
-              let corrCount = 0;
-              ans.forEach(optId => {
-                if (correctOpts.includes(optId)) corrCount++;
-              });
-              earnedForQ = corrCount * ptsPerCorr;
-            }
-          }
-          typeStats.P.earned += earnedForQ;
-        } else if (q.type === 'A') {
-          if (Array.isArray(ans) && ans.length === 1) {
-            const correctOpt = (q.options || []).find(o => isOptionCorrect(o, q));
-            if (correctOpt && ans[0] === correctOpt.id) {
-              earnedForQ = qPts;
-            }
-          }
-          typeStats.A.earned += earnedForQ;
-        }
-
-        totalScore += earnedForQ;
-        euStats[q.euNo].earned += earnedForQ;
-      });
-
-      totalScore = Math.round(totalScore * 100) / 100;
-      const percentage = Math.round((totalScore / maxScore) * 1000) / 10;
-      const isPassed = Math.round(totalScore * 100) >= Math.round(passScore * 100);
-
-      return {
-        totalScore,
-        maxScore,
-        percentage,
-        isPassed,
-        typeStats,
-        euStats
-      };
-    }
-
-    function getAnsweredCount() {
-      let count = 0;
-      questions.forEach(q => {
-        const ans = userQuizAnswers[q.id];
-        if (!ans) return;
-        if (q.type === 'K') {
-          if (typeof ans === 'object' && !Array.isArray(ans)) {
-            const keys = Object.keys(ans);
-            if (keys.length > 0) count++;
-          }
-        } else {
-          if (Array.isArray(ans) && ans.length > 0) count++;
-        }
-      });
-      return count;
-    }
-
-    // Quiz HUD Update (No live score leaking while answering!)
-    function updateQuizHud() {
-      const answeredCount = getAnsweredCount();
-      const pctAnswered = Math.round((answeredCount / 45) * 100);
-
-      const hudAns = document.getElementById('hudAnsweredCount');
-      const hudProgress = document.getElementById('hudProgressBar');
-      const hudResultBanner = document.getElementById('hudResultBanner');
-      const hudSubmitBtn = document.getElementById('hudSubmitBtn');
-
-      if (hudAns) hudAns.textContent = answeredCount;
-      if (hudProgress) hudProgress.style.width = pctAnswered + '%';
-
-      if (quizSubmitted) {
-        const summary = calculateScoreSummary();
-        if (hudResultBanner) {
-          hudResultBanner.classList.remove('hidden');
-          const badge = document.getElementById('hudResultStatusBadge');
-          const ptsEl = document.getElementById('hudResultPoints');
-          const pctEl = document.getElementById('hudResultPct');
-
-          if (badge) {
-            badge.textContent = summary.isPassed ? 'LULUS (PASSED)' : 'BELUM LULUS';
-            badge.className = summary.isPassed 
-              ? 'px-2 py-0.5 rounded font-mono font-bold text-[11px] bg-emerald-600 text-white' 
-              : 'px-2 py-0.5 rounded font-mono font-bold text-[11px] bg-rose-600 text-white';
-          }
-          if (ptsEl) ptsEl.textContent = summary.totalScore.toFixed(2) + ' / ' + summary.maxScore + ' Pts';
-          if (pctEl) pctEl.textContent = summary.percentage.toFixed(1) + '%';
-        }
-        if (hudSubmitBtn) {
-          hudSubmitBtn.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg> Kemas Kini Keputusan';
-        }
-      } else {
-        if (hudResultBanner) hudResultBanner.classList.add('hidden');
-        if (hudSubmitBtn) {
-          hudSubmitBtn.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Hantar & Semak Keputusan';
-        }
-      }
-    }
-
-    // Open and Populate Exam Results Modal
-    function openExamResultsModal() {
-      const summary = calculateScoreSummary();
-      const modal = document.getElementById('examResultsModal');
-      const banner = document.getElementById('resHeroBanner');
-      const totalScoreEl = document.getElementById('resTotalScore');
-      const pctEl = document.getElementById('resPercentage');
-      const kScoreEl = document.getElementById('resKScore');
-      const aScoreEl = document.getElementById('resAScore');
-      const pScoreEl = document.getElementById('resPScore');
-      const euBarsEl = document.getElementById('resEuBarsContainer');
-
-      if (totalScoreEl) totalScoreEl.textContent = summary.totalScore.toFixed(2) + ' / ' + summary.maxScore;
-      if (pctEl) pctEl.textContent = summary.percentage.toFixed(1) + '%';
-      if (kScoreEl) kScoreEl.textContent = summary.typeStats.K.earned.toFixed(1) + ' / ' + summary.typeStats.K.max + ' Pts';
-      if (aScoreEl) aScoreEl.textContent = summary.typeStats.A.earned.toFixed(1) + ' / ' + summary.typeStats.A.max + ' Pts';
-      if (pScoreEl) pScoreEl.textContent = summary.typeStats.P.earned.toFixed(1) + ' / ' + summary.typeStats.P.max + ' Pts';
-
-      if (banner) {
-        if (summary.isPassed) {
-          banner.className = 'rounded-2xl p-5 sm:p-6 mb-5 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md bg-gradient-to-r from-emerald-600 to-teal-700';
-          banner.innerHTML = `
-            <div class="space-y-1 text-center sm:text-left">
-              <span class="inline-flex items-center px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-white/20 border border-white/30 tracking-wider uppercase">
-                Status Rasmi: Lulus Peperiksaan
-              </span>
-              <div class="text-xl sm:text-2xl font-black">TAHNIAH! ANDA TELAH LULUS!</div>
-              <p class="text-xs text-emerald-100 max-w-md leading-relaxed">
-                Skor anda <strong>${summary.totalScore.toFixed(2)} Pts (${summary.percentage.toFixed(1)}%)</strong> melepasi syarat kelayakan minimum <strong>${(activeSet ? activeSet.passPoints : 49.0).toFixed(2)} Pts (70.0%)</strong> dengan kelebihan <strong>+${(summary.totalScore - (activeSet ? activeSet.passPoints : 49.0)).toFixed(2)} Pts</strong>!
-              </p>
-            </div>
-            <div class="font-mono text-3xl sm:text-4xl font-black shrink-0 px-4 py-2 bg-white/10 rounded-xl border border-white/20 text-center">
-              ${summary.percentage.toFixed(1)}%
-            </div>
-          `;
-        } else {
-          const passPts = activeSet ? activeSet.passPoints : 49.0;
-          const diff = (passPts - summary.totalScore).toFixed(2);
-          banner.className = 'rounded-2xl p-5 sm:p-6 mb-5 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md bg-gradient-to-r from-rose-600 to-rose-700';
-          banner.innerHTML = `
-            <div class="space-y-1 text-center sm:text-left">
-              <span class="inline-flex items-center px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-white/20 border border-white/30 tracking-wider uppercase">
-                Status Rasmi: Belum Melepasi Syarat
-              </span>
-              <div class="text-xl sm:text-2xl font-black">BELUM LULUS (FAILED)</div>
-              <p class="text-xs text-rose-100 max-w-md leading-relaxed">
-                Skor anda <strong>${summary.totalScore.toFixed(2)} Pts (${summary.percentage.toFixed(1)}%)</strong>. Syarat lulus set ini ialah <strong>${passPts.toFixed(2)} Pts (70.0%)</strong>. Anda hanya kekurangan <strong>${diff} Pts</strong> lagi (sekitar 1–2 soalan betul).
-                ${currentExamSet === 'predicted' ? '<br/><span class="text-[11px] text-amber-200 mt-1 block">* Rekod slip sebenar anda terdahulu: <strong>49.70 Pts (69.02%)</strong> — hanya beza 0.70 Pts sahaja!</span>' : ''}
-              </p>
-            </div>
-            <div class="font-mono text-3xl sm:text-4xl font-black shrink-0 px-4 py-2 bg-white/10 rounded-xl border border-white/20 text-center">
-              ${summary.percentage.toFixed(1)}%
-            </div>
-          `;
-        }
-      }
-
-      if (euBarsEl) {
-        euBarsEl.innerHTML = eus.map(eu => {
-          const stat = summary.euStats[eu.no];
-          const pct = stat.max > 0 ? Math.round((stat.earned / stat.max) * 100) : 0;
-          const isCritical = (eu.no === 5 || eu.no === 6);
-          let barColor = pct >= 70 ? 'bg-emerald-500' : (pct >= 50 ? 'bg-amber-500' : 'bg-rose-500');
-
-          return `
-            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-xs">
-              <div class="flex items-center justify-between font-semibold mb-1">
-                <span class="flex items-center gap-1.5 text-slate-900 dark:text-zinc-100">
-                  <span class="w-1.5 h-1.5 rounded-full ${isCritical ? 'bg-rose-500' : 'bg-indigo-500'}"></span>
-                  EU${eu.no}: ${eu.name} ${isCritical ? '<span class="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">Fokus Utama</span>' : ''}
-                </span>
-                <span class="font-mono font-bold ${pct >= 70 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-600 dark:text-zinc-400'}">
-                  ${stat.earned.toFixed(1)} / ${stat.max} Pts (${pct}%)
-                </span>
-              </div>
-              <div class="w-full bg-slate-200 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
-                <div class="${barColor} h-full transition-all duration-500" style="width: ${pct}%"></div>
-              </div>
-            </div>
-          `;
-        }).join('');
-      }
-
-      modal.classList.remove('hidden');
-    }
-
-    function closeExamResultsModal() {
-      const modal = document.getElementById('examResultsModal');
-      if (modal) modal.classList.add('hidden');
     }
 
     function isOptionCorrect(opt, q) {
@@ -2319,308 +1950,81 @@
       return false;
     }
 
-    // Smart Reader Formatter (Zero-slop, clean paragraphs and flex bullet lists)
-    function formatText(text) {
-      if (!text) return '';
-      const lines = text.split('\n');
-      let html = '';
+    function handleKOptionSelect(qId, optId, boolVal, isDrill = false) {
+      if (currentMode !== 'quiz') return;
+      const targetStore = isDrill ? drillUserAnswers : userQuizAnswers;
+      const key = isDrill ? 'cpre_drill_answers' : getStorageKey('cpre_quiz_answers');
 
-      for (let i = 0; i < lines.length; i++) {
-        let line = lines[i].trim();
-        if (!line) continue;
-
-        // Format inline markdown bold and code
-        let formatted = line
-          .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>')
-          .replace(/\`([^\`]+)\`/g, '<code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 font-mono text-[11px]">$1</code>');
-
-        if (formatted.startsWith('• ') || formatted.startsWith('- ') || formatted.startsWith('* ')) {
-          const cleanText = formatted.replace(/^[•\-\*]\s*/, '');
-          html += `<div class="flex items-start gap-2 my-1.5"><span class="text-indigo-500 dark:text-indigo-400 font-bold shrink-0 leading-relaxed">•</span><span class="leading-relaxed flex-1">${cleanText}</span></div>`;
-        } else {
-          html += `<p class="leading-relaxed mb-2 last:mb-0">${formatted}</p>`;
-        }
+      if (!targetStore[qId] || typeof targetStore[qId] !== 'object' || Array.isArray(targetStore[qId])) {
+        targetStore[qId] = {};
       }
-      return html;
+      if (targetStore[qId][optId] === boolVal) {
+        delete targetStore[qId][optId];
+      } else {
+        targetStore[qId][optId] = boolVal;
+      }
+      localStorage.setItem(key, JSON.stringify(targetStore));
+
+      if (isDrill) {
+        renderDrillQuestions();
+      } else {
+        updateQuizHud();
+        renderQuestions();
+      }
     }
 
-    // Render Question Cards
-    function renderQuestions() {
-      const filtered = questions.filter(q => {
-        if (currentEU !== 0 && q.euNo !== currentEU) return false;
-        if (currentType !== 'all' && q.type !== currentType) return false;
-        if (filterBookmarkedOnly && !bookmarkedIds.has(q.id)) return false;
-        if (searchQuery) {
-          const matchQ = (q.question || '').toLowerCase().includes(searchQuery);
-          const matchCode = (q.code || '').toLowerCase().includes(searchQuery);
-          const matchTitle = (q.title || '').toLowerCase().includes(searchQuery);
-          const matchWhy = (q.whyCorrect || '').toLowerCase().includes(searchQuery);
-          const matchOpts = (q.options || []).some(o => (o.text || '').toLowerCase().includes(searchQuery));
-          const matchId = ('q' + q.id).includes(searchQuery);
-          if (!matchQ && !matchCode && !matchTitle && !matchWhy && !matchOpts && !matchId) return false;
-        }
-        return true;
-      });
+    function handleOptionSelect(qId, optId, type, isDrill = false) {
+      if (currentMode !== 'quiz') return;
+      if (type === 'K') return;
 
-      visibleCountEl.textContent = filtered.length;
+      const targetStore = isDrill ? drillUserAnswers : userQuizAnswers;
+      const key = isDrill ? 'cpre_drill_answers' : getStorageKey('cpre_quiz_answers');
 
-      if (filtered.length === 0) {
-        if (filterBookmarkedOnly) {
-          questionsContainer.innerHTML = `
-            <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-10 text-center shadow-sm">
-              <div class="w-10 h-10 mx-auto mb-3 rounded-full bg-amber-50 dark:bg-amber-950/60 flex items-center justify-center text-amber-500">
-                <svg class="w-5 h-5 fill-amber-500" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              </div>
-              <div class="text-sm font-bold text-slate-900 dark:text-white mb-1">Tiada soalan bertanda bintang</div>
-              <div class="text-xs text-slate-500 dark:text-zinc-400 max-w-sm mx-auto mb-4">Tekan ikon bintang pada mana-mana soalan untuk simpan ke senarai ulangkaji fokus anda.</div>
-              <button onclick="toggleBookmarkFilter()" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 text-xs font-bold shadow-xs">
-                Tunjuk Semua Soalan
-              </button>
-            </div>
-          `;
-        } else {
-          questionsContainer.innerHTML = `
-            <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-10 text-center shadow-sm">
-              <div class="text-sm font-bold text-slate-900 dark:text-white mb-1">Tiada soalan sepadan</div>
-              <div class="text-xs text-slate-500 dark:text-zinc-400 mb-3">Sila ubah carian kata kunci atau tetapan penapis.</div>
-              <button onclick="clearSearch(); filterByEU(0); filterByType('all');" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 text-xs font-bold shadow-xs">
-                Reset Penapis
-              </button>
-            </div>
-          `;
-        }
-        return;
+      if (!Array.isArray(targetStore[qId])) {
+        targetStore[qId] = [];
       }
 
-      questionsContainer.innerHTML = filtered.map(q => {
-        const isBookmarked = bookmarkedIds.has(q.id);
-        const isRevealed = currentMode === 'study' || revealedAnswers.has(q.id);
-        const userSelections = userQuizAnswers[q.id];
-        const isExpCollapsed = collapsedExplanations.has(q.id);
-
-        // Type Badge styling (Clean shadcn style badge)
-        let typeBadgeColor = 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-900/60';
-        if (q.type === 'K') typeBadgeColor = 'bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-900/60';
-        if (q.type === 'P') typeBadgeColor = 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-900/60';
-
-        // Calculate earned score for this card if revealed
-        let cardScoreBanner = '';
-        if (isRevealed && currentMode === 'quiz') {
-          let cardEarned = 0;
-          const qPts = q.pts;
-
-          if (q.type === 'K') {
-            const totalOpts = (q.options || []).length;
-            const ptsPerStmt = qPts / totalOpts;
-            let corrCount = 0;
-            if (userSelections && typeof userSelections === 'object' && !Array.isArray(userSelections)) {
-              (q.options || []).forEach(opt => {
-                if (userSelections[opt.id] !== undefined && userSelections[opt.id] === isOptionCorrect(opt, q)) {
-                  cardEarned += ptsPerStmt;
-                  corrCount++;
-                }
-              });
-            }
-            cardEarned = Math.round(cardEarned * 100) / 100;
-            const isFull = cardEarned === qPts;
-            cardScoreBanner = `
-              <div class="mb-3 px-3 py-2 rounded-lg ${isFull ? 'bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200' : 'bg-slate-100 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 text-slate-800 dark:text-zinc-200'} flex items-center justify-between text-xs">
-                <span class="font-semibold">Skor Anda: <strong class="font-mono text-sm ${isFull ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'}">+${cardEarned.toFixed(2)} / ${qPts.toFixed(2)} Pts</strong></span>
-                <span class="text-[11px] font-mono">${corrCount}/${totalOpts} Kenyataan Betul (${ptsPerStmt.toFixed(2)} pt/baris)</span>
-              </div>
-            `;
-          } else if (q.type === 'P') {
-            const numAns = 2;
-            const ptsPerCorr = qPts / numAns;
-            const correctOpts = (q.options || []).filter(o => isOptionCorrect(o, q)).map(o => o.id);
-            let corrCount = 0;
-            let isOver = false;
-
-            if (Array.isArray(userSelections) && userSelections.length > 0) {
-              if (userSelections.length > numAns) {
-                isOver = true;
-                cardEarned = 0;
-              } else {
-                userSelections.forEach(id => {
-                  if (correctOpts.includes(id)) corrCount++;
-                });
-                cardEarned = corrCount * ptsPerCorr;
-              }
-            }
-            cardScoreBanner = `
-              <div class="mb-3 px-3 py-2 rounded-lg ${cardEarned === qPts ? 'bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200' : 'bg-slate-100 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 text-slate-800 dark:text-zinc-200'} flex items-center justify-between text-xs">
-                <span class="font-semibold">Skor Anda: <strong class="font-mono text-sm ${cardEarned === qPts ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'}">+${cardEarned.toFixed(2)} / ${qPts.toFixed(2)} Pts</strong></span>
-                <span class="text-[11px] font-mono">${isOver ? '<span class=\"text-rose-600 dark:text-rose-400 font-bold\">0 Pts (Tanda lebih 2 pilihan)</span>' : corrCount + '/2 Pilihan Betul'}</span>
-              </div>
-            `;
-          } else {
-            // A-type
-            let isCorr = false;
-            if (Array.isArray(userSelections) && userSelections.length === 1) {
-              const correctOpt = (q.options || []).find(o => isOptionCorrect(o, q));
-              if (correctOpt && userSelections[0] === correctOpt.id) {
-                cardEarned = qPts;
-                isCorr = true;
-              }
-            }
-            cardScoreBanner = `
-              <div class="mb-3 px-3 py-2 rounded-lg ${isCorr ? 'bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200' : 'bg-slate-100 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 text-slate-800 dark:text-zinc-200'} flex items-center justify-between text-xs">
-                <span class="font-semibold">Skor Anda: <strong class="font-mono text-sm ${isCorr ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-900 dark:text-white'}">+${cardEarned.toFixed(2)} / ${qPts.toFixed(2)} Pt</strong></span>
-                <span class="text-[11px] font-mono">${isCorr ? '✓ Tepat' : '✕ Tidak Tepat'}</span>
-              </div>
-            `;
-          }
+      if (type === 'A') {
+        if (targetStore[qId].includes(optId)) {
+          targetStore[qId] = [];
+        } else {
+          targetStore[qId] = [optId];
         }
+      } else if (type === 'P') {
+        const idx = targetStore[qId].indexOf(optId);
+        if (idx > -1) {
+          targetStore[qId].splice(idx, 1);
+        } else {
+          targetStore[qId].push(optId);
+        }
+      }
+      localStorage.setItem(key, JSON.stringify(targetStore));
 
-        return `
-          <article id="q-card-${q.id}" class="q-card bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 sm:p-5 shadow-sm transition-all hover:border-slate-300 dark:hover:border-zinc-700">
-            
-            <!-- Card Header Meta -->
-            <div class="flex items-center justify-between gap-2 mb-3">
-              <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                <span class="inline-flex items-center justify-center h-6 px-2.5 rounded-md bg-zinc-900 dark:bg-white font-mono font-extrabold text-xs text-white dark:text-zinc-950 shadow-xs">
-                  Q${q.id}
-                </span>
-                <span class="font-mono text-xs text-slate-600 dark:text-zinc-400 font-bold">${q.code}</span>
-                <span class="text-[11px] font-bold px-2 py-0.5 rounded-md border ${typeBadgeColor}">
-                  ${q.type}-Type • ${q.pts} ${q.pts > 1 ? 'Pts' : 'Pt'}
-                </span>
-                <span class="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60">
-                  EU${q.euNo}
-                </span>
-              </div>
-
-              <!-- Bookmark Star Button -->
-              <button 
-                onclick="toggleBookmark(${q.id}, event)" 
-                class="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400 hover:text-amber-500 bg-slate-50 dark:bg-zinc-800/60 hover:bg-slate-100 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/60 transition-all"
-                title="Tanda soalan"
-              >
-                <svg class="w-3.5 h-3.5 ${isBookmarked ? 'fill-amber-400 text-amber-400' : 'text-slate-400 dark:text-zinc-500'}" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                </svg>
-              </button>
-            </div>
-
-            <!-- Question Statement -->
-            <div class="mb-3.5">
-              <div class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider mb-1">${q.title}</div>
-              <div class="text-xs sm:text-[13.5px] font-semibold text-slate-900 dark:text-zinc-100 leading-relaxed">
-                ${formatText(q.question)}
-              </div>
-              ${q.eo ? `<div class="inline-flex items-center text-[10.5px] text-slate-500 dark:text-zinc-400 font-mono mt-1.5 font-medium px-2 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700/60">EO: ${q.eo}</div>` : ''}
-            </div>
-
-            <!-- Embedded Diagram Illustration (High Contrast PDF Extract) -->
-            ${q.diagramHtml || ''}
-
-            <!-- Card Score Banner (If Quiz Revealed) -->
-            ${cardScoreBanner}
-
-            <!-- OPTIONS / STATEMENTS SECTION -->
-            ${q.type === 'K' ? renderKTypeMatrix(q, isRevealed, userSelections) : renderStandardOptions(q, isRevealed, userSelections)}
-
-            <!-- Quiz Reveal Individual Button -->
-            ${!isRevealed ? `
-              <div class="pt-1 flex justify-end">
-                <button onclick="revealAnswer(${q.id})" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 text-xs font-bold shadow-xs transition-all hover:opacity-90">
-                  Semak Jawapan Soalan Ini
-                </button>
-              </div>
-            ` : ''}
-
-            <!-- Deep Explanations Section with Clean Callout Cards -->
-            ${isRevealed ? `
-              <div class="mt-4 pt-3.5 border-t border-slate-100 dark:border-zinc-800 space-y-3">
-                
-                <!-- Official Answer Strip (Uniform Header + Dedicated Response Container) -->
-                <div class="rounded-xl bg-slate-100/90 dark:bg-zinc-850 border border-slate-200 dark:border-zinc-700/80 p-3 shadow-2xs">
-                  <div class="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-slate-200/80 dark:border-zinc-700/60">
-                    <div class="flex items-center gap-2">
-                      <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-extrabold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 uppercase tracking-wider shadow-2xs">
-                        Jawapan Rasmi
-                      </span>
-                      <span class="text-[11px] font-medium text-slate-500 dark:text-zinc-400 hidden sm:inline">Skema Peperiksaan IREB</span>
-                    </div>
-                    <button 
-                      id="exp-toggle-btn-${q.id}" 
-                      onclick="toggleExplanation(${q.id})" 
-                      class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11.5px] font-bold bg-white dark:bg-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-700 text-indigo-600 dark:text-indigo-400 border border-slate-200 dark:border-zinc-700 shadow-2xs transition-all shrink-0"
-                    >
-                      ${isExpCollapsed ? 'Huraian Penuh ▾' : 'Tutup Huraian ▴'}
-                    </button>
-                  </div>
-                  <div class="font-mono text-xs sm:text-[13px] font-bold text-slate-900 dark:text-zinc-100 leading-relaxed break-words bg-white/80 dark:bg-zinc-900/90 p-2.5 rounded-lg border border-slate-200/60 dark:border-zinc-800 shadow-2xs">
-                    ${q.correctDisplay || 'Rujuk Pilihan di Atas'}
-                  </div>
-                </div>
-
-                <div id="exp-body-${q.id}" class="exp-body space-y-3 text-xs pt-1 ${isExpCollapsed ? 'hidden' : ''}">
-                  
-                  <!-- Why Correct: Emerald Callout -->
-                  ${q.whyCorrect ? `
-                    <div class="p-3.5 rounded-xl border border-emerald-300 dark:border-emerald-800/80 bg-emerald-50/80 dark:bg-emerald-950/40 text-emerald-950 dark:text-emerald-100 shadow-xs">
-                      <div class="font-bold text-emerald-800 dark:text-emerald-300 text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                        Penerangan & Logik Betul
-                      </div>
-                      <div class="space-y-1.5 text-xs font-normal">
-                        ${formatText(q.whyCorrect)}
-                      </div>
-                    </div>
-                  ` : ''}
-
-                  <!-- Trap Alert / Why Wrong: Rose Callout -->
-                  ${q.whyWrong ? `
-                    <div class="p-3.5 rounded-xl border border-rose-300 dark:border-rose-800/80 bg-rose-50/80 dark:bg-rose-950/40 text-rose-950 dark:text-rose-100 shadow-xs">
-                      <div class="font-bold text-rose-800 dark:text-rose-300 text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                        Perangkap Soalan (Trap Alert) & Pilihan Salah
-                      </div>
-                      <div class="space-y-1.5 text-xs font-normal">
-                        ${formatText(q.whyWrong)}
-                      </div>
-                    </div>
-                  ` : ''}
-
-                  <!-- Handbook Notes: Blue Callout -->
-                  ${q.extra ? `
-                    <div class="p-3.5 rounded-xl border border-blue-300 dark:border-blue-800/80 bg-blue-50/80 dark:bg-blue-950/40 text-blue-950 dark:text-blue-100 shadow-xs">
-                      <div class="font-bold text-blue-800 dark:text-blue-300 text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"></path></svg>
-                        Rujukan Sukatan & Konsep IREB
-                      </div>
-                      <div class="space-y-1.5 text-xs font-normal">
-                        ${formatText(q.extra)}
-                      </div>
-                    </div>
-                  ` : ''}
-
-                  <!-- Mnemonic: Amber Callout -->
-                  ${q.mnemonic ? `
-                    <div class="p-3.5 rounded-xl border border-amber-300 dark:border-amber-800/80 bg-amber-50/80 dark:bg-amber-950/40 text-amber-950 dark:text-amber-100 shadow-xs">
-                      <strong class="text-amber-800 dark:text-amber-300 block mb-1.5 text-xs font-bold uppercase tracking-wider">Formula Hafalan (Mnemonic Anchor):</strong>
-                      <div class="space-y-1 text-xs font-normal">
-                        ${formatText(q.mnemonic)}
-                      </div>
-                    </div>
-                  ` : ''}
-
-                </div>
-
-              </div>
-            ` : ''}
-
-          </article>
-        `;
-      }).join('');
+      if (isDrill) {
+        renderDrillQuestions();
+      } else {
+        updateQuizHud();
+        renderQuestions();
+      }
     }
 
-    // Render K-Type Matrix with dedicated True/False buttons
-    function renderKTypeMatrix(q, isRevealed, userSelections) {
+    function revealAnswer(qId) {
+      revealedAnswers.add(qId);
+      localStorage.setItem(getStorageKey('cpre_revealed_qids'), JSON.stringify(Array.from(revealedAnswers)));
+      renderQuestions();
+      updateQuizHud();
+    }
+
+    function revealDrillAnswer(qId) {
+      drillRevealed.add(qId);
+      localStorage.setItem('cpre_drill_revealed', JSON.stringify(Array.from(drillRevealed)));
+      renderDrillQuestions();
+    }
+
+    function renderKTypeMatrix(q, isRevealed, userSelections, isDrill = false) {
       const labels = getKLabels(q);
       const userMap = (userSelections && typeof userSelections === 'object' && !Array.isArray(userSelections)) ? userSelections : {};
-      const ptsPerStmt = (q.pts / (q.options || []).length).toFixed(2);
+      const ptsPerStmt = ((q.pts || 2) / (q.options || []).length).toFixed(2);
 
       return `
         <div class="mb-3.5 space-y-2.5">
@@ -2669,7 +2073,6 @@
             return `
               <div class="p-3 rounded-xl border text-xs ${rowContainerStyle} flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all">
                 
-                <!-- Statement text -->
                 <div class="flex items-start space-x-2.5 flex-1">
                   <span class="w-5 h-5 rounded-md flex items-center justify-center font-mono font-bold text-[11px] bg-purple-100 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300 shrink-0 mt-0.5">
                     ${optId}
@@ -2677,29 +2080,25 @@
                   <span class="text-slate-800 dark:text-zinc-200 leading-relaxed mt-0.5">${opt.text}</span>
                 </div>
 
-                <!-- True / False Action Area -->
                 <div class="shrink-0 flex items-center gap-2 self-end sm:self-center">
-                  
                   ${!isRevealed ? `
-                    <!-- Interactive Toggle Buttons in Quiz Mode -->
                     <div class="inline-flex rounded-lg p-0.5 bg-slate-200/80 dark:bg-zinc-800 border border-slate-300/80 dark:border-zinc-700/80 text-xs">
                       <button 
                         type="button" 
-                        onclick="handleKOptionSelect(${q.id}, '${optId}', true)" 
+                        onclick="handleKOptionSelect('${q.id}', '${optId}', true, ${isDrill})" 
                         class="px-2.5 py-1 rounded-md font-semibold text-[11px] transition-all ${userBool === true ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-white'}"
                       >
                         ${labels.posShort}
                       </button>
                       <button 
                         type="button" 
-                        onclick="handleKOptionSelect(${q.id}, '${optId}', false)" 
+                        onclick="handleKOptionSelect('${q.id}', '${optId}', false, ${isDrill})" 
                         class="px-2.5 py-1 rounded-md font-semibold text-[11px] transition-all ${userBool === false ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-white'}"
                       >
                         ${labels.negShort}
                       </button>
                     </div>
                   ` : `
-                    <!-- Revealed State: Show Official Answer & User Choice -->
                     <div class="flex flex-wrap items-center gap-1.5">
                       <span class="inline-flex items-center px-2 py-0.5 rounded text-[10.5px] font-mono font-bold ${correctBool ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800' : 'bg-slate-200 dark:bg-zinc-800 text-slate-800 dark:text-zinc-200 border border-slate-300 dark:border-zinc-700'}">
                         Skema: ${correctBool ? labels.pos : labels.neg}
@@ -2707,7 +2106,6 @@
                       ${statusBadge}
                     </div>
                   `}
-
                 </div>
 
               </div>
@@ -2717,19 +2115,15 @@
       `;
     }
 
-    // Render A-Type and P-Type Options
-    function renderStandardOptions(q, isRevealed, userSelections) {
+    function renderStandardOptions(q, isRevealed, userSelections, isDrill = false) {
       const selectedList = Array.isArray(userSelections) ? userSelections : [];
-      const numAns = q.type === 'P' ? 2 : 1;
 
       return `
         <div class="space-y-2 mb-3.5">
-          
-          <!-- Helper Prompt for Multiple Choice -->
           ${q.type === 'P' && !isRevealed ? `
             <div class="flex items-center justify-between text-[11px] text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 rounded-lg px-2.5 py-1 font-medium">
               <span>Pilih tepat <strong>2 jawapan</strong>:</span>
-              <span class="font-mono font-bold">Dipilih: ${selectedList.length}/2 ${selectedList.length > 2 ? '<span class=\"text-rose-600 dark:text-rose-400 font-black\">(Amaran: 0 Pts jika lebih!)</span>' : ''}</span>
+              <span class="font-mono font-bold">Dipilih: ${selectedList.length}/2 ${selectedList.length > 2 ? '<span class="text-rose-600 dark:text-rose-400 font-black">(Amaran: 0 Pts jika lebih!)</span>' : ''}</span>
             </div>
           ` : ''}
 
@@ -2750,39 +2144,943 @@
                     JAWAPAN BETUL
                   </span>
                 `;
-              } else if (isSelected) {
-                optStyle = 'bg-rose-50/80 dark:bg-rose-950/40 border-2 border-rose-500 text-rose-950 dark:text-rose-100 font-medium shadow-xs';
+              } else if (isSelected && !isCorrect) {
+                optStyle = 'bg-rose-50/80 dark:bg-rose-950/40 border-2 border-rose-500 dark:border-rose-600 text-rose-950 dark:text-rose-100 shadow-xs';
                 indicator = `
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-rose-600 text-white shadow-xs">
                     PILIHAN ANDA (SALAH)
                   </span>
                 `;
-              } else {
-                optStyle = 'bg-slate-50/40 dark:bg-zinc-950/40 border border-slate-200 dark:border-zinc-800/80 text-slate-500 dark:text-zinc-400';
               }
-            } else if (isSelected) {
-              optStyle = 'bg-indigo-50 dark:bg-indigo-950/50 border-2 border-indigo-500 text-indigo-950 dark:text-indigo-100 font-semibold shadow-xs';
+            } else {
+              if (isSelected) {
+                optStyle = 'bg-indigo-50/80 dark:bg-indigo-950/50 border-2 border-indigo-600 text-indigo-900 dark:text-indigo-100 shadow-xs';
+              }
             }
 
             return `
               <div 
-                onclick="handleOptionSelect(${q.id}, '${optId}', '${q.type}')" 
-                class="p-3 rounded-lg border text-xs leading-relaxed flex items-start justify-between gap-3 transition-all cursor-pointer ${optStyle}"
+                onclick="${!isRevealed ? `handleOptionSelect('${q.id}', '${optId}', '${q.type}', ${isDrill})` : ''}"
+                class="p-3 sm:p-3.5 rounded-xl border text-xs sm:text-[13px] transition-all flex items-start justify-between gap-3 ${!isRevealed ? 'cursor-pointer hover:border-indigo-400' : ''} ${optStyle}"
               >
-                <div class="flex items-start space-x-2.5">
-                  <span class="w-5 h-5 rounded-md flex items-center justify-center font-mono font-bold text-[11px] bg-slate-200 dark:bg-zinc-800 text-slate-800 dark:text-zinc-200 shrink-0 mt-0.5">
+                <div class="flex items-start space-x-3 flex-1">
+                  <span class="w-5 h-5 rounded-md flex items-center justify-center font-mono font-bold text-xs shrink-0 mt-0.5 ${isSelected && !isRevealed ? 'bg-indigo-600 text-white' : 'bg-slate-200 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300'}">
                     ${optId}
                   </span>
-                  <span class="mt-0.5">${opt.text}</span>
+                  <span class="leading-relaxed mt-0.5">${opt.text}</span>
                 </div>
-                <div class="shrink-0 mt-0.5">
-                  ${indicator}
-                </div>
+                ${indicator ? `<div class="shrink-0 pt-0.5">${indicator}</div>` : ''}
               </div>
             `;
           }).join('')}
         </div>
       `;
+    }
+
+    // =============================================================
+    // 5. SIMULATION EXAM RENDERING
+    // =============================================================
+    function renderQuestions() {
+      if (!questionsContainer) return;
+
+      const filtered = questions.filter(q => {
+        if (currentEU !== 0 && q.euNo !== currentEU) return false;
+        if (currentType !== 'all' && q.type !== currentType) return false;
+        if (filterBookmarkedOnly && !bookmarkedIds.has(q.id)) return false;
+        if (searchQuery) {
+          const matchQ = (q.question || '').toLowerCase().includes(searchQuery);
+          const matchCode = (q.code || '').toLowerCase().includes(searchQuery);
+          const matchTitle = (q.title || '').toLowerCase().includes(searchQuery);
+          const matchWhy = (q.whyCorrect || '').toLowerCase().includes(searchQuery);
+          const matchOpts = (q.options || []).some(o => (o.text || '').toLowerCase().includes(searchQuery));
+          const matchId = ('q' + q.id).includes(searchQuery);
+          if (!matchQ && !matchCode && !matchTitle && !matchWhy && !matchOpts && !matchId) return false;
+        }
+        return true;
+      });
+
+      if (visibleCountEl) visibleCountEl.textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        questionsContainer.innerHTML = `
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl p-10 text-center shadow-sm">
+            <div class="text-sm font-bold text-slate-900 dark:text-white mb-1">Tiada soalan sepadan</div>
+            <div class="text-xs text-slate-500 dark:text-zinc-400 mb-3">Sila ubah carian kata kunci atau tetapan penapis.</div>
+            <button onclick="clearSearch(); filterByEU(0); filterByType('all');" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 text-xs font-bold shadow-xs">
+              Reset Penapis
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      questionsContainer.innerHTML = filtered.map(q => {
+        const isRevealed = (currentMode === 'study') || revealedAnswers.has(q.id);
+        const userSelections = userQuizAnswers[q.id];
+        const isExpCollapsed = collapsedExplanations.has(q.id);
+        return renderQuestionCardHtml(q, isRevealed, userSelections, isExpCollapsed, false);
+      }).join('');
+    }
+
+    // =============================================================
+    // 6. HELPER FUNCTIONS (MODALS, BOOKMARKS, SCORING, ETC.)
+    // =============================================================
+    function openImageModal(target) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImgTag');
+      if (!modal || !modalImg) return;
+
+      if (target && (target.startsWith('assets/') || target.startsWith('http') || target.startsWith('data:'))) {
+        modalImg.src = target;
+      } else {
+        const el = document.getElementById(target);
+        if (el) modalImg.src = el.src;
+      }
+      modal.classList.remove('hidden');
+    }
+
+    function closeImageModal() {
+      const modal = document.getElementById('imageModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      const studyBtn = document.getElementById('modeStudyBtn');
+      const quizBtn = document.getElementById('modeQuizBtn');
+      const hud = document.getElementById('quizScoreHud');
+
+      if (mode === 'quiz') {
+        studyBtn.className = 'px-3 py-1 rounded-md text-xs font-medium text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all';
+        quizBtn.className = 'px-3 py-1 rounded-md text-xs font-semibold bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs transition-all';
+        if (hud && currentMainView === 'exam') hud.classList.remove('hidden');
+      } else {
+        studyBtn.className = 'px-3 py-1 rounded-md text-xs font-semibold bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs transition-all';
+        quizBtn.className = 'px-3 py-1 rounded-md text-xs font-medium text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all';
+        if (hud) hud.classList.add('hidden');
+      }
+
+      if (currentMainView === 'drill') {
+        renderDrillQuestions();
+      } else {
+        renderQuestions();
+        updateQuizHud();
+      }
+    }
+
+    function toggleTheme(event) {
+      const isDark = document.documentElement.classList.contains('dark');
+      const newTheme = isDark ? 'light' : 'dark';
+      applyTheme(newTheme);
+      localStorage.setItem('cpre_theme', newTheme);
+    }
+
+    function applyTheme(theme) {
+      const moonIcon = document.getElementById('moonIcon');
+      const sunIcon = document.getElementById('sunIcon');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        if (moonIcon) moonIcon.classList.remove('hidden');
+        if (sunIcon) sunIcon.classList.add('hidden');
+      } else {
+        document.documentElement.classList.remove('dark');
+        if (moonIcon) moonIcon.classList.add('hidden');
+        if (sunIcon) sunIcon.classList.remove('hidden');
+      }
+    }
+
+    function toggleBookmark(qId, e) {
+      if (e) e.stopPropagation();
+      const strId = String(qId);
+      if (bookmarkedIds.has(strId)) {
+        bookmarkedIds.delete(strId);
+      } else {
+        bookmarkedIds.add(strId);
+      }
+      localStorage.setItem(getStorageKey('cpre_bookmarks'), JSON.stringify(Array.from(bookmarkedIds)));
+      updateBookmarkUI();
+      if (currentMainView === 'drill') renderDrillQuestions();
+      else renderQuestions();
+    }
+
+    function updateBookmarkUI() {
+      if (bookmarkCountText) bookmarkCountText.textContent = bookmarkedIds.size;
+    }
+
+    function toggleBookmarkFilter() {
+      filterBookmarkedOnly = !filterBookmarkedOnly;
+      if (bookmarkFilterBanner) {
+        bookmarkFilterBanner.classList.toggle('hidden', !filterBookmarkedOnly);
+      }
+      renderQuestions();
+    }
+
+    function formatText(text) {
+      if (!text) return '';
+      const lines = text.split('\n');
+      let out = '';
+      for (let line of lines) {
+        let l = line.trim();
+        if (!l) continue;
+        let formatted = l
+          .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>')
+          .replace(/\`([^\`]+)\`/g, '<code class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 font-mono text-[11px]">$1</code>');
+        if (formatted.startsWith('• ') || formatted.startsWith('- ') || formatted.startsWith('* ')) {
+          out += `<div class="flex items-start gap-2 my-1.5"><span class="text-indigo-500 font-bold shrink-0">•</span><span class="flex-1">${formatted.replace(/^[•\-\*]\s*/, '')}</span></div>`;
+        } else {
+          out += `<p class="mb-1.5 last:mb-0 leading-relaxed">${formatted}</p>`;
+        }
+      }
+      return out;
+    }
+
+    function filterByEU(euNo) {
+      currentEU = euNo;
+      document.querySelectorAll('.eu-btn').forEach(b => {
+        if (parseInt(b.getAttribute('data-eu')) === euNo) {
+          b.className = 'eu-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shrink-0 shadow-xs';
+        } else {
+          b.className = 'eu-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 shrink-0 flex items-center gap-1.5 border border-slate-200 dark:border-zinc-700/60';
+        }
+      });
+      renderQuestions();
+    }
+
+    function filterByType(type) {
+      currentType = type;
+      document.querySelectorAll('.type-btn').forEach(b => {
+        if (b.getAttribute('data-type') === type) {
+          b.className = 'type-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-xs';
+        } else {
+          b.className = 'type-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/60';
+        }
+      });
+      renderQuestions();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.trim().toLowerCase();
+      if (clearSearchBtn) clearSearchBtn.classList.toggle('hidden', searchQuery.length === 0);
+      renderQuestions();
+    }
+
+    function clearSearch() {
+      if (searchInput) searchInput.value = '';
+      searchQuery = '';
+      if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
+      renderQuestions();
+    }
+
+    function expandAllExplanations() {
+      if (currentMode === 'quiz') {
+        questions.forEach(q => revealedAnswers.add(q.id));
+      }
+      collapsedExplanations.clear();
+      renderQuestions();
+    }
+
+    function collapseAllExplanations() {
+      questions.forEach(q => collapsedExplanations.add(q.id));
+      renderQuestions();
+    }
+
+    function toggleSetDropdown(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('setDropdownMenu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    function closeSetDropdown() {
+      const menu = document.getElementById('setDropdownMenu');
+      if (menu) menu.classList.add('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      const wrapper = document.getElementById('setSelectorWrapper');
+      if (wrapper && !wrapper.contains(e.target)) closeSetDropdown();
+    });
+
+    function switchExamSet(setKey) {
+      if (!appData.sets || !appData.sets[setKey]) return;
+      currentExamSet = setKey;
+      localStorage.setItem('cpre_active_set', setKey);
+      
+      activeSet = appData.sets[currentExamSet];
+      questions = activeSet.questions;
+      eus = activeSet.eus;
+
+      bookmarkedIds = new Set(JSON.parse(localStorage.getItem(getStorageKey('cpre_bookmarks')) || '[]'));
+      userQuizAnswers = JSON.parse(localStorage.getItem(getStorageKey('cpre_quiz_answers')) || '{}');
+      quizSubmitted = localStorage.getItem(getStorageKey('cpre_quiz_submitted')) === 'true';
+      revealedAnswers = new Set(JSON.parse(localStorage.getItem(getStorageKey('cpre_revealed_qids')) || '[]'));
+
+      currentEU = 0;
+      currentType = 'all';
+      searchQuery = '';
+      filterBookmarkedOnly = false;
+      if (searchInput) searchInput.value = '';
+      if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
+      if (bookmarkFilterBanner) bookmarkFilterBanner.classList.add('hidden');
+
+      closeSetDropdown();
+      updateSetSwitcherUI();
+      updateHeaderBadge();
+      updateStrategyDashboard();
+      updateTypeCounts();
+      renderEUPills();
+      renderTOCDrawer();
+      updateBookmarkUI();
+      renderQuestions();
+      updateQuizHud();
+    }
+
+    function updateSetSwitcherUI() {
+      const isOfficial = currentExamSet === 'official';
+      const badgeIcon = document.getElementById('activeSetBadgeIcon');
+      const nameText = document.getElementById('activeSetNameText');
+      const nameMobile = document.getElementById('activeSetNameMobile');
+      const setBtn = document.getElementById('setSelectorBtn');
+      const chkOff = document.getElementById('check-official');
+      const chkPred = document.getElementById('check-predicted');
+
+      if (badgeIcon) {
+        if (isOfficial) {
+          badgeIcon.innerHTML = `<svg class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>`;
+        } else {
+          badgeIcon.innerHTML = `<svg class="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>`;
+        }
+      }
+
+      if (setBtn) {
+        if (isOfficial) {
+          setBtn.className = "h-8 px-2 sm:px-2.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 flex items-center space-x-2 transition-all text-xs font-semibold shadow-xs cursor-pointer";
+        } else {
+          setBtn.className = "h-8 px-2 sm:px-2.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 flex items-center space-x-2 transition-all text-xs font-semibold shadow-xs cursor-pointer";
+        }
+      }
+
+      if (nameText) {
+        nameText.textContent = isOfficial ? 'Set Latihan Rasmi (70 Pts)' : 'Set Ramalan G (72 Pts)';
+      }
+      if (nameMobile) {
+        nameMobile.textContent = isOfficial ? 'Set Rasmi' : 'Set G';
+      }
+
+      if (chkOff) chkOff.classList.toggle('hidden', !isOfficial);
+      if (chkPred) chkPred.classList.toggle('hidden', isOfficial);
+    }
+
+    function updateHeaderBadge() {
+      const badge = document.getElementById('headerBadgeText');
+      if (badge) {
+        badge.textContent = currentExamSet === 'official' 
+          ? '45 Soalan • 70.0 Pts (Lulus 49.0 Pts)' 
+          : '45 Soalan • 72.0 Pts (Lulus 50.40 Pts)';
+      }
+    }
+
+    function renderEUPills() {
+      const container = document.getElementById('euPillsContainer');
+      if (!container || !eus) return;
+
+      let html = `
+        <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 mr-1 shrink-0">EU:</span>
+        <button onclick="filterByEU(0)" class="eu-btn ${currentEU === 0 ? 'active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shrink-0 shadow-xs' : 'px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 shrink-0 border border-slate-200 dark:border-zinc-700/60'}" data-eu="0">
+          Semua (EU1–7)
+        </button>
+      `;
+
+      eus.forEach(eu => {
+        const isActive = currentEU === eu.no;
+        const dotColor = (eu.no === 5 || eu.no === 6) ? 'bg-rose-500' : 'bg-slate-400 dark:bg-zinc-500';
+        const btnCls = isActive 
+          ? 'eu-btn active px-2.5 py-1 rounded-md text-xs font-semibold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shrink-0 shadow-xs'
+          : 'eu-btn px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 shrink-0 flex items-center gap-1.5 border border-slate-200 dark:border-zinc-700/60';
+        
+        html += `
+          <button onclick="filterByEU(${eu.no})" class="${btnCls}" data-eu="${eu.no}">
+            <span class="w-1.5 h-1.5 rounded-full ${dotColor}"></span>
+            EU${eu.no} (${eu.range || ''})
+          </button>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function renderTOCDrawer() {
+      const container = document.getElementById('tocDrawerContainer');
+      if (!container || !eus) return;
+
+      let html = '';
+      eus.forEach(eu => {
+        const euQs = questions.filter(q => q.euNo === eu.no);
+        html += `
+          <div>
+            <div class="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-zinc-300 mb-1.5">
+              <span>EU${eu.no}: ${eu.name}</span>
+              <span class="font-mono text-[10.5px] text-slate-500 dark:text-zinc-400">${eu.range || ''} • ${eu.pts || ''} Pts (${eu.qCount || euQs.length}Q)</span>
+            </div>
+            <div class="grid grid-cols-5 sm:grid-cols-9 gap-1.5">
+        `;
+        euQs.forEach(q => {
+          const isBm = bookmarkedIds.has(String(q.id));
+          const ans = userQuizAnswers[q.id];
+          let btnClass = "bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700/60";
+          if (ans) btnClass = "bg-indigo-600 text-white font-bold";
+          
+          html += `
+            <button onclick="jumpToQuestion('${q.id}')" class="h-8 rounded-lg text-xs font-mono font-medium flex items-center justify-center transition-transform active:scale-95 relative ${btnClass}">
+              ${q.code || q.id}
+              ${isBm ? '<span class="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-amber-400"></span>' : ''}
+            </button>
+          `;
+        });
+        html += `
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function toggleDrawer() {
+      const drawer = document.getElementById('jumpDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      if (!drawer) return;
+      if (drawer.classList.contains('hidden')) {
+        drawer.classList.remove('hidden');
+        if (overlay) overlay.classList.remove('hidden');
+        setTimeout(() => drawer.classList.remove('translate-y-full'), 10);
+      } else {
+        drawer.classList.add('translate-y-full');
+        setTimeout(() => {
+          drawer.classList.add('hidden');
+          if (overlay) overlay.classList.add('hidden');
+        }, 200);
+      }
+    }
+
+    function jumpToQuestion(qId) {
+      toggleDrawer();
+      switchMainView('exam');
+      switchTab('questions');
+
+      setTimeout(() => {
+        const el = document.getElementById('q-card-' + qId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.add('ring-2', 'ring-indigo-500', 'dark:ring-white');
+          setTimeout(() => el.classList.remove('ring-2', 'ring-indigo-500', 'dark:ring-white'), 1500);
+        }
+      }, 50);
+    }
+
+    function updateTypeCounts() {
+      const elAll = document.getElementById('typeCountAll');
+      const elK = document.getElementById('typeCountK');
+      const elA = document.getElementById('typeCountA');
+      const elP = document.getElementById('typeCountP');
+      
+      if (elAll) elAll.textContent = questions.length;
+      if (elK) elK.textContent = questions.filter(q => q.type === 'K').length;
+      if (elA) elA.textContent = questions.filter(q => q.type === 'A').length;
+      if (elP) elP.textContent = questions.filter(q => q.type === 'P').length;
+    }
+
+    function updateStrategyDashboard() {
+      const grid = document.getElementById('strategyCardsGrid');
+      if (!grid) return;
+
+      if (currentExamSet === 'official') {
+        grid.innerHTML = `
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Formula Kelayakan</span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                  Lulus: 70% (49.0 Pts)
+                </span>
+              </div>
+              <div class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white">Latihan Skema Rasmi IREB</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                45 soalan rasmi ground-truth dengan semakan 0 perbezaan terhadap IREB Correction Aid. Target markah selamat ialah <strong>52.5 Pts (75%+)</strong>.
+              </p>
+            </div>
+            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
+              <div class="flex justify-between text-[11px] font-mono text-slate-500 mb-1">
+                <span>Skor Lulus: 49.0 Pts</span>
+                <span class="text-emerald-600 dark:text-emerald-400 font-bold">Max: 70.0 Pts</span>
+              </div>
+              <div class="w-full bg-slate-100 dark:bg-zinc-800 h-2 rounded-full overflow-hidden flex">
+                <div class="bg-indigo-500 h-full" style="width: 70%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Topik Tumpuan</span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+                  8 Soalan (13 Pts)
+                </span>
+              </div>
+              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">EU5 (Process) + EU6 (Management)</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                Kelemahan biasa calon ialah pada proses kerja (EU5) dan pengurusan keperluan (EU6). Kuasai 2 bab ini untuk menjamin kelulusan selesa.
+              </p>
+            </div>
+            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-1.5 overflow-x-auto text-[10px] font-mono text-slate-600 dark:text-zinc-400 scrollbar-none">
+              <span class="px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800 rounded border border-slate-200 dark:border-zinc-700/60">Time Facet</span>
+              <span class="px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800 rounded border border-slate-200 dark:border-zinc-700/60">Traceability</span>
+              <span class="px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800 rounded border border-slate-200 dark:border-zinc-700/60">Baselines</span>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Paparan Utama</span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                  45 Soalan (70 Pts)
+                </span>
+              </div>
+              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">Skema Peperiksaan Rasmi iSQI / IREB</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                Set latihan asas rasmi untuk menguji pemahaman teori piawai CPRE Foundation Level.
+              </p>
+            </div>
+            <div class="grid grid-cols-2 gap-2 mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
+              <button onclick="switchTab('questions')" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold text-xs shadow-xs transition-all flex items-center justify-center">
+                Bank Soalan
+              </button>
+              <button onclick="switchTab('cheatsheet')" class="h-8 px-3 rounded-lg bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs border border-slate-200 dark:border-zinc-700 transition-all flex items-center justify-center">
+                Cheat Sheet
+              </button>
+            </div>
+          </div>
+        `;
+      } else {
+        grid.innerHTML = `
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Formula Kelayakan</span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                  Lulus: 70% (50.40 Pts)
+                </span>
+              </div>
+              <div class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white">Slip Terdahulu: 44.60 Pts ➔ Sasaran: 50.40 Pts</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                Percubaan pertama: <strong>44.60 Pts (61.94%)</strong>. Jurang lulus ialah <strong>+5.80 Pts</strong> (sekitar 3–4 soalan betul). Set ini direka khas untuk menutup jurang ini!
+              </p>
+            </div>
+            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
+              <div class="flex justify-between text-[11px] font-mono text-slate-500 mb-1">
+                <span>Terdahulu: 44.60 Pts (61.94%)</span>
+                <span class="text-emerald-600 dark:text-emerald-400 font-bold">Lulus: 50.40 (70%)</span>
+              </div>
+              <div class="w-full bg-slate-100 dark:bg-zinc-800 h-2 rounded-full overflow-hidden flex">
+                <div class="bg-rose-500 h-full" style="width: 61.94%"></div>
+                <div class="bg-emerald-500 h-full animate-pulse" style="width: 8.06%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Topik Kelemahan Terdahulu</span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+                  EU1 (44%), EU5 (40%), EU6 (50%)
+                </span>
+              </div>
+              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">Fokus Lonjakan Markah di EU 1, 5 & 6</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                EU1 dapat 44%, EU5 dapat 40%, EU6 dapat 50%. Memperbaiki 4 soalan di ketiga-tiga unit ini akan melonjakkan markah anda melepasi 75%!
+              </p>
+            </div>
+            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80 flex items-center gap-1.5 overflow-x-auto text-[10px] font-mono text-slate-600 dark:text-zinc-400 scrollbar-none">
+              <span class="px-1.5 py-0.5 bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 rounded border border-rose-200 dark:border-rose-900">EU1 (44%)</span>
+              <span class="px-1.5 py-0.5 bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 rounded border border-rose-200 dark:border-rose-900">EU5 (40%)</span>
+              <span class="px-1.5 py-0.5 bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 rounded border border-amber-200 dark:border-amber-900">EU6 (50%)</span>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-2xl p-4 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-1.5 mb-2">
+                <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Paparan Utama</span>
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                  Set Ramalan G (72 Pts)
+                </span>
+              </div>
+              <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">Kolam Soalan Ramalan CPRE FL 3.4</div>
+              <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+                45 soalan ramalan peperiksaan berasaskan format terbaharu dengan penekanan pada aspek teknikal dan senario operasi sebenar.
+              </p>
+            </div>
+            <div class="grid grid-cols-2 gap-2 mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
+              <button onclick="switchTab('questions')" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold text-xs shadow-xs transition-all flex items-center justify-center">
+                Bank Soalan
+              </button>
+              <button onclick="switchTab('cheatsheet')" class="h-8 px-3 rounded-lg bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs border border-slate-200 dark:border-zinc-700 transition-all flex items-center justify-center">
+                Cheat Sheet
+              </button>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function switchTab(tabId) {
+      const qTab = document.getElementById('questionsTab');
+      const csTab = document.getElementById('cheatsheetTab');
+      const mobTabQ = document.getElementById('mobTabQ');
+      const mobTabCs = document.getElementById('mobTabCs');
+      const mobDotQ = document.getElementById('mobDotQ');
+      const mobDotCs = document.getElementById('mobDotCs');
+
+      if (tabId === 'questions') {
+        if (qTab) qTab.classList.remove('hidden');
+        if (csTab) csTab.classList.add('hidden');
+        if (mobTabQ) mobTabQ.className = "flex flex-1 flex-col items-center justify-center py-1 text-slate-900 dark:text-white font-bold transition-all active:scale-95";
+        if (mobTabCs) mobTabCs.className = "flex flex-1 flex-col items-center justify-center py-1 text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 font-medium transition-all active:scale-95";
+        if (mobDotQ) mobDotQ.classList.remove('opacity-0');
+        if (mobDotCs) mobDotCs.classList.add('opacity-0');
+      } else {
+        if (qTab) qTab.classList.add('hidden');
+        if (csTab) csTab.classList.remove('hidden');
+        if (mobTabQ) mobTabQ.className = "flex flex-1 flex-col items-center justify-center py-1 text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 font-medium transition-all active:scale-95";
+        if (mobTabCs) mobTabCs.className = "flex flex-1 flex-col items-center justify-center py-1 text-slate-900 dark:text-white font-bold transition-all active:scale-95";
+        if (mobDotQ) mobDotQ.classList.add('opacity-0');
+        if (mobDotCs) mobDotCs.classList.remove('opacity-0');
+      }
+    }
+
+    // Scoring & Quiz HUD
+    function getAnsweredCount() {
+      let count = 0;
+      questions.forEach(q => {
+        const a = userQuizAnswers[q.id];
+        if (a) {
+          if (q.type === 'K') {
+            if (typeof a === 'object' && Object.keys(a).length > 0) count++;
+          } else if (Array.isArray(a) && a.length > 0) {
+            count++;
+          }
+        }
+      });
+      return count;
+    }
+
+    function calculateScoreSummary() {
+      let totalScore = 0;
+      const maxScore = activeSet.maxPoints || 70.0;
+      const passPoints = activeSet.passPoints || 49.0;
+      
+      const typeStats = {
+        K: { earned: 0, max: 0 },
+        A: { earned: 0, max: 0 },
+        P: { earned: 0, max: 0 }
+      };
+
+      const euStats = {};
+      (eus || []).forEach(eu => {
+        euStats[eu.no] = { earned: 0, max: 0 };
+      });
+
+      questions.forEach(q => {
+        const qPts = q.pts || 1;
+        const euNo = q.euNo;
+        const qType = q.type;
+
+        if (typeStats[qType]) typeStats[qType].max += qPts;
+        if (euStats[euNo]) euStats[euNo].max += qPts;
+
+        const ans = userQuizAnswers[q.id];
+        if (!ans) return;
+
+        let qEarned = 0;
+        if (qType === 'K') {
+          const totalOpts = (q.options || []).length;
+          const ptsPerStmt = qPts / totalOpts;
+          if (typeof ans === 'object' && !Array.isArray(ans)) {
+            (q.options || []).forEach(opt => {
+              if (ans[opt.id] !== undefined && ans[opt.id] === isOptionCorrect(opt, q)) {
+                qEarned += ptsPerStmt;
+              }
+            });
+          }
+        } else if (qType === 'P') {
+          const numAns = 2;
+          const ptsPerCorr = qPts / numAns;
+          const correctOpts = (q.options || []).filter(o => isOptionCorrect(o, q)).map(o => o.id);
+          if (Array.isArray(ans) && ans.length <= numAns) {
+            let corrCount = 0;
+            ans.forEach(id => {
+              if (correctOpts.includes(id)) corrCount++;
+            });
+            qEarned = corrCount * ptsPerCorr;
+          }
+        } else {
+          // A-type
+          if (Array.isArray(ans) && ans.length === 1) {
+            const correctOpt = (q.options || []).find(o => isOptionCorrect(o, q));
+            if (correctOpt && ans[0] === correctOpt.id) {
+              qEarned = qPts;
+            }
+          }
+        }
+
+        qEarned = Math.round(qEarned * 100) / 100;
+        totalScore += qEarned;
+        if (typeStats[qType]) typeStats[qType].earned += qEarned;
+        if (euStats[euNo]) euStats[euNo].earned += qEarned;
+      });
+
+      totalScore = Math.round(totalScore * 100) / 100;
+      const percentage = (totalScore / maxScore) * 100;
+      const isPassed = totalScore >= passPoints;
+
+      return {
+        totalScore,
+        maxScore,
+        passPoints,
+        percentage,
+        isPassed,
+        typeStats,
+        euStats
+      };
+    }
+
+    function updateQuizHud() {
+      const answeredCount = getAnsweredCount();
+      const hudCount = document.getElementById('hudAnsweredCount');
+      const hudProgress = document.getElementById('hudProgressBar');
+      const hudSubmitBtn = document.getElementById('hudSubmitBtn');
+      const hudResultBanner = document.getElementById('hudResultBanner');
+
+      if (hudCount) hudCount.textContent = answeredCount;
+      if (hudProgress) {
+        const pct = Math.round((answeredCount / 45) * 100);
+        hudProgress.style.width = pct + '%';
+      }
+
+      if (quizSubmitted) {
+        const summary = calculateScoreSummary();
+        if (hudResultBanner) {
+          hudResultBanner.classList.remove('hidden');
+          const badge = document.getElementById('hudResultBadge');
+          const ptsEl = document.getElementById('hudScorePts');
+          const pctEl = document.getElementById('hudScorePct');
+          if (badge) {
+            badge.textContent = summary.isPassed ? 'LULUS' : 'BELUM LULUS';
+            badge.className = summary.isPassed 
+              ? 'px-2 py-0.5 rounded font-mono font-bold text-[11px] bg-emerald-600 text-white' 
+              : 'px-2 py-0.5 rounded font-mono font-bold text-[11px] bg-rose-600 text-white';
+          }
+          if (ptsEl) ptsEl.textContent = summary.totalScore.toFixed(2) + ' / ' + summary.maxScore + ' Pts';
+          if (pctEl) pctEl.textContent = summary.percentage.toFixed(1) + '%';
+        }
+        if (hudSubmitBtn) {
+          hudSubmitBtn.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg> Kemas Kini Keputusan';
+        }
+      } else {
+        if (hudResultBanner) hudResultBanner.classList.add('hidden');
+        if (hudSubmitBtn) {
+          hudSubmitBtn.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Hantar & Semak Keputusan';
+        }
+      }
+    }
+
+    function submitAndScoreQuiz() {
+      const answeredCount = getAnsweredCount();
+      const unansweredCount = 45 - answeredCount;
+      
+      let desc = 'Adakah anda pasti untuk menghantar jawapan dan melihat keputusan rasmi pemarkahan IREB?';
+      if (unansweredCount > 0) {
+        desc = `Anda telah menjawab ${answeredCount} daripada 45 soalan (${unansweredCount} soalan belum dijawab). Adakah anda pasti mahu menghantar peperiksaan sekarang dan melihat analisis keputusan?`;
+      } else {
+        desc = 'Tahniah! Anda telah menjawab kesemua 45 soalan. Adakah anda bersedia untuk menghantar dan menyemak markah rasmi?';
+      }
+
+      openConfirmModal(
+        'Hantar Peperiksaan & Semak Keputusan?',
+        desc,
+        () => {
+          quizSubmitted = true;
+          localStorage.setItem(getStorageKey('cpre_quiz_submitted'), 'true');
+          questions.forEach(q => revealedAnswers.add(q.id));
+          localStorage.setItem(getStorageKey('cpre_revealed_qids'), JSON.stringify(Array.from(revealedAnswers)));
+          
+          updateQuizHud();
+          renderQuestions();
+          openExamResultsModal();
+        },
+        'Ya, Hantar & Semak',
+        'emerald'
+      );
+    }
+
+    let pendingConfirmAction = null;
+
+    function openConfirmModal(title, desc, actionFn, confirmBtnText = 'Ya, Teruskan', variant = 'rose') {
+      const titleEl = document.getElementById('confirmTitle');
+      const descEl = document.getElementById('confirmDesc');
+      const actionBtn = document.getElementById('confirmActionBtn');
+      const iconContainer = document.getElementById('confirmIconContainer');
+      const icon = document.getElementById('confirmIcon');
+
+      if (titleEl) titleEl.textContent = title || 'Pengesahan';
+      if (descEl) descEl.textContent = desc || 'Adakah anda pasti untuk meneruskan tindakan ini?';
+      
+      if (actionBtn) {
+        actionBtn.textContent = confirmBtnText;
+        if (variant === 'emerald') {
+          actionBtn.className = 'h-8 px-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-xs transition-colors';
+        } else {
+          actionBtn.className = 'h-8 px-3.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow-xs transition-colors';
+        }
+      }
+
+      if (iconContainer) {
+        if (variant === 'emerald') {
+          iconContainer.className = 'w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-900/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shrink-0';
+          if (icon) {
+            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />';
+          }
+        } else {
+          iconContainer.className = 'w-10 h-10 rounded-full bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/60 flex items-center justify-center text-rose-600 dark:text-rose-400 shrink-0';
+          if (icon) {
+            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />';
+          }
+        }
+      }
+
+      pendingConfirmAction = actionFn;
+      document.getElementById('confirmModal').classList.remove('hidden');
+    }
+
+    function closeConfirmModal() {
+      pendingConfirmAction = null;
+      document.getElementById('confirmModal').classList.add('hidden');
+    }
+
+    function executeConfirmAction() {
+      if (typeof pendingConfirmAction === 'function') pendingConfirmAction();
+      closeConfirmModal();
+    }
+
+    function resetQuizAnswers() {
+      openConfirmModal(
+        'Reset Jawapan Peperiksaan?',
+        'Adakah anda pasti mahu memadamkan semua jawapan yang telah anda tanda untuk set peperiksaan ini? Tindakan ini akan mengembalikan set ke keadaan belum dijawab.',
+        () => {
+          userQuizAnswers = {};
+          revealedAnswers.clear();
+          quizSubmitted = false;
+          localStorage.removeItem(getStorageKey('cpre_quiz_answers'));
+          localStorage.removeItem(getStorageKey('cpre_revealed_qids'));
+          localStorage.removeItem(getStorageKey('cpre_quiz_submitted'));
+
+          updateQuizHud();
+          renderQuestions();
+          renderTOCDrawer();
+        },
+        'Ya, Padam & Reset',
+        'rose'
+      );
+    }
+
+    function openExamResultsModal() {
+      const summary = calculateScoreSummary();
+      const modal = document.getElementById('examResultsModal');
+      const banner = document.getElementById('resHeroBanner');
+      const totalScoreEl = document.getElementById('resTotalScore');
+      const pctEl = document.getElementById('resPercentage');
+      const kScoreEl = document.getElementById('resKScore');
+      const aScoreEl = document.getElementById('resAScore');
+      const pScoreEl = document.getElementById('resPScore');
+      const euBarsEl = document.getElementById('resEuBarsContainer');
+
+      if (totalScoreEl) totalScoreEl.textContent = summary.totalScore.toFixed(2) + ' / ' + summary.maxScore;
+      if (pctEl) pctEl.textContent = summary.percentage.toFixed(1) + '%';
+      if (kScoreEl) kScoreEl.textContent = summary.typeStats.K.earned.toFixed(1) + ' / ' + summary.typeStats.K.max + ' Pts';
+      if (aScoreEl) aScoreEl.textContent = summary.typeStats.A.earned.toFixed(1) + ' / ' + summary.typeStats.A.max + ' Pts';
+      if (pScoreEl) pScoreEl.textContent = summary.typeStats.P.earned.toFixed(1) + ' / ' + summary.typeStats.P.max + ' Pts';
+
+      if (banner) {
+        if (summary.isPassed) {
+          banner.className = 'rounded-2xl p-5 sm:p-6 mb-5 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md bg-gradient-to-r from-emerald-600 to-teal-700';
+          banner.innerHTML = `
+            <div class="space-y-1 text-center sm:text-left">
+              <span class="inline-flex items-center px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-white/20 border border-white/30 tracking-wider uppercase">
+                Status Rasmi: Lulus Peperiksaan
+              </span>
+              <div class="text-xl sm:text-2xl font-black">TAHNIAH! ANDA TELAH LULUS!</div>
+              <p class="text-xs text-emerald-100 max-w-md leading-relaxed">
+                Skor anda <strong>${summary.totalScore.toFixed(2)} Pts (${summary.percentage.toFixed(1)}%)</strong> melepasi syarat kelayakan minimum <strong>${activeSet.passPoints.toFixed(2)} Pts (70.0%)</strong> dengan kelebihan <strong>+${(summary.totalScore - activeSet.passPoints).toFixed(2)} Pts</strong>!
+              </p>
+            </div>
+            <div class="font-mono text-3xl sm:text-4xl font-black shrink-0 px-4 py-2 bg-white/10 rounded-xl border border-white/20 text-center">
+              ${summary.percentage.toFixed(1)}%
+            </div>
+          `;
+        } else {
+          const passPts = activeSet.passPoints;
+          const diff = (passPts - summary.totalScore).toFixed(2);
+          banner.className = 'rounded-2xl p-5 sm:p-6 mb-5 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md bg-gradient-to-r from-rose-600 to-rose-700';
+          banner.innerHTML = `
+            <div class="space-y-1 text-center sm:text-left">
+              <span class="inline-flex items-center px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-white/20 border border-white/30 tracking-wider uppercase">
+                Status Rasmi: Belum Melepasi Syarat
+              </span>
+              <div class="text-xl sm:text-2xl font-black">BELUM LULUS (FAILED)</div>
+              <p class="text-xs text-rose-100 max-w-md leading-relaxed">
+                Skor anda <strong>${summary.totalScore.toFixed(2)} Pts (${summary.percentage.toFixed(1)}%)</strong>. Syarat lulus set ini ialah <strong>${passPts.toFixed(2)} Pts (70.0%)</strong>. Anda hanya kekurangan <strong>${diff} Pts</strong> lagi (sekitar 2–3 soalan betul).
+              </p>
+            </div>
+            <div class="font-mono text-3xl sm:text-4xl font-black shrink-0 px-4 py-2 bg-white/10 rounded-xl border border-white/20 text-center">
+              ${summary.percentage.toFixed(1)}%
+            </div>
+          `;
+        }
+      }
+
+      if (euBarsEl) {
+        euBarsEl.innerHTML = eus.map(eu => {
+          const stat = summary.euStats[eu.no];
+          const pct = stat.max > 0 ? Math.round((stat.earned / stat.max) * 100) : 0;
+          const isCritical = (eu.no === 5 || eu.no === 6);
+          let barColor = pct >= 70 ? 'bg-emerald-500' : (pct >= 50 ? 'bg-amber-500' : 'bg-rose-500');
+
+          return `
+            <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-xs">
+              <div class="flex items-center justify-between font-semibold mb-1">
+                <span class="flex items-center gap-1.5 text-slate-900 dark:text-zinc-100">
+                  <span class="w-1.5 h-1.5 rounded-full ${isCritical ? 'bg-rose-500' : 'bg-indigo-500'}"></span>
+                  EU${eu.no}: ${eu.name} ${isCritical ? '<span class="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">Fokus Utama</span>' : ''}
+                </span>
+                <span class="font-mono font-bold ${pct >= 70 ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-600 dark:text-zinc-400'}">
+                  ${stat.earned.toFixed(1)} / ${stat.max} Pts (${pct}%)
+                </span>
+              </div>
+              <div class="w-full bg-slate-200 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
+                <div class="${barColor} h-full transition-all duration-500" style="width: ${pct}%"></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeExamResultsModal() {
+      const modal = document.getElementById('examResultsModal');
+      if (modal) modal.classList.add('hidden');
     }
   </script>
 </body>

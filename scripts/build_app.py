@@ -39,16 +39,17 @@ def wrap_diagrams(questions_list, prefix=""):
             </div>
             '''
 
-# Wrap diagrams for both sets
+# Wrap diagrams for both simulation sets and EU drill questions
 if 'sets' in app_data:
     wrap_diagrams(app_data['sets']['official']['questions'], prefix="off-")
     wrap_diagrams(app_data['sets']['predicted']['questions'], prefix="pred-")
-    if 'predicted_maritime' in app_data['sets']:
-        wrap_diagrams(app_data['sets']['predicted_maritime']['questions'], prefix="mar-")
-    # default questions point to official or predicted
     app_data['questions'] = app_data['sets']['official']['questions']
 else:
     wrap_diagrams(app_data['questions'])
+
+if 'eu_drill' in app_data:
+    for eu_key, eu_item in app_data['eu_drill'].items():
+        wrap_diagrams(eu_item['questions'], prefix=f"drill-{eu_key}-")
 
 app_data_json_str = json.dumps(app_data, ensure_ascii=False)
 
