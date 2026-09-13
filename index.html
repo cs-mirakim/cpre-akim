@@ -107,25 +107,36 @@
           <span class="font-extrabold text-sm sm:text-base tracking-tight text-slate-900 dark:text-white hidden sm:inline">CPRE Master</span>
         </a>
 
-        <!-- Clean 2-Way Segmented Mode Switcher -->
-        <div class="flex items-center p-0.5 bg-slate-100 dark:bg-zinc-900 rounded-xl border border-slate-200 dark:border-zinc-800 text-xs">
+        <!-- Clean 3-Way Segmented Mode Switcher (Drill, Exam, Notes) -->
+        <div class="flex items-center p-0.5 bg-slate-100 dark:bg-zinc-900 rounded-xl border border-slate-200 dark:border-zinc-800 text-xs overflow-x-auto scrollbar-none max-w-[60vw] sm:max-w-none">
           <button 
             id="mainNavDrillBtn" 
             onclick="switchMainView('drill')" 
-            class="px-2.5 sm:px-3.5 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs"
+            class="px-2 sm:px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs shrink-0"
           >
             <svg class="w-4 h-4 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
-            <span>Ulangkaji Bab (EU 1–7)</span>
-            <span class="hidden md:inline font-mono text-[10px] px-1.5 py-0.2 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 font-bold">132Q</span>
+            <span class="whitespace-nowrap">Ulangkaji Bab</span>
+            <span class="hidden xl:inline font-mono text-[10px] px-1.5 py-0.2 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 font-bold">132Q</span>
           </button>
 
           <button 
             id="mainNavExamBtn" 
             onclick="switchMainView('exam')" 
-            class="px-2.5 sm:px-3.5 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white"
+            class="px-2 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white shrink-0"
           >
             <svg class="w-4 h-4 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span>Simulasi Exam (45Q)</span>
+            <span class="whitespace-nowrap">Simulasi Exam</span>
+            <span class="hidden xl:inline font-mono text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-bold">45Q</span>
+          </button>
+
+          <button 
+            id="mainNavNotesBtn" 
+            onclick="switchMainView('notes')" 
+            class="px-2 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white shrink-0"
+          >
+            <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+            <span class="whitespace-nowrap">Nota Kompilasi</span>
+            <span class="hidden xl:inline font-mono text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold">EU 1–7</span>
           </button>
         </div>
       </div>
@@ -345,22 +356,20 @@
       <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800/90 rounded-xl p-4 shadow-sm flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between gap-1.5 mb-2">
-            <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Paparan Utama</span>
+            <span class="text-[11px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-wider">Format & Silibus</span>
             <span class="whitespace-nowrap shrink-0 text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-700/60">
-              45 Soalan (70 Pts)
+              45 Soalan (70+ Pts)
             </span>
           </div>
-          <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">Struktur Silibus Rasmi IREB</div>
+          <div class="text-sm font-bold tracking-tight text-slate-900 dark:text-white">Simulasi Peperiksaan Penuh</div>
           <p class="text-xs text-slate-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
-            Tukar antara bank soalan lengkap (Q1–Q45) atau ringkasan nota padat 1-muka surat.
+            Menjawab 45 soalan piawai IREB mengikut masa sebenar. Untuk bacaan teori padat bab demi bab, layari modul Nota Kompilasi.
           </p>
         </div>
-        <div class="grid grid-cols-2 gap-2 mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
-          <button onclick="switchTab('questions')" id="tabQuestionsBtn" class="h-8 px-3 rounded-lg bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-bold text-xs shadow-xs transition-all flex items-center justify-center">
-            Bank Soalan
-          </button>
-          <button onclick="switchTab('cheatsheet')" id="tabCheatsheetBtn" class="h-8 px-3 rounded-lg bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-semibold text-xs border border-slate-200 dark:border-zinc-700 transition-all flex items-center justify-center">
-            Cheat Sheet
+        <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-zinc-800/80">
+          <button onclick="switchMainView('notes')" class="w-full h-8 px-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-xs">
+            <svg class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+            <span>Buka Nota Kompilasi Teras (EU 1–7) ➔</span>
           </button>
         </div>
       </div>
@@ -669,227 +678,9 @@
 
   </main>
 
-  <!-- MAIN TAB 2: CHEAT SHEETS (Structured High-Yield Reference) -->
-  <section id="cheatsheetTab" class="max-w-5xl mx-auto px-4 py-4 hidden">
-    
-    <div class="mb-5 pb-3 border-b border-slate-200 dark:border-zinc-800">
-      <h2 class="text-base font-bold text-slate-900 dark:text-white">CPRE FL 3.3.2 Reference & Core Guidelines</h2>
-      <p class="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">Nota padat untuk rujukan pantas 9 Prinsip Asas RE, peraturan pemodelan, elisitasi, proses, dan pengurusan keperluan.</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      
-      <!-- 1. 9 Fundamental Principles of RE -->
-      <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm md:col-span-2">
-        <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-zinc-800">
-          <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
-            <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">1. 9 Fundamental Principles of Requirements Engineering (EU2)</h3>
-          </div>
-          <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">EU2 Core</span>
-        </div>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs leading-relaxed text-slate-700 dark:text-zinc-300">
-          
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">1. Value-Orientation</strong>
-            <span class="text-slate-600 dark:text-zinc-400">Keperluan ialah <em>means to an end</em> (alat capai nilai perniagaan), bukan matlamat mutlak. Setiap keperluan mesti menambah nilai.</span>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">2. Stakeholders</strong>
-            <span class="text-slate-600 dark:text-zinc-400">RE adalah tentang orang. Kenalpasti semua pihak berkepentingan (Direct Users, Sponsors, Operators, Regulators) dan imbangkan kehendak mereka.</span>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">3. Shared Understanding</strong>
-            <span class="text-slate-600 dark:text-zinc-400">Gabungan <strong>Explicit Shared Understanding</strong> (didokumentasikan) dan <strong>Implicit Shared Understanding</strong> (pengalaman & budaya bersama).</span>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">4. Context</strong>
-            <span class="text-slate-600 dark:text-zinc-400">Tentukan <strong>System Boundary</strong> (dalam kawalan sistem) vs <strong>Context Boundary</strong> (persekitaran berkaitan) vs <strong>Irrelevant Environment</strong>.</span>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">5. Problem - Req - Solution</strong>
-            <span class="text-slate-600 dark:text-zinc-400">Fahami <em>Problem Space</em> (keperluan bisnes) terlebih dahulu sebelum melompat ke <em>Solution Space</em> (spesifikasi seni bina & teknikal).</span>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">6. Validation</strong>
-            <span class="text-slate-600 dark:text-zinc-400">Sahkan keperluan seawal mungkin, secara berterusan dan berulang-ulang bersama stakeholder sebelum pembinaan sistem bermula.</span>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">7. Evolution</strong>
-            <span class="text-slate-600 dark:text-zinc-400">Keperluan tidak statik; ia sentiasa berubah (evolving). Kawal perubahan melalui baselines dan Change Control yang sistematik.</span>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">8. Innovation</strong>
-            <span class="text-slate-600 dark:text-zinc-400">Jangan sekadar mencatat permintaan lisan stakeholder; jana idea inovatif yang memberi kepuasan luar jangka (Excitement Factors).</span>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">9. Systematic Work</strong>
-            <span class="text-slate-600 dark:text-zinc-400">Gunakan kaedah, templat, dan proses yang berdisiplin serta boleh diulang (repeatable) mengikut kesesuaian konteks projek.</span>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- 2. Natural Language Defects -->
-      <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm">
-        <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-zinc-800">
-          <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">2. Natural Language Defects (EU3 / Ch 5)</h3>
-          <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700">EU3 / Ch 5</span>
-        </div>
-        
-        <div class="space-y-2.5 text-xs leading-relaxed text-slate-700 dark:text-zinc-300">
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">1. Nominalization (-tion, -ment, -ance)</strong>
-            <span>Kata kerja bertukar menjadi kata nama. Menyembunyikan pelaku sebenar proses.</span>
-            <div class="mt-1 text-[11px] font-mono text-slate-500 dark:text-zinc-400">Contoh: "Data loading occurs" ➔ Tukar ke: "System shall load data"</div>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">2. Universal Quantifiers (All, Always, Never)</strong>
-            <span>Mengitlakkan keadaan tanpa mengambil kira syarat pengecualian (exceptions).</span>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">3. Incompletely Specified Conditions (If...)</strong>
-            <span>Menyatakan syarat 'IF' tanpa menjelaskan apa berlaku sekiranya syarat gagal dipenuhi (ELSE/Exception).</span>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">4. Passive Voice (Ayat Pasif)</strong>
-            <span>Pelaku (agent) yang bertanggungjawab tidak dinyatakan dalam ayat spesifikasi.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 3. Model-Based Requirements Rules -->
-      <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm">
-        <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-zinc-800">
-          <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">3. Conceptual Modeling Rules (EU3 / Ch 6)</h3>
-          <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700">EU3 / Ch 6</span>
-        </div>
-
-        <div class="space-y-2.5 text-xs leading-relaxed text-slate-700 dark:text-zinc-300">
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">Use Case Diagram</strong>
-            <ul class="list-disc pl-4 space-y-0.5 text-slate-600 dark:text-zinc-400">
-              <li>Actor ke Actor: Hanya hubungan <strong>Generalization</strong> dibenarkan.</li>
-              <li>Use Case ke Use Case: Wajib menggunakan <strong>&lt;&lt;include&gt;&gt;</strong> atau <strong>&lt;&lt;extend&gt;&gt;</strong>.</li>
-            </ul>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">Data Flow Diagram (DFD)</strong>
-            <ul class="list-disc pl-4 space-y-0.5 text-slate-600 dark:text-zinc-400">
-              <li>Data Store ke Data Store tidak boleh bersambung secara terus (mesti melalui Process).</li>
-              <li>External Entity ke Data Store mesti melalui Process.</li>
-            </ul>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">3 Perspektif IREB</strong>
-            <div class="grid grid-cols-3 gap-1.5 text-center mt-1.5 text-[11px]">
-              <div class="p-1.5 bg-white dark:bg-zinc-900 rounded font-medium border border-slate-200 dark:border-zinc-800">Structure (Class/ERD)</div>
-              <div class="p-1.5 bg-white dark:bg-zinc-900 rounded font-medium border border-slate-200 dark:border-zinc-800">Function (DFD/Activity)</div>
-              <div class="p-1.5 bg-white dark:bg-zinc-900 rounded font-medium border border-slate-200 dark:border-zinc-800">Behavior (State)</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 4. EU4 Elicitation & Validation -->
-      <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm">
-        <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-zinc-800">
-          <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">4. Elicitation, Kano & Validation (EU4)</h3>
-          <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">EU4 Core</span>
-        </div>
-
-        <div class="space-y-2.5 text-xs leading-relaxed text-slate-700 dark:text-zinc-300">
-          <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
-            <strong class="text-slate-900 dark:text-zinc-100 block font-bold mb-0.5">Model Kano:</strong>
-            <ul class="list-disc pl-4 space-y-0.5 text-slate-600 dark:text-zinc-400 text-[11px]">
-              <li><strong>Basic Factors (Must-be):</strong> Diambil mudah; jika tiada pelanggan sangat kecewa.</li>
-              <li><strong>Performance Factors (Linear):</strong> Semakin banyak, semakin puas hati pelanggan.</li>
-              <li><strong>Excitement Factors (Delighters):</strong> Keperluan tidak dijangka yang memukau pelanggan.</li>
-            </ul>
-          </div>
-          <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
-            <strong class="text-slate-900 dark:text-zinc-100 block font-bold mb-0.5">Validasi Keperluan:</strong>
-            <p class="text-slate-600 dark:text-zinc-400 text-[11px]">
-              <strong>Inspection:</strong> Teknik semakan paling formal, teliti, dan berstruktur (wajib untuk sistem keselamatan tinggi / Safety-Critical). <strong>Walkthrough:</strong> Dipimpin oleh pengarang untuk penerangan santai.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5. EU5 Process & Facets -->
-      <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm">
-        <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-zinc-800">
-          <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">5. Process Facets (EU5)</h3>
-          <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">EU5 Core</span>
-        </div>
-
-        <div class="space-y-2 text-xs leading-relaxed text-slate-700 dark:text-zinc-300">
-          <p><strong>Time Facet:</strong> Linear (Sequential / Waterfall) vs Iterative (Agile / Sprint).</p>
-          <p><strong>Purpose Facet:</strong> Prescriptive (Spesifikasi Kontrak) vs Explorative (Meneroka pasaran).</p>
-          <p><strong>Target Facet:</strong> Customer-specific (Satu pelanggan khas) vs Market-driven (Produk pasaran terbuka).</p>
-          <p><strong>Format Facet:</strong> Document-centric (Dokumen formal SRS) vs Item-centric (Product Backlog items).</p>
-          <div class="p-2.5 bg-slate-50 dark:bg-zinc-950 rounded-lg border border-slate-200 dark:border-zinc-800 text-[11px] text-slate-800 dark:text-zinc-200 font-medium">
-            Kunci soalan: Dua facet paling utama menentukan bentuk proses ialah <strong>Time Facet</strong> dan <strong>Purpose Facet</strong>.
-          </div>
-        </div>
-      </div>
-
-      <!-- 6. EU6 Management Practices -->
-      <div class="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-sm md:col-span-2">
-        <div class="flex items-center justify-between pb-2.5 mb-3 border-b border-slate-100 dark:border-zinc-800">
-          <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">6. Management, Traceability & Baselines (EU6 & EU7)</h3>
-          <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">EU6 & EU7 Core</span>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs leading-relaxed text-slate-700 dark:text-zinc-300">
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">Traceability (Kebolehkesanan)</strong>
-            <ul class="list-disc pl-4 space-y-0.5 text-slate-600 dark:text-zinc-400 text-[11px]">
-              <li><strong>Pre-RS Traceability:</strong> Keperluan ke sumber asalnya (stakeholder, minit mesyuarat, undang-undang).</li>
-              <li><strong>Post-RS Traceability:</strong> Keperluan ke artifak hiliran (reka bentuk seni bina, kod sumber, kes ujian).</li>
-              <li><strong>Inter-RS Traceability:</strong> Hubungan kebergantungan antara keperluan berbeza.</li>
-            </ul>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">Baselines & Versioning</strong>
-            <ul class="list-disc pl-4 space-y-0.5 text-slate-600 dark:text-zinc-400 text-[11px]">
-              <li><strong>Baselines:</strong> Konfigurasi keperluan stabil yang telah disahkan dan dipersetujui secara rasmi.</li>
-              <li>Baseline yang telah ditandatangani <strong>tidak boleh diubah secara terus</strong>.</li>
-              <li>Perubahan diserap ke dalam <strong>Future Baseline</strong> melalui proses kawalan perubahan (Change Control).</li>
-            </ul>
-          </div>
-
-          <div class="p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800/80">
-            <strong class="text-slate-900 dark:text-zinc-100 block mb-0.5 font-bold">Tool Support (EU7)</strong>
-            <ul class="list-disc pl-4 space-y-0.5 text-slate-600 dark:text-zinc-400 text-[11px]">
-              <li>Alat perisian mesti menyokong proses RE sedia ada (bukan memaksa organisasi mengubah proses semata-mata mengikut alatan).</li>
-              <li>Kira kos keseluruhan pemilikan (TCO: latihan, integrasi, penyelenggaraan).</li>
-              <li>Laksanakan projek perintis (Pilot Project) sebelum penggunaan menyeluruh.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </section>
-
   </div>
+
+
 
 
 
@@ -1027,33 +818,116 @@
 
   </div>
 
-<nav aria-label="Mobile Navigation" class="fixed bottom-0 inset-x-0 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl border-t border-slate-200/90 dark:border-zinc-800/90 h-16 z-30 md:hidden flex items-center justify-around px-2 shadow-lg">
-    
-    <!-- Tab 1: Soalan -->
-    <button onclick="switchTab('questions')" id="mobTabQ" class="flex flex-1 flex-col items-center justify-center py-1 text-slate-900 dark:text-white font-bold transition-all active:scale-95">
-      <svg class="w-5 h-5 mb-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
-      </svg>
-      <span class="text-[10px] tracking-tight">Soalan</span>
-      <span id="mobDotQ" class="w-1 h-1 rounded-full bg-indigo-600 dark:bg-white mt-0.5 transition-opacity"></span>
-    </button>
 
-    <!-- Tab 2: Nota / Cheat Sheet -->
-    <button onclick="switchTab('cheatsheet')" id="mobTabCs" class="flex flex-1 flex-col items-center justify-center py-1 text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 font-medium transition-all active:scale-95">
-      <svg class="w-5 h-5 mb-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+  <!-- MODULE 3: KOMPILASI NOTA TERAS (MASTER NOTES COMPENDIUM EU 1 - EU 7) -->
+  <div id="notesModuleView" class="hidden max-w-5xl mx-auto px-4 py-5 space-y-6">
+    
+    <!-- Hero Header Card -->
+    <div class="rounded-3xl bg-gradient-to-br from-slate-900 via-zinc-900 to-indigo-950 text-white p-6 sm:p-8 shadow-xl border border-zinc-800 relative overflow-hidden">
+      <div class="relative z-10">
+        <div class="flex flex-wrap items-center gap-2 mb-2.5">
+          <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[11px] font-bold border border-emerald-500/30 uppercase tracking-wider">
+            BUKU NOTA INDUK KOMPILASI
+          </span>
+          <span class="px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono text-[11px] font-bold border border-indigo-500/30">
+            IREB CPRE FL 3.4
+          </span>
+          <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono text-[11px] font-bold border border-amber-500/30">
+            7 Bab Lengkap • 100% Silibus Rasmi
+          </span>
+        </div>
+        <h1 class="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-white mt-1">
+          Kompilasi Nota Teras & Rumusan Peperiksaan
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed">
+          Himpunan lengkap konsep utama, perbandingan teknikal, amaran perangkap peperiksaan, dan formula pemarkahan bagi setiap Educational Unit (EU 1–7) untuk bacaan santai dan ulangkaji pantas tanpa perlu menjawab soalan satu demi satu.
+        </p>
+      </div>
+      <div class="absolute -right-12 -top-12 w-64 h-64 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none"></div>
+      <div class="absolute right-1/3 -bottom-16 w-64 h-64 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none"></div>
+    </div>
+
+    <!-- Sticky Navigation & Search Filter Toolbar -->
+    <div class="sticky top-14 z-20 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md rounded-2xl border border-slate-200 dark:border-zinc-800 p-3.5 shadow-md space-y-2.5">
+      <!-- Search Input -->
+      <div class="relative">
+        <input 
+          type="text" 
+          id="notesSearchInput" 
+          oninput="filterNotesContent(this.value)" 
+          placeholder="Cari konsep, formula, rajah, atau istilah (cth: Kano, Baseline, Rupp, Statechart, 9 Prinsip)..." 
+          class="w-full h-9 pl-9 pr-8 rounded-xl bg-slate-100 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700/60 text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-emerald-500 transition-all"
+        />
+        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <button onclick="clearNotesSearch()" class="absolute right-2.5 top-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs font-bold p-1">✕</button>
+      </div>
+
+      <!-- EU Quick-Jump / Filter Pills -->
+      <div class="flex items-center justify-between gap-2 pt-1.5 border-t border-slate-100 dark:border-zinc-800/80">
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
+          <button onclick="filterNotesEU('all')" class="notes-eu-pill active px-2.5 py-1 rounded-lg text-xs font-bold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-xs shrink-0" data-eu="all">Semua Bab</button>
+          <button onclick="filterNotesEU('EU1')" class="notes-eu-pill px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60 shrink-0" data-eu="EU1">EU 1 (14%)</button>
+          <button onclick="filterNotesEU('EU2')" class="notes-eu-pill px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60 shrink-0" data-eu="EU2">EU 2 (16%)</button>
+          <button onclick="filterNotesEU('EU3')" class="notes-eu-pill px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60 shrink-0" data-eu="EU3">EU 3 (26%)</button>
+          <button onclick="filterNotesEU('EU4')" class="notes-eu-pill px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60 shrink-0" data-eu="EU4">EU 4 (22%)</button>
+          <button onclick="filterNotesEU('EU5')" class="notes-eu-pill px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60 shrink-0" data-eu="EU5">EU 5 (7%)</button>
+          <button onclick="filterNotesEU('EU6')" class="notes-eu-pill px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60 shrink-0" data-eu="EU6">EU 6 (11%)</button>
+          <button onclick="filterNotesEU('EU7')" class="notes-eu-pill px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60 shrink-0" data-eu="EU7">EU 7 (4%)</button>
+        </div>
+
+        <div class="hidden sm:flex items-center space-x-1.5 text-[11px] text-slate-500 dark:text-zinc-400 shrink-0">
+          <button onclick="toggleAllNotesAccordions(true)" class="hover:text-slate-900 dark:hover:text-white font-medium transition-colors">Buka Semua</button>
+          <span>•</span>
+          <button onclick="toggleAllNotesAccordions(false)" class="hover:text-slate-900 dark:hover:text-white font-medium transition-colors">Tutup Semua</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes Dynamic Content Container -->
+    <div id="notesContentContainer" class="space-y-8">
+      <!-- Injected by renderMasterNotes() -->
+    </div>
+
+  </div>
+
+
+  <!-- Mobile Native Bottom Navigation Bar (iOS / Android App Style) -->
+  <nav aria-label="Mobile Navigation" class="fixed bottom-0 inset-x-0 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl border-t border-slate-200/90 dark:border-zinc-800/90 h-16 z-30 md:hidden flex items-center justify-around px-2 shadow-lg">
+    
+    <!-- Tab 1: Ulangkaji Bab (EU 1–7) -->
+    <button onclick="switchMainView('drill')" id="mobTabDrill" class="flex flex-1 flex-col items-center justify-center py-1 text-slate-900 dark:text-white font-bold transition-all active:scale-95">
+      <svg class="w-5 h-5 mb-0.5 shrink-0 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
       </svg>
-      <span class="text-[10px] tracking-tight">Cheat Sheet</span>
-      <span id="mobDotCs" class="w-1 h-1 rounded-full bg-indigo-600 dark:bg-white mt-0.5 opacity-0 transition-opacity"></span>
+      <span class="text-[10px] tracking-tight">Ulangkaji</span>
+      <span id="mobDotDrill" class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-0.5 transition-opacity"></span>
     </button>
 
-    <!-- Tab 3: TOC Grid Drawer Trigger -->
+    <!-- Tab 2: Simulasi Exam (45Q) -->
+    <button onclick="switchMainView('exam')" id="mobTabExam" class="flex flex-1 flex-col items-center justify-center py-1 text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 font-medium transition-all active:scale-95">
+      <svg class="w-5 h-5 mb-0.5 shrink-0 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <span class="text-[10px] tracking-tight">Simulasi</span>
+      <span id="mobDotExam" class="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-0.5 opacity-0 transition-opacity"></span>
+    </button>
+
+    <!-- Tab 3: Nota Kompilasi Teras -->
+    <button onclick="switchMainView('notes')" id="mobTabNotes" class="flex flex-1 flex-col items-center justify-center py-1 text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 font-medium transition-all active:scale-95">
+      <svg class="w-5 h-5 mb-0.5 shrink-0 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+      </svg>
+      <span class="text-[10px] tracking-tight">Nota Padat</span>
+      <span id="mobDotNotes" class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-0.5 opacity-0 transition-opacity"></span>
+    </button>
+
+    <!-- Tab 4: TOC Grid Drawer Trigger (Shown only in exam mode or compact) -->
     <button onclick="toggleDrawer()" id="mobTabDrawer" class="flex flex-1 flex-col items-center justify-center py-1 text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 font-medium transition-all active:scale-95">
       <svg class="w-5 h-5 mb-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/>
       </svg>
-      <span class="text-[10px] tracking-tight">TOC Grid</span>
-      <span class="w-1 h-1 rounded-full opacity-0 mt-0.5"></span>
+      <span class="text-[10px] tracking-tight">TOC Q1–45</span>
+      <span class="w-1.5 h-1.5 rounded-full opacity-0 mt-0.5"></span>
     </button>
 
   </nav>
@@ -1307,7 +1181,7 @@
     });
 
     // =============================================================
-    // 1. PRIMARY MODULE SWITCHER (SIMULASI VS ULANGKAJI BAB)
+    // 1. PRIMARY MODULE SWITCHER (DRILL VS EXAM VS MASTER NOTES)
     // =============================================================
     function switchMainView(view, save = true) {
       currentMainView = view;
@@ -1315,43 +1189,515 @@
 
       const examView = document.getElementById('examModuleView');
       const drillView = document.getElementById('euDrillModuleView');
+      const notesView = document.getElementById('notesModuleView');
+
       const examBtn = document.getElementById('mainNavExamBtn');
       const drillBtn = document.getElementById('mainNavDrillBtn');
+      const notesBtn = document.getElementById('mainNavNotesBtn');
+
+      const mobDrill = document.getElementById('mobTabDrill');
+      const mobExam = document.getElementById('mobTabExam');
+      const mobNotes = document.getElementById('mobTabNotes');
+
+      const mobDotDrill = document.getElementById('mobDotDrill');
+      const mobDotExam = document.getElementById('mobDotExam');
+      const mobDotNotes = document.getElementById('mobDotNotes');
+
       const setWrapper = document.getElementById('setSelectorWrapper');
       const quickText = document.getElementById('moduleQuickText');
 
-      if (view === 'drill') {
-        if (examView) examView.classList.add('hidden');
-        if (drillView) drillView.classList.remove('hidden');
+      const activeBtnCls = 'px-2 sm:px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs shrink-0';
+      const inactiveBtnCls = 'px-2 sm:px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white shrink-0';
 
-        if (examBtn) {
-          examBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2';
-        }
-        if (drillBtn) {
-          drillBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs';
-        }
+      const mobActiveCls = 'flex flex-1 flex-col items-center justify-center py-1 text-slate-900 dark:text-white font-bold transition-all active:scale-95';
+      const mobInactiveCls = 'flex flex-1 flex-col items-center justify-center py-1 text-slate-400 dark:text-zinc-500 hover:text-slate-700 dark:hover:text-zinc-300 font-medium transition-all active:scale-95';
+
+      // Reset views
+      if (examView) examView.classList.add('hidden');
+      if (drillView) drillView.classList.add('hidden');
+      if (notesView) notesView.classList.add('hidden');
+
+      // Reset header buttons
+      if (drillBtn) drillBtn.className = inactiveBtnCls;
+      if (examBtn) examBtn.className = inactiveBtnCls;
+      if (notesBtn) notesBtn.className = inactiveBtnCls;
+
+      // Reset mobile buttons
+      if (mobDrill) mobDrill.className = mobInactiveCls;
+      if (mobExam) mobExam.className = mobInactiveCls;
+      if (mobNotes) mobNotes.className = mobInactiveCls;
+
+      if (mobDotDrill) mobDotDrill.classList.add('opacity-0');
+      if (mobDotExam) mobDotExam.classList.add('opacity-0');
+      if (mobDotNotes) mobDotNotes.classList.add('opacity-0');
+
+      if (view === 'drill') {
+        if (drillView) drillView.classList.remove('hidden');
+        if (drillBtn) drillBtn.className = activeBtnCls;
+        if (mobDrill) mobDrill.className = mobActiveCls;
+        if (mobDotDrill) mobDotDrill.classList.remove('opacity-0');
         if (setWrapper) setWrapper.classList.add('hidden');
         if (quickText) quickText.textContent = 'Mod Ulangkaji Bab demi Bab (EU 1–7)';
 
         renderDrillEUTabs();
         renderDrillEUHeader();
         renderDrillQuestions();
+      } else if (view === 'notes') {
+        if (notesView) notesView.classList.remove('hidden');
+        if (notesBtn) notesBtn.className = activeBtnCls;
+        if (mobNotes) mobNotes.className = mobActiveCls;
+        if (mobDotNotes) mobDotNotes.classList.remove('opacity-0');
+        if (setWrapper) setWrapper.classList.add('hidden');
+        if (quickText) quickText.textContent = 'Buku Nota Induk Kompilasi (EU 1–7)';
+
+        renderMasterNotes();
       } else {
         if (examView) examView.classList.remove('hidden');
-        if (drillView) drillView.classList.add('hidden');
-
-        if (examBtn) {
-          examBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 bg-white dark:bg-zinc-800 text-slate-900 dark:text-white shadow-xs';
-        }
-        if (drillBtn) {
-          drillBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-all flex items-center gap-2';
-        }
+        if (examBtn) examBtn.className = activeBtnCls;
+        if (mobExam) mobExam.className = mobActiveCls;
+        if (mobDotExam) mobDotExam.classList.remove('opacity-0');
         if (setWrapper) setWrapper.classList.remove('hidden');
         if (quickText) quickText.textContent = currentExamSet === 'official' ? 'Set Latihan Rasmi (70 Pts)' : 'Set Ramalan G (72 Pts)';
 
         renderQuestions();
       }
     }
+    // =============================================================
+    // 3. MASTER NOTES COMPENDIUM MODULE (EU 1 - EU 7)
+    // =============================================================
+    let currentNotesEUFilter = 'all';
+    let notesSearchQuery = '';
+
+    const highYieldSyllabusCheatSheets = {
+      'EU1': [
+        {
+          title: '3 Jenis Utama Keperluan (Requirements Classification)',
+          badge: 'Definisi Teras',
+          content: `
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div class="p-3 rounded-xl bg-blue-50/60 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/60">
+                <strong class="text-blue-950 dark:text-blue-200 block mb-1 font-bold">1. Keperluan Fungsian (Functional)</strong>
+                <p class="text-slate-600 dark:text-zinc-400 leading-relaxed">Fungsi, tindakan, atau tingkah laku yang sistem MESTI mampu laksanakan (cth: "Sistem mesti membolehkan pengguna menempah tiket bilik hotel").</p>
+              </div>
+              <div class="p-3 rounded-xl bg-purple-50/60 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-900/60">
+                <strong class="text-purple-950 dark:text-purple-200 block mb-1 font-bold">2. Keperluan Kualiti (Quality / Non-Functional)</strong>
+                <p class="text-slate-600 dark:text-zinc-400 leading-relaxed">Tahap kualiti bagaimana sistem berfungsi: kebolehpercayaan (reliability), kebolehgunaan (usability), keselamatan (security), prestasi (performance).</p>
+              </div>
+              <div class="p-3 rounded-xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/60">
+                <strong class="text-amber-950 dark:text-amber-200 block mb-1 font-bold">3. Kekangan (Constraints)</strong>
+                <p class="text-slate-600 dark:text-zinc-400 leading-relaxed">Had atau sempadan organisasi, undang-undang, fizikal atau teknologi yang menyempitkan ruang penyelesaian (cth: "Mesti patuh Akta PDPA 2010 dan guna pangkalan data PostgreSQL sedia ada").</p>
+              </div>
+            </div>
+          `
+        },
+        {
+          title: 'Sempadan Sistem vs Sempadan Konteks (Boundaries)',
+          badge: 'Prinsip Sempadan',
+          content: `
+            <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-xs leading-relaxed space-y-2">
+              <div><strong>System Boundary (Sempadan Sistem):</strong> Memisahkan apa yang akan dibina dalam sistem (di bawah kawalan pemaju) daripada persekitaran operasinya.</div>
+              <div><strong>Context Boundary (Sempadan Konteks):</strong> Memisahkan persekitaran yang relevan dengan sistem (stakeholder, sistem legasi, perundangan) daripada persekitaran yang tidak relevan (Irrelevant Environment).</div>
+              <div class="p-2 rounded bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 text-amber-900 dark:text-amber-300">
+                <strong>Ingat:</strong> Bahagian persekitaran yang tidak mempunyai sebarang kesan kepada sistem dinamakan <em>Irrelevant Environment</em> dan tidak perlu dianalisis.
+              </div>
+            </div>
+          `
+        }
+      ],
+      'EU2': [
+        {
+          title: '9 Prinsip Asas Requirements Engineering (IREB Standard)',
+          badge: 'Wajib Hafal',
+          content: `
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+              <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="block text-slate-900 dark:text-white mb-0.5">1. Value-Orientation</strong>
+                <span class="text-slate-600 dark:text-zinc-400">Keperluan ialah alat capai nilai bisnes, bukan matlamat mutlak.</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="block text-slate-900 dark:text-white mb-0.5">2. Stakeholders</strong>
+                <span class="text-slate-600 dark:text-zinc-400">Kenal pasti pengguna langsung, penaja, pengendali dan pihak berkuasa.</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="block text-slate-900 dark:text-white mb-0.5">3. Shared Understanding</strong>
+                <span class="text-slate-600 dark:text-zinc-400">Kombinasi persefahaman tersurat (dokumen) dan tersirat (budaya).</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="block text-slate-900 dark:text-white mb-0.5">4. Context</strong>
+                <span class="text-slate-600 dark:text-zinc-400">Tentukan sempadan sistem dan had konteks dengan jelas.</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="block text-slate-900 dark:text-white mb-0.5">5. Problem vs Solution</strong>
+                <span class="text-slate-600 dark:text-zinc-400">Bezakan masalah bisnes (APA) sebelum menentukan arkitektur (BAGAIMANA).</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="block text-slate-900 dark:text-white mb-0.5">6. Perspectives</strong>
+                <span class="text-slate-600 dark:text-zinc-400">Lihat dari 3 sudut: Struktur/Data, Fungsian, dan Tingkah Laku.</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="block text-slate-900 dark:text-white mb-0.5">7. Evolution</strong>
+                <span class="text-slate-600 dark:text-zinc-400">Perubahan tidak dapat dielak; urus perubahan secara terkawal (CCB).</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="block text-slate-900 dark:text-white mb-0.5">8. Innovation</strong>
+                <span class="text-slate-600 dark:text-zinc-400">Jangan sekadar mencatat; terokai keperluan keterujaan yang tersirat.</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="block text-slate-900 dark:text-white mb-0.5">9. Systematic Work</strong>
+                <span class="text-slate-600 dark:text-zinc-400">Gunakan proses tersusun, templat standard, dan aktiviti boleh diulang.</span>
+              </div>
+            </div>
+          `
+        }
+      ],
+      'EU3': [
+        {
+          title: 'Templat Ayat Chris Rupp (Natural Language Template)',
+          badge: 'Formula Wajib',
+          content: `
+            <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-xs space-y-2">
+              <div class="font-mono p-2.5 rounded bg-zinc-900 text-emerald-400 border border-zinc-700 text-[11.5px] leading-relaxed">
+                &lt;Bila/Syarat&gt; + &lt;Sistem/Subjek&gt; + &lt;MESTI (SHALL) / PATUT (SHOULD) / BOLEH (WILL)&gt; + &lt;Aktiviti/Kata Kerja&gt; + &lt;Objek & Perincian&gt;
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] pt-1">
+                <div><strong>SHALL (Mesti):</strong> Wajib mengikut undang-undang/kontrak.</div>
+                <div><strong>SHOULD (Patut):</strong> Disyorkan tetapi boleh runding jika kekangan kos.</div>
+                <div><strong>WILL (Boleh):</strong> Ciri masa depan / pilihan tambahan.</div>
+              </div>
+            </div>
+          `
+        },
+        {
+          title: '3 Perspektif Pemodelan & Rajah UML Berkaitan',
+          badge: 'Matriks Pemodelan',
+          content: `
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="text-slate-900 dark:text-white block mb-1">1. Struktur / Data</strong>
+                <ul class="list-disc pl-4 space-y-1 text-slate-600 dark:text-zinc-400">
+                  <li><strong>Class Diagram:</strong> Kelas, atribut, operasi, multipliciti (0..*, 1..1), agregasi/komposisi.</li>
+                  <li><strong>ERD (Entity-Relationship):</strong> Entiti, atribut, hubungan (1:1, 1:N, M:N).</li>
+                </ul>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="text-slate-900 dark:text-white block mb-1">2. Fungsian (Function)</strong>
+                <ul class="list-disc pl-4 space-y-1 text-slate-600 dark:text-zinc-400">
+                  <li><strong>Use Case Diagram:</strong> Aktor, use case, sempadan sistem, &lt;&lt;include&gt;&gt; (wajib), &lt;&lt;extend&gt;&gt; (bersyarat).</li>
+                  <li><strong>Data Flow Diagram (DFD):</strong> Proses, stor data, entiti luaran, aliran data.</li>
+                </ul>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="text-slate-900 dark:text-white block mb-1">3. Tingkah Laku (Behavior)</strong>
+                <ul class="list-disc pl-4 space-y-1 text-slate-600 dark:text-zinc-400">
+                  <li><strong>Activity Diagram:</strong> Tindakan, aliran kawalan, Decision/Merge (diamond), Fork/Join (bar konkurensi).</li>
+                  <li><strong>State Machine Diagram:</strong> Keadaan (State), peristiwa (Event), pengawal [Guard], tindakan (Action).</li>
+                </ul>
+              </div>
+            </div>
+          `
+        }
+      ],
+      'EU4': [
+        {
+          title: 'Model Kano (Kepuasan Pelanggan vs Pelaksanaan Ciri)',
+          badge: 'Analisis Keperluan',
+          content: `
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div class="p-3 rounded-xl bg-rose-50/60 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/60">
+                <strong class="text-rose-900 dark:text-rose-200 block mb-1">1. Faktor Asas (Must-be / Dissatisfiers)</strong>
+                <p class="text-slate-600 dark:text-zinc-400 leading-relaxed">Ciri asas yang dianggap pasti ada. Jika tiada, pengguna sangat marah. Jika ada, pengguna tidak puji kerana dianggap lumrah (cth: brek kereta berfungsi).</p>
+              </div>
+              <div class="p-3 rounded-xl bg-blue-50/60 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/60">
+                <strong class="text-blue-900 dark:text-blue-200 block mb-1">2. Faktor Prestasi (One-dimensional / Satisfiers)</strong>
+                <p class="text-slate-600 dark:text-zinc-400 leading-relaxed">Berkadar terus dengan kepuasan. Makin laju atau makin jimat minyak, pengguna makin berpuas hati. Pengguna minta secara terang-terangan.</p>
+              </div>
+              <div class="p-3 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-900/60">
+                <strong class="text-emerald-900 dark:text-emerald-200 block mb-1">3. Faktor Keterujaan (Delighters)</strong>
+                <p class="text-slate-600 dark:text-zinc-400 leading-relaxed">Ciri luar jangkaan yang tidak diminta. Jika tiada, pengguna tidak kisah. Jika ada, kepuasan melonjak tinggi (cth: sistem tempat duduk pemandu berurut automatik).</p>
+              </div>
+            </div>
+          `
+        },
+        {
+          title: '6 Kriteria Kualiti Keperluan Tunggal (Quality Criteria)',
+          badge: 'Skema Semakan',
+          content: `
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+              <div class="p-2 rounded bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800"><strong>1. Jelas (Unambiguous):</strong> Hanya satu tafsiran sahaja.</div>
+              <div class="p-2 rounded bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800"><strong>2. Lengkap (Complete):</strong> Mengandungi semua data operasi.</div>
+              <div class="p-2 rounded bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800"><strong>3. Konsisten (Consistent):</strong> Tiada percanggahan antara klausa.</div>
+              <div class="p-2 rounded bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800"><strong>4. Boleh Diuji (Verifiable):</strong> Boleh disahkan oleh ujian QA.</div>
+              <div class="p-2 rounded bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800"><strong>5. Tepat (Correct):</strong> Mencerminkan kehendak sebenar bisnes.</div>
+              <div class="p-2 rounded bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800"><strong>6. Boleh Dilaksana (Feasible):</strong> Boleh dibina dalam bajet & teknologi.</div>
+            </div>
+          `
+        }
+      ],
+      'EU5': [
+        {
+          title: '3 Faset Utama Konfigurasi Proses RE',
+          badge: 'Faset Proses',
+          content: `
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="text-slate-900 dark:text-white block mb-1">1. Faset Masa (Time Facet)</strong>
+                <p class="text-slate-600 dark:text-zinc-400 leading-relaxed"><strong>Linear</strong> (Waterfall / sekali gus di awal) vs <strong>Iteratif</strong> (Agile / berulang-ulang mengikut pelepasan sprint).</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="text-slate-900 dark:text-white block mb-1">2. Faset Tujuan (Purpose Facet)</strong>
+                <p class="text-slate-600 dark:text-zinc-400 leading-relaxed"><strong>Prescriptive</strong> (spesifikasi mengikat sebagai kontrak) vs <strong>Explorative</strong> (menjelajah kehendak pasaran melalui prototaip).</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="text-slate-900 dark:text-white block mb-1">3. Faset Penyelarasan (Coordination Facet)</strong>
+                <p class="text-slate-600 dark:text-zinc-400 leading-relaxed"><strong>Customer-Specific</strong> (ditempah khas oleh satu organisasi) vs <strong>Market-Driven</strong> (dibina untuk jualan massa/awam).</p>
+              </div>
+            </div>
+          `
+        }
+      ],
+      'EU6': [
+        {
+          title: 'Baselines & Kebolehkesanan (Traceability)',
+          badge: 'Teras Pengurusan',
+          content: `
+            <div class="space-y-3 text-xs leading-relaxed">
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                <strong class="text-slate-900 dark:text-white block mb-1">Peraturan Emas Baseline:</strong>
+                <p class="text-slate-600 dark:text-zinc-400">Baseline ialah konfigurasi keperluan stabil yang telah disahkan dan dipersetujui. Baseline yang telah ditandatangani <strong>tidak boleh disentuh atau diubah secara langsung</strong>. Semua perubahan diserap ke dalam <em>Future Baseline</em> melalui Change Control Board (CCB).</p>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                  <strong class="block text-slate-900 dark:text-white mb-0.5">Pre-RS Traceability</strong>
+                  <span class="text-slate-600 dark:text-zinc-400">Pautan daripada keperluan balik ke sumber asalnya (stakeholder, minit mesyuarat, undang-undang).</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                  <strong class="block text-slate-900 dark:text-white mb-0.5">Post-RS Traceability</strong>
+                  <span class="text-slate-600 dark:text-zinc-400">Pautan daripada keperluan ke artifak hiliran (reka bentuk arkitektur, kod modul, kes ujian QA).</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800">
+                  <strong class="block text-slate-900 dark:text-white mb-0.5">Inter-RS Traceability</strong>
+                  <span class="text-slate-600 dark:text-zinc-400">Hubungan kebergantungan (dependency) antara keperluan fungsian yang berbeza.</span>
+                </div>
+              </div>
+            </div>
+          `
+        }
+      ],
+      'EU7': [
+        {
+          title: 'Prinsip Sokongan Alatan RE (Tool Support)',
+          badge: 'Prinsip Alatan',
+          content: `
+            <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-xs space-y-2 leading-relaxed">
+              <div><strong>Alat Mengikut Proses (Bukan Sebaliknya):</strong> Alat perisian mesti dipilih untuk menyokong proses kerja RE yang sedia ada, bukan memaksa organisasi mengubah proses semata-mata mengikut alatan.</div>
+              <div><strong>Kos Keseluruhan Pemilikan (TCO):</strong> Pemilihan alat mesti mengambil kira kos latihan pengguna, integrasi sistem, penyesuaian (customization), dan penyelenggaraan berkala.</div>
+              <div><strong>Projek Perintis (Pilot Project):</strong> Jangan terus gunakan alatan baharu ke seluruh organisasi. Laksanakan projek perintis pada skala kecil terlebih dahulu untuk menguji keberkesanan.</div>
+            </div>
+          `
+        }
+      ]
+    };
+
+    function renderMasterNotes() {
+      const container = document.getElementById('notesContentContainer');
+      if (!container || !appData.eu_drill) return;
+
+      const euKeys = ['EU1', 'EU2', 'EU3', 'EU4', 'EU5', 'EU6', 'EU7'];
+      let html = '';
+
+      euKeys.forEach((euKey, idx) => {
+        // Filter check
+        if (currentNotesEUFilter !== 'all' && currentNotesEUFilter !== euKey) {
+          return;
+        }
+
+        const eu = appData.eu_drill[euKey];
+        if (!eu) return;
+
+        const anchors = eu.memoryAnchors || [];
+        const deepNotes = eu.deepDiveNotes || [];
+        const cheatCards = highYieldSyllabusCheatSheets[euKey] || [];
+        const totalQs = (eu.questions || []).length;
+
+        // Search filtering logic
+        if (notesSearchQuery.trim()) {
+          const q = notesSearchQuery.toLowerCase();
+          const matchTitle = (eu.title || '').toLowerCase().includes(q) || (eu.titleBm || '').toLowerCase().includes(q);
+          const matchAnchors = anchors.some(a => (a.topic || '').toLowerCase().includes(q) || (a.mustRemember || '').toLowerCase().includes(q) || (a.riskIfForgotten || '').toLowerCase().includes(q));
+          const matchDeep = deepNotes.some(d => (d.section || '').toLowerCase().includes(q) || (d.content || '').toLowerCase().includes(q));
+          const matchCheat = cheatCards.some(c => (c.title || '').toLowerCase().includes(q) || (c.content || '').toLowerCase().includes(q));
+
+          if (!matchTitle && !matchAnchors && !matchDeep && !matchCheat) {
+            return;
+          }
+        }
+
+        html += `
+          <section id="notes-sec-${euKey}" class="rounded-3xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/90 shadow-sm p-5 sm:p-7 space-y-6 scroll-mt-28">
+            
+            <!-- Section Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-zinc-800/90">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-lg font-mono text-xs font-black bg-indigo-600 text-white shadow-xs">
+                    ${eu.code || euKey}
+                  </span>
+                  <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400 font-mono">
+                    Pemberat Peperiksaan: ${eu.examWeight || 'Tinggi'}
+                  </span>
+                </div>
+                <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                  ${eu.title}
+                </h2>
+                <p class="text-xs text-slate-500 dark:text-zinc-400 font-medium">
+                  ${eu.titleBm || ''} • (${totalQs} Soalan Latihan Disediakan)
+                </p>
+              </div>
+
+              <div class="shrink-0 flex items-center gap-2">
+                <button onclick="switchDrillEU('${euKey}'); switchMainView('drill');" class="h-8 px-3 rounded-xl bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 dark:hover:bg-amber-900/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 text-xs font-bold flex items-center gap-1.5 transition-all">
+                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+                  <span>Latih Soalan Bab Ini ➔</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- High Yield Infographics / Cheat Cards -->
+            ${cheatCards.length > 0 ? `
+              <div class="space-y-3">
+                <div class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span>Matriks Teras & Rumusan Silibus</span>
+                </div>
+                <div class="space-y-3">
+                  ${cheatCards.map(c => `
+                    <div class="p-4 rounded-2xl bg-slate-50/80 dark:bg-zinc-950 border border-slate-200/90 dark:border-zinc-800/80 space-y-2">
+                      <div class="flex items-center justify-between pb-2 border-b border-slate-200/60 dark:border-zinc-800">
+                        <h4 class="text-xs sm:text-[13px] font-bold text-slate-900 dark:text-white">${c.title}</h4>
+                        <span class="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900/60">${c.badge}</span>
+                      </div>
+                      <div class="pt-1">${c.content}</div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- Sub-accordion 1: Memory Anchors & Trap Alerts -->
+            <div class="rounded-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden bg-slate-50/50 dark:bg-zinc-950/40">
+              <button onclick="toggleAccordion('notes-anchor-${euKey}', 'notes-anchor-chev-${euKey}')" class="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-slate-100/60 dark:hover:bg-zinc-800/40 transition-colors">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-6 h-6 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center justify-center font-bold text-xs">★</span>
+                  <span class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">Apa KENA Ingat & Amaran Perangkap Peperiksaan</span>
+                  <span class="font-mono text-[10.5px] px-1.5 py-0.2 rounded-md bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-bold">${anchors.length} Perkara</span>
+                </div>
+                <svg id="notes-anchor-chev-${euKey}" class="notes-acc-chev w-4 h-4 text-slate-400 dark:text-zinc-500 transition-transform duration-200 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+              </button>
+              <div id="notes-anchor-${euKey}" class="notes-acc-body px-4 pb-4 pt-2 border-t border-slate-200/60 dark:border-zinc-800 space-y-3">
+                ${anchors.map((a, aIdx) => `
+                  <div class="p-3.5 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 space-y-2">
+                    <div class="flex items-center gap-2">
+                      <span class="w-4 h-4 rounded-md bg-amber-500 text-white flex items-center justify-center font-mono font-bold text-[10px] shrink-0">${aIdx + 1}</span>
+                      <span class="font-bold text-xs sm:text-[13px] text-slate-900 dark:text-white">${a.topic}</span>
+                    </div>
+                    <div class="text-xs text-slate-700 dark:text-zinc-300 leading-relaxed pl-6">
+                      <strong class="text-slate-900 dark:text-white font-semibold">Mesti Diingati:</strong> ${formatText(a.mustRemember)}
+                    </div>
+                    <div class="ml-6 p-2.5 rounded-lg bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-rose-950 dark:text-rose-200 text-xs flex items-start gap-2">
+                      <span class="text-rose-600 font-bold">⚠️</span>
+                      <div>
+                        <strong class="font-bold text-rose-800 dark:text-rose-300">Risiko Kalau Lupa Dalam Exam:</strong>
+                        <div class="mt-0.5 leading-relaxed">${formatText(a.riskIfForgotten)}</div>
+                      </div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Sub-accordion 2: Deep Dive Notes (Official Handbook) -->
+            ${deepNotes.length > 0 ? `
+              <div class="rounded-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden bg-slate-50/50 dark:bg-zinc-950/40">
+                <button onclick="toggleAccordion('notes-deep-${euKey}', 'notes-deep-chev-${euKey}')" class="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-slate-100/60 dark:hover:bg-zinc-800/40 transition-colors">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-6 h-6 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 flex items-center justify-center font-bold text-xs">📖</span>
+                    <span class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white">Zon Pengetahuan Mendalam & Rujukan Handbook Rasmi</span>
+                    <span class="font-mono text-[10.5px] px-1.5 py-0.2 rounded-md bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 font-bold">${deepNotes.length} Sub-bab</span>
+                  </div>
+                  <svg id="notes-deep-chev-${euKey}" class="notes-acc-chev w-4 h-4 text-slate-400 dark:text-zinc-500 transition-transform duration-200 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                </button>
+                <div id="notes-deep-${euKey}" class="notes-acc-body px-4 pb-4 pt-2 border-t border-slate-200/60 dark:border-zinc-800 space-y-3">
+                  ${deepNotes.map(d => `
+                    <div class="p-3.5 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 space-y-2">
+                      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-1.5 border-b border-slate-100 dark:border-zinc-800">
+                        <span class="font-bold text-xs sm:text-[13px] text-slate-900 dark:text-white">${d.section}</span>
+                        <span class="font-mono text-[10px] text-indigo-600 dark:text-indigo-400">${d.source}</span>
+                      </div>
+                      <div class="text-xs text-slate-700 dark:text-zinc-300 leading-relaxed whitespace-pre-line">${formatText(d.content)}</div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+          </section>
+        `;
+      });
+
+      if (!html) {
+        container.innerHTML = `
+          <div class="text-center py-12 bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 p-6">
+            <div class="text-3xl mb-2">🔍</div>
+            <div class="text-sm font-bold text-slate-900 dark:text-white">Tiada nota sepadan dengan carian "${notesSearchQuery}"</div>
+            <p class="text-xs text-slate-500 dark:text-zinc-400 mt-1">Cuba cari kata kunci lain seperti 'Kano', 'Baseline', 'Rupp', atau klik 'Semua Bab'.</p>
+            <button onclick="clearNotesSearch()" class="mt-3 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-zinc-800 text-xs font-semibold text-slate-700 dark:text-zinc-300 hover:bg-slate-200 transition-colors">Padam Carian</button>
+          </div>
+        `;
+      } else {
+        container.innerHTML = html;
+      }
+    }
+
+    function filterNotesEU(euId) {
+      currentNotesEUFilter = euId;
+      document.querySelectorAll('.notes-eu-pill').forEach(btn => {
+        if (btn.getAttribute('data-eu') === euId) {
+          btn.className = 'notes-eu-pill active px-2.5 py-1 rounded-lg text-xs font-bold bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-xs shrink-0';
+        } else {
+          btn.className = 'notes-eu-pill px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700/60 shrink-0';
+        }
+      });
+      renderMasterNotes();
+
+      if (euId !== 'all') {
+        const sec = document.getElementById('notes-sec-' + euId);
+        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function filterNotesContent(val) {
+      notesSearchQuery = val || '';
+      renderMasterNotes();
+    }
+
+    function clearNotesSearch() {
+      const input = document.getElementById('notesSearchInput');
+      if (input) input.value = '';
+      notesSearchQuery = '';
+      renderMasterNotes();
+    }
+
+    function toggleAllNotesAccordions(expand) {
+      document.querySelectorAll('.notes-acc-body').forEach(el => {
+        if (expand) el.classList.remove('hidden');
+        else el.classList.add('hidden');
+      });
+      document.querySelectorAll('.notes-acc-chev').forEach(el => {
+        if (expand) el.classList.add('rotate-180');
+        else el.classList.remove('rotate-180');
+      });
+    }
+
 
     // =============================================================
     // 2. EU DRILL MODULE LOGIC & RENDERING
